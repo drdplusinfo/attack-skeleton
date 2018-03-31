@@ -11,9 +11,9 @@ namespace DrdPlus\Calculators\AttackSkeleton;
             foreach ($controller->getShields() as $shield) {
                 $shieldCode = $shield['code']; ?>
                 <option value="<?= $shieldCode->getValue() ?>"
-                        <?php if ($controller->getFight()->getSelectedShield()->getValue() === $shieldCode->getValue()) { ?>selected<?php }
+                        <?php if ($controller->getAttack()->getSelectedShield()->getValue() === $shieldCode->getValue()) { ?>selected<?php }
                         if (!$shield['canUseIt']) { ?>disabled<?php } ?>>
-                    <?= (!$shield['canUseIt'] ? '💪 ' : '') . $shieldCode->translateTo('cs') . ($controller->getFight()->getCoverOfShield($shieldCode) > 0 ? (' +' . $controller->getFight()->getCoverOfShield($shieldCode)) : '') ?>
+                    <?= (!$shield['canUseIt'] ? '💪 ' : '') . $shieldCode->translateTo('cs') . ($controller->getAttack()->getCoverOfShield($shieldCode) > 0 ? (' +' . $controller->getAttack()->getCoverOfShield($shieldCode)) : '') ?>
                 </option>
             <?php } ?>
         </select>

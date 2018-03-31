@@ -6,7 +6,7 @@ use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\ItemHoldingCode;
 
 /** @var Controller $controller */
-$selectedMeleeWeapon = $controller->getFight()->getCurrentMeleeWeapon();
+$selectedMeleeWeapon = $controller->getAttack()->getCurrentMeleeWeapon();
 $selectedMeleeWeaponValue = $selectedMeleeWeapon ? $selectedMeleeWeapon->getValue() : null;
 if ($controller->addingNewMeleeWeapon()) { ?>
     <div id="addMeleeWeapon" class="block add">
@@ -50,13 +50,13 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
         <label>
             <input type="radio" value="<?= ItemHoldingCode::MAIN_HAND ?>"
                    name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
             v dominantní ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
             v druhé
             ruce</label>
     </div>
@@ -64,7 +64,7 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
         <label>
             <input type="radio" value="<?= ItemHoldingCode::TWO_HANDS ?>"
                    name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
             obouručně
         </label>
     </div>

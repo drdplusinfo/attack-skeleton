@@ -40,8 +40,8 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     private $currentValues;
     /** @var CurrentProperties */
     private $currentProperties;
-    /** @var Fight */
-    private $fight;
+    /** @var Attack */
+    private $attack;
     /** @var array|string[] */
     private $messagesAbout = [];
 
@@ -54,7 +54,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         parent::__construct($cookiesPostfix);
         $this->currentValues = new CurrentValues($_GET, $this->getHistory());
         $this->currentProperties = new CurrentProperties($this->currentValues);
-        $this->fight = new Fight(
+        $this->attack = new Attack(
             $this->currentValues,
             $this->currentProperties,
             $this->getHistory(),
@@ -88,11 +88,11 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     }
 
     /**
-     * @return Fight
+     * @return Attack
      */
-    public function getFight(): Fight
+    public function getAttack(): Attack
     {
-        return $this->fight;
+        return $this->attack;
     }
 
     /**
@@ -118,7 +118,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      */
     public function getMeleeWeapons(): array
     {
-        $weaponCodes = $this->fight->getPossibleMeleeWeapons();
+        $weaponCodes = $this->attack->getPossibleMeleeWeapons();
         $countOfUnusable = 0;
         foreach ($weaponCodes as $weaponCodesOfSameCategory) {
             $countOfUnusable += $this->countUnusable($weaponCodesOfSameCategory);
@@ -157,7 +157,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      */
     public function getRangedWeapons(): array
     {
-        $weaponCodes = $this->fight->getPossibleRangedWeapons();
+        $weaponCodes = $this->attack->getPossibleRangedWeapons();
         $countOfUnusable = 0;
         foreach ($weaponCodes as $weaponCodesOfSameCategory) {
             $countOfUnusable += $this->countUnusable($weaponCodesOfSameCategory);
@@ -180,7 +180,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      */
     public function getShields(): array
     {
-        $shieldCodes = $this->fight->getPossibleShields();
+        $shieldCodes = $this->attack->getPossibleShields();
         $countOfUnusable = $this->countUnusable($shieldCodes);
         if ($countOfUnusable > 0) {
             $shieldWord = 'štít';
@@ -200,7 +200,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      */
     public function getBodyArmors(): array
     {
-        $bodyArmors = $this->fight->getPossibleBodyArmors();
+        $bodyArmors = $this->attack->getPossibleBodyArmors();
         $countOfUnusable = $this->countUnusable($bodyArmors);
         if ($countOfUnusable > 0) {
             $armorWord = 'zbroj';
@@ -220,7 +220,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
      */
     public function getHelms(): array
     {
-        $helmCodes = $this->fight->getPossibleHelms();
+        $helmCodes = $this->attack->getPossibleHelms();
         $countOfUnusable = $this->countUnusable($helmCodes);
         $this->addUnusableMessage($countOfUnusable, 'helms', 'helmu', 'helmy', 'helem');
 

@@ -8,7 +8,7 @@ use DrdPlus\Tables\Tables;
 
 /** @var Controller $controller */
 /** @var Tables $tables */
-$selectedRangedWeapon = $controller->getFight()->getSelectedRangedWeapon();
+$selectedRangedWeapon = $controller->getAttack()->getSelectedRangedWeapon();
 $selectedRangedWeaponValue = $selectedRangedWeapon ? $selectedRangedWeapon->getValue() : null;
 if ($controller->addingNewRangedWeapon()) { ?>
     <div id="addRangedWeapon" class="block add">
@@ -52,20 +52,20 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
         <label>
             <input type="radio" value="<?= ItemHoldingCode::MAIN_HAND ?>"
                    name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
             v dominantní ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
             v druhé ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::TWO_HANDS ?>"
                    name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getFight()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
             obouručně
         </label>
     </div>

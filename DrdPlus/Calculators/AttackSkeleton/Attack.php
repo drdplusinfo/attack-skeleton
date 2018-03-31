@@ -26,7 +26,7 @@ use Granam\Integer\Tools\ToInteger;
 use Granam\Strict\Object\StrictObject;
 use Granam\String\StringTools;
 
-class Fight extends StrictObject
+class Attack extends StrictObject
 {
     /** @var CurrentValues */
     private $currentValues;
