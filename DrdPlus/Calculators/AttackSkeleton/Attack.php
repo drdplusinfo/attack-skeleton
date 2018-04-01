@@ -24,13 +24,13 @@ use Granam\Strict\Object\StrictObject;
 class Attack extends StrictObject
 {
     /** @var CurrentValues */
-    private $currentValues;
+    protected $currentValues;
     /** @var CurrentProperties */
-    private $currentProperties;
+    protected $currentProperties;
     /** @var History */
-    private $history;
+    protected $history;
     /** @var PreviousProperties */
-    private $previousProperties;
+    protected $previousProperties;
 
     /**
      * @param CurrentValues $currentValues
@@ -60,7 +60,7 @@ class Attack extends StrictObject
      * @param CustomArmamentsService $newWeaponsService
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    private function registerCustomArmaments(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomArmaments(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         $this->registerCustomMeleeWeapons($currentValues, $newWeaponsService);
         $this->registerCustomRangedWeapons($currentValues, $newWeaponsService);
@@ -73,7 +73,7 @@ class Attack extends StrictObject
      * @param CustomArmamentsService $newWeaponsService
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    private function registerCustomMeleeWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomMeleeWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomMeleeWeaponsValues() as $customMeleeWeaponsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
@@ -101,7 +101,7 @@ class Attack extends StrictObject
      * @param CustomArmamentsService $newWeaponsService
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    private function registerCustomRangedWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomRangedWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomRangedWeaponsValues() as $customRangedWeaponsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
@@ -133,7 +133,7 @@ class Attack extends StrictObject
      * @param CustomArmamentsService $newWeaponsService
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    private function registerCustomBodyArmors(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomBodyArmors(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomBodyArmorsValues() as $customBodyArmorsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
@@ -157,7 +157,7 @@ class Attack extends StrictObject
      * @param CustomArmamentsService $newWeaponsService
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    private function registerCustomHelms(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomHelms(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomHelmsValues() as $customHelmsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
@@ -179,7 +179,7 @@ class Attack extends StrictObject
      * @return MeleeWeaponCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    private function getPreviousMeleeWeapon(): MeleeWeaponCode
+    protected function getPreviousMeleeWeapon(): MeleeWeaponCode
     {
         $meleeWeaponValue = $this->history->getValue(Controller::MELEE_WEAPON);
         if (!$meleeWeaponValue) {
@@ -223,7 +223,7 @@ class Attack extends StrictObject
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    private function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode): bool
+    protected function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode): bool
     {
         return Tables::getIt()->getArmourer()->isTwoHandedOnly($weaponlikeCode);
     }
@@ -233,7 +233,7 @@ class Attack extends StrictObject
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    private function isOneHandedOnly(WeaponlikeCode $weaponlikeCode): bool
+    protected function isOneHandedOnly(WeaponlikeCode $weaponlikeCode): bool
     {
         return Tables::getIt()->getArmourer()->isOneHandedOnly($weaponlikeCode);
     }
@@ -242,7 +242,7 @@ class Attack extends StrictObject
      * @return ItemHoldingCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    private function getPreviousMeleeWeaponHolding(): ItemHoldingCode
+    protected function getPreviousMeleeWeaponHolding(): ItemHoldingCode
     {
         $previousMeleeWeaponHoldingValue = $this->history->getValue(Controller::MELEE_WEAPON_HOLDING);
         if ($previousMeleeWeaponHoldingValue === null) {
@@ -313,7 +313,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function canUseWeaponlike(WeaponlikeCode $weaponlikeCode, ItemHoldingCode $itemHoldingCode): bool
+    protected function canUseWeaponlike(WeaponlikeCode $weaponlikeCode, ItemHoldingCode $itemHoldingCode): bool
     {
         return $this->canUseArmament(
             $weaponlikeCode,
@@ -349,7 +349,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    private function getSelectedShieldForMelee(): ShieldCode
+    protected function getSelectedShieldForMelee(): ShieldCode
     {
         $selectedShield = $this->getSelectedShield();
         if ($selectedShield->isUnarmed()) {
@@ -364,7 +364,7 @@ class Attack extends StrictObject
         return $selectedShield;
     }
 
-    private function canUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
+    protected function canUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return $this->canUseArmament(
@@ -440,7 +440,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function getPreviousRangedWeapon(): RangedWeaponCode
+    protected function getPreviousRangedWeapon(): RangedWeaponCode
     {
         $rangedWeaponValue = $this->history->getValue(Controller::RANGED_WEAPON);
         if (!$rangedWeaponValue) {
@@ -458,7 +458,7 @@ class Attack extends StrictObject
         return $rangedWeapon;
     }
 
-    private function canUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
+    protected function canUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return Tables::getIt()->getArmourer()
@@ -469,7 +469,7 @@ class Attack extends StrictObject
             );
     }
 
-    private function couldUseWeaponlike(WeaponlikeCode $weaponlikeCode, ItemHoldingCode $itemHoldingCode): bool
+    protected function couldUseWeaponlike(WeaponlikeCode $weaponlikeCode, ItemHoldingCode $itemHoldingCode): bool
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return $this->couldUseArmament(
@@ -482,7 +482,7 @@ class Attack extends StrictObject
         );
     }
 
-    private function couldUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
+    protected function couldUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return Tables::getIt()->getArmourer()
@@ -499,7 +499,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function getPreviousRangedWeaponHolding(): ItemHoldingCode
+    protected function getPreviousRangedWeaponHolding(): ItemHoldingCode
     {
         $rangedWeaponHoldingValue = $this->history->getValue(Controller::RANGED_WEAPON_HOLDING);
         if ($rangedWeaponHoldingValue === null) {
@@ -556,7 +556,7 @@ class Attack extends StrictObject
         return $previousShield;
     }
 
-    private function couldUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
+    protected function couldUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
     {
         /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return $this->canUseArmament(
@@ -593,7 +593,7 @@ class Attack extends StrictObject
      * @return ItemHoldingCode
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    private function getShieldHolding(ItemHoldingCode $weaponHolding, WeaponlikeCode $weaponlikeCode, ShieldCode $shield = null): ItemHoldingCode
+    protected function getShieldHolding(ItemHoldingCode $weaponHolding, WeaponlikeCode $weaponlikeCode, ShieldCode $shield = null): ItemHoldingCode
     {
         if ($weaponHolding->holdsByTwoHands()) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
@@ -662,7 +662,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function addUsabilityToMeleeWeapons(array $meleeWeaponCodeValues): array
+    protected function addUsabilityToMeleeWeapons(array $meleeWeaponCodeValues): array
     {
         $meleeWeaponCodes = [];
         foreach ($meleeWeaponCodeValues as $meleeWeaponCodeValue) {
@@ -680,7 +680,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function addWeaponlikeUsability(array $weaponLikeCode, ItemHoldingCode $itemHoldingCode): array
+    protected function addWeaponlikeUsability(array $weaponLikeCode, ItemHoldingCode $itemHoldingCode): array
     {
         $withUsagePossibility = [];
         foreach ($weaponLikeCode as $code) {
@@ -720,7 +720,7 @@ class Attack extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    private function addUsabilityToRangedWeapons(array $rangedWeaponCodeValues): array
+    protected function addUsabilityToRangedWeapons(array $rangedWeaponCodeValues): array
     {
         $meleeWeaponCodes = [];
         foreach ($rangedWeaponCodeValues as $rangedWeaponCodeValue) {
@@ -770,7 +770,7 @@ class Attack extends StrictObject
      * @param array|ArmamentCode[] $armamentCodes
      * @return array
      */
-    private function addNonWeaponArmamentUsability(array $armamentCodes): array
+    protected function addNonWeaponArmamentUsability(array $armamentCodes): array
     {
         $withUsagePossibility = [];
         foreach ($armamentCodes as $armamentCode) {
@@ -797,7 +797,7 @@ class Attack extends StrictObject
         return BodyArmorCode::getIt($selectedBodyArmorValue);
     }
 
-    private function getPreviousBodyArmor(): BodyArmorCode
+    protected function getPreviousBodyArmor(): BodyArmorCode
     {
         $previousBodyArmorValue = $this->history->getValue(Controller::BODY_ARMOR);
         if (!$previousBodyArmorValue) {
@@ -914,7 +914,7 @@ class Attack extends StrictObject
         );
     }
 
-    private function getPreviousHelm(): HelmCode
+    protected function getPreviousHelm(): HelmCode
     {
         $previousHelmValue = $this->history->getValue(Controller::HELM);
         if (!$previousHelmValue) {
