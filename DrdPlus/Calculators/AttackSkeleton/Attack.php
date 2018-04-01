@@ -258,6 +258,38 @@ class Attack extends StrictObject
     }
 
     /**
+     * @return CurrentValues
+     */
+    protected function getCurrentValues(): CurrentValues
+    {
+        return $this->currentValues;
+    }
+
+    /**
+     * @return CurrentProperties
+     */
+    protected function getCurrentProperties(): CurrentProperties
+    {
+        return $this->currentProperties;
+    }
+
+    /**
+     * @return History
+     */
+    protected function getHistory(): History
+    {
+        return $this->history;
+    }
+
+    /**
+     * @return PreviousProperties
+     */
+    protected function getPreviousProperties(): PreviousProperties
+    {
+        return $this->previousProperties;
+    }
+
+    /**
      * @return MeleeWeaponCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
