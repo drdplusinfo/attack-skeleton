@@ -203,7 +203,7 @@ class Attack extends StrictObject
      * @return ItemHoldingCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    private function getWeaponHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding): ItemHoldingCode
+    protected function getWeaponHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding): ItemHoldingCode
     {
         if ($this->isTwoHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
