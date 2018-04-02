@@ -6,7 +6,6 @@ use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Properties\PropertyCode;
-use DrdPlus\Codes\Skills\PhysicalSkillCode;
 use DrdPlus\Configurator\Skeleton\History;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\Tools\ToInteger;
@@ -115,6 +114,9 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     /**
      * @return array|MeleeWeaponCode[][][]
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
     public function getMeleeWeapons(): array
     {
@@ -154,6 +156,9 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     /**
      * @return array|RangedWeaponCode[][][]
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
+     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
     public function getRangedWeapons(): array
     {
