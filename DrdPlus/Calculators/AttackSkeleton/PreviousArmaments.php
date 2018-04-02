@@ -32,6 +32,30 @@ class PreviousArmaments extends StrictObject
     }
 
     /**
+     * @return History
+     */
+    protected function getHistory(): History
+    {
+        return $this->history;
+    }
+
+    /**
+     * @return PreviousProperties
+     */
+    protected function getPreviousProperties(): PreviousProperties
+    {
+        return $this->previousProperties;
+    }
+
+    /**
+     * @return Tables
+     */
+    protected function getTables(): Tables
+    {
+        return $this->tables;
+    }
+
+    /**
      * @return MeleeWeaponCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
