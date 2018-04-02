@@ -213,7 +213,7 @@ class PreviousArmaments extends StrictObject
     }
 
     /**
-     * @param ShieldCode $shieldCode
+     * @param ShieldCode|null $shieldCode
      * @return ItemHoldingCode
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
@@ -221,18 +221,18 @@ class PreviousArmaments extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    public function getPreviousMeleeShieldHolding(ShieldCode $shieldCode): ItemHoldingCode
+    public function getPreviousMeleeShieldHolding(ShieldCode $shieldCode = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
             $this->getPreviousMeleeWeaponHolding(),
             $this->getPreviousMeleeWeapon(),
-            $shieldCode,
+            $shieldCode ?? $this->getPreviousShield(),
             $this->tables
         );
     }
 
     /**
-     * @param ShieldCode $shieldCode
+     * @param ShieldCode|null $shieldCode
      * @return ItemHoldingCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
@@ -240,12 +240,12 @@ class PreviousArmaments extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getPreviousRangedShieldHolding(ShieldCode $shieldCode): ItemHoldingCode
+    public function getPreviousRangedShieldHolding(ShieldCode $shieldCode = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
             $this->getPreviousRangedWeaponHolding(),
             $this->getPreviousRangedWeapon(),
-            $shieldCode,
+            $shieldCode ?? $this->getPreviousShield(),
             $this->tables
         );
     }
