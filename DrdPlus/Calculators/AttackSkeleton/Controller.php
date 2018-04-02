@@ -7,6 +7,7 @@ use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Properties\PropertyCode;
 use DrdPlus\Configurator\Skeleton\History;
+use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\Tools\ToInteger;
 
@@ -58,7 +59,8 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
             $this->currentProperties,
             $this->getHistory(),
             new PreviousProperties($this->getHistory()),
-            new CustomArmamentsService()
+            new CustomArmamentsService(),
+            Tables::getIt()
         );
     }
 

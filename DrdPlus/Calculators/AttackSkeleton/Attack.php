@@ -23,6 +23,8 @@ use Granam\Strict\Object\StrictObject;
 
 class Attack extends StrictObject
 {
+    use UsingArmaments;
+
     /** @var CurrentValues */
     protected $currentValues;
     /** @var CurrentProperties */
@@ -31,6 +33,10 @@ class Attack extends StrictObject
     protected $history;
     /** @var PreviousProperties */
     protected $previousProperties;
+    /** @var PreviousArmaments */
+    protected $previousArmaments;
+    /** @var Tables */
+    protected $tables;
 
     /**
      * @param CurrentValues $currentValues
@@ -38,6 +44,7 @@ class Attack extends StrictObject
      * @param History $history
      * @param PreviousProperties $previousProperties
      * @param CustomArmamentsService $newWeaponService
+     * @param Tables $tables
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
@@ -45,13 +52,16 @@ class Attack extends StrictObject
         CurrentProperties $currentProperties,
         History $history,
         PreviousProperties $previousProperties,
-        CustomArmamentsService $newWeaponService
+        CustomArmamentsService $newWeaponService,
+        Tables $tables
     )
     {
         $this->currentValues = $currentValues;
         $this->currentProperties = $currentProperties;
         $this->history = $history;
         $this->previousProperties = $previousProperties;
+        $this->previousArmaments = new PreviousArmaments($history, $previousProperties, $tables);
+        $this->tables = $tables;
         $this->registerCustomArmaments($currentValues, $newWeaponService);
     }
 
@@ -176,83 +186,6 @@ class Attack extends StrictObject
     }
 
     /**
-     * @return MeleeWeaponCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    protected function getPreviousMeleeWeapon(): MeleeWeaponCode
-    {
-        $meleeWeaponValue = $this->history->getValue(Controller::MELEE_WEAPON);
-        if (!$meleeWeaponValue) {
-            return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
-        }
-        $meleeWeapon = MeleeWeaponCode::getIt($meleeWeaponValue);
-        $weaponHolding = $this->getWeaponHolding(
-            $meleeWeapon,
-            $this->history->getValue(Controller::MELEE_WEAPON_HOLDING)
-        );
-        if (!$this->couldUseWeaponlike($meleeWeapon, $weaponHolding)) {
-            return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
-        }
-
-        return $meleeWeapon;
-    }
-
-    /**
-     * @param WeaponlikeCode $weaponlikeCode
-     * @param string $weaponHolding
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    protected function getWeaponHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding): ItemHoldingCode
-    {
-        if ($this->isTwoHandedOnly($weaponlikeCode)) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
-        }
-        if ($this->isOneHandedOnly($weaponlikeCode)) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-        if (!$weaponHolding) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-
-        return ItemHoldingCode::getIt($weaponHolding);
-    }
-
-    /**
-     * @param WeaponlikeCode $weaponlikeCode
-     * @return bool
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    protected function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode): bool
-    {
-        return Tables::getIt()->getArmourer()->isTwoHandedOnly($weaponlikeCode);
-    }
-
-    /**
-     * @param WeaponlikeCode $weaponlikeCode
-     * @return bool
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    protected function isOneHandedOnly(WeaponlikeCode $weaponlikeCode): bool
-    {
-        return Tables::getIt()->getArmourer()->isOneHandedOnly($weaponlikeCode);
-    }
-
-    /**
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    protected function getPreviousMeleeWeaponHolding(): ItemHoldingCode
-    {
-        $previousMeleeWeaponHoldingValue = $this->history->getValue(Controller::MELEE_WEAPON_HOLDING);
-        if ($previousMeleeWeaponHoldingValue === null) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-
-        return $this->getWeaponHolding($this->getPreviousMeleeWeapon(), $previousMeleeWeaponHoldingValue);
-    }
-
-    /**
      * @return CurrentValues
      */
     protected function getCurrentValues(): CurrentValues
@@ -282,6 +215,14 @@ class Attack extends StrictObject
     protected function getPreviousProperties(): PreviousProperties
     {
         return $this->previousProperties;
+    }
+
+    /**
+     * @return PreviousArmaments
+     */
+    protected function getPreviousArmaments(): PreviousArmaments
+    {
+        return $this->previousArmaments;
     }
 
     /**
@@ -319,7 +260,7 @@ class Attack extends StrictObject
             $weaponlikeCode,
             Tables::getIt()->getArmourer()->getStrengthForWeaponOrShield(
                 $weaponlikeCode,
-                $this->getWeaponHolding($weaponlikeCode, $itemHoldingCode->getValue()),
+                $this->getWeaponHolding($weaponlikeCode, $itemHoldingCode->getValue(), $this->tables),
                 $this->currentProperties->getCurrentStrength()
             )
         );
@@ -339,7 +280,11 @@ class Attack extends StrictObject
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponHolding($currentWeapon ?? $this->getCurrentMeleeWeapon(), $meleeWeaponHoldingValue);
+        return $this->getWeaponHolding(
+            $currentWeapon ?? $this->getCurrentMeleeWeapon(),
+            $meleeWeaponHoldingValue,
+            $this->tables
+        );
     }
 
     /**
@@ -390,7 +335,8 @@ class Attack extends StrictObject
         return $this->getShieldHolding(
             $this->getCurrentMeleeWeaponHolding(),
             $this->getCurrentMeleeWeapon(),
-            $selectedShield
+            $selectedShield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
+            $this->tables
         );
     }
 
@@ -409,7 +355,8 @@ class Attack extends StrictObject
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
         $weaponHolding = $this->getWeaponHolding(
             $rangedWeapon,
-            $this->currentValues->getValue(Controller::RANGED_WEAPON_HOLDING)
+            $this->currentValues->getValue(Controller::RANGED_WEAPON_HOLDING),
+            $this->tables
         );
         if (!$this->canUseWeaponlike($rangedWeapon, $weaponHolding)) {
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
@@ -431,31 +378,7 @@ class Attack extends StrictObject
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponHolding($this->getSelectedRangedWeapon(), $rangedWeaponHoldingValue);
-    }
-
-    /**
-     * @return RangedWeaponCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
-     */
-    protected function getPreviousRangedWeapon(): RangedWeaponCode
-    {
-        $rangedWeaponValue = $this->history->getValue(Controller::RANGED_WEAPON);
-        if (!$rangedWeaponValue) {
-            return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
-        }
-        $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
-        $weaponHolding = $this->getWeaponHolding(
-            $rangedWeapon,
-            $this->history->getValue(Controller::RANGED_WEAPON_HOLDING)
-        );
-        if (!$this->couldUseWeaponlike($rangedWeapon, $weaponHolding)) {
-            return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
-        }
-
-        return $rangedWeapon;
+        return $this->getWeaponHolding($this->getSelectedRangedWeapon(), $rangedWeaponHoldingValue, $this->tables);
     }
 
     protected function canUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
@@ -469,45 +392,6 @@ class Attack extends StrictObject
             );
     }
 
-    protected function couldUseWeaponlike(WeaponlikeCode $weaponlikeCode, ItemHoldingCode $itemHoldingCode): bool
-    {
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-        return $this->couldUseArmament(
-            $weaponlikeCode,
-            Tables::getIt()->getArmourer()->getStrengthForWeaponOrShield(
-                $weaponlikeCode,
-                $this->getWeaponHolding($weaponlikeCode, $itemHoldingCode->getValue()),
-                $this->previousProperties->getPreviousStrength()
-            )
-        );
-    }
-
-    protected function couldUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
-    {
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-        return Tables::getIt()->getArmourer()
-            ->canUseArmament(
-                $armamentCode,
-                $strengthForArmament,
-                $this->previousProperties->getPreviousSize()
-            );
-    }
-
-    /**
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
-     */
-    protected function getPreviousRangedWeaponHolding(): ItemHoldingCode
-    {
-        $rangedWeaponHoldingValue = $this->history->getValue(Controller::RANGED_WEAPON_HOLDING);
-        if ($rangedWeaponHoldingValue === null) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-
-        return $this->getWeaponHolding($this->getPreviousRangedWeapon(), $rangedWeaponHoldingValue);
-    }
 
     /**
      * @return ShieldCode
@@ -529,104 +413,6 @@ class Attack extends StrictObject
         }
 
         return $selectedShield;
-    }
-
-    /**
-     * @return ShieldCode
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
-     * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
-     */
-    public function getPreviousShield(): ShieldCode
-    {
-        $previousShieldValue = $this->history->getValue(Controller::SHIELD);
-        if (!$previousShieldValue) {
-            return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
-        }
-        $previousShield = ShieldCode::getIt($previousShieldValue);
-        if ($this->getPreviousMeleeWeaponHolding()->holdsByTwoHands()
-            || $this->getPreviousRangedWeaponHolding()->holdsByTwoHands()
-            || !$this->couldUseShield($previousShield, $this->getPreviousMeleeShieldHolding($previousShield))
-            || !$this->couldUseShield($previousShield, $this->getPreviousRangedShieldHolding($previousShield))
-        ) {
-            return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
-        }
-
-        return $previousShield;
-    }
-
-    protected function couldUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
-    {
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-        return $this->canUseArmament(
-            $shieldCode,
-            Tables::getIt()->getArmourer()->getStrengthForWeaponOrShield(
-                $shieldCode,
-                $itemHoldingCode,
-                $this->previousProperties->getPreviousStrength()
-            )
-        );
-    }
-
-    /**
-     * @param ShieldCode $shieldCode = null
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
-     */
-    public function getPreviousRangedShieldHolding(ShieldCode $shieldCode = null): ItemHoldingCode
-    {
-        return $this->getShieldHolding(
-            $this->getPreviousRangedWeaponHolding(),
-            $this->getPreviousRangedWeapon(),
-            $shieldCode
-        );
-    }
-
-    /**
-     * @param ItemHoldingCode $weaponHolding
-     * @param WeaponlikeCode $weaponlikeCode
-     * @param ShieldCode|null $shield = null
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
-     */
-    protected function getShieldHolding(ItemHoldingCode $weaponHolding, WeaponlikeCode $weaponlikeCode, ShieldCode $shield = null): ItemHoldingCode
-    {
-        if ($weaponHolding->holdsByTwoHands()) {
-            /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-            if (Tables::getIt()->getArmourer()->canHoldItByTwoHands($shield ?? $this->getSelectedShieldForMelee())) {
-                // because two-handed weapon has to be dropped to use shield and then both hands can be used for shield
-                return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
-            }
-
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
-        }
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-        if ($weaponlikeCode->isUnarmed()
-            && Tables::getIt()->getArmourer()->canHoldItByTwoHands($shield ?? $this->getSelectedShieldForMelee())
-        ) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
-        }
-
-        return $weaponHolding->getOpposite();
-    }
-
-    /**
-     * @param ShieldCode|null $shieldCode = null
-     * @return ItemHoldingCode
-     * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    public function getPreviousMeleeShieldHolding(ShieldCode $shieldCode = null): ItemHoldingCode
-    {
-        return $this->getShieldHolding(
-            $this->getPreviousMeleeWeaponHolding(),
-            $this->getPreviousMeleeWeapon(),
-            $shieldCode
-        );
     }
 
     /**
@@ -797,29 +583,6 @@ class Attack extends StrictObject
         return BodyArmorCode::getIt($selectedBodyArmorValue);
     }
 
-    protected function getPreviousBodyArmor(): BodyArmorCode
-    {
-        $previousBodyArmorValue = $this->history->getValue(Controller::BODY_ARMOR);
-        if (!$previousBodyArmorValue) {
-            return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
-        }
-        $previousBodyArmor = BodyArmorCode::getIt($previousBodyArmorValue);
-        if (!$this->canUseArmament($previousBodyArmor, $this->previousProperties->getPreviousStrength())) {
-            return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
-        }
-
-        return $previousBodyArmor;
-    }
-
-    /**
-     * @return int
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmor
-     */
-    public function getProtectionOfPreviousBodyArmor(): int
-    {
-        return Tables::getIt()->getBodyArmorsTable()->getProtectionOf($this->getPreviousBodyArmor());
-    }
-
     /**
      * @return int
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmor
@@ -910,30 +673,8 @@ class Attack extends StrictObject
         return $this->getShieldHolding(
             $this->getSelectedRangedWeaponHolding(),
             $this->getSelectedRangedWeapon(),
-            $shield
+            $shield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
+            $this->tables
         );
-    }
-
-    protected function getPreviousHelm(): HelmCode
-    {
-        $previousHelmValue = $this->history->getValue(Controller::HELM);
-        if (!$previousHelmValue) {
-            return HelmCode::getIt(HelmCode::WITHOUT_HELM);
-        }
-        $previousHelm = HelmCode::getIt($previousHelmValue);
-        if (!$this->canUseArmament($previousHelm, $this->previousProperties->getPreviousStrength())) {
-            return HelmCode::getIt(HelmCode::WITHOUT_HELM);
-        }
-
-        return $previousHelm;
-    }
-
-    /**
-     * @return int
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmor
-     */
-    public function getPreviousHelmProtection(): int
-    {
-        return Tables::getIt()->getHelmsTable()->getProtectionOf($this->getPreviousHelm());
     }
 }
