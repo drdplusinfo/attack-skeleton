@@ -53,13 +53,11 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     public function __construct(string $cookiesPostfix)
     {
         parent::__construct($cookiesPostfix);
-        $this->currentValues = new CurrentValues($_GET, $this->getHistory());
+        $this->currentValues = new CurrentValues($_GET, $this->getMemory());
         $this->currentProperties = new CurrentProperties($this->currentValues);
         $this->attack = new AttackForCalculator(
             $this->currentValues,
-            $this->currentProperties,
             $this->getHistory(),
-            new PreviousProperties($this->getHistory()),
             new CustomArmamentsService(),
             Tables::getIt()
         );
@@ -103,11 +101,6 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     public function getCurrentProperties(): CurrentProperties
     {
         return $this->currentProperties;
-    }
-
-    public function shouldRemember(): bool
-    {
-        return $this->getHistory()->shouldRememberCurrent();
     }
 
     public function getScrollFromTop(): int
