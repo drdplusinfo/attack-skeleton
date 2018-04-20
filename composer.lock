@@ -1104,12 +1104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "69d8962f26a74d13e68e93184f5dd279783e5208"
+                "reference": "32f9d1c1078937b093fef4ba9c99c27f327caa6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/69d8962f26a74d13e68e93184f5dd279783e5208",
-                "reference": "69d8962f26a74d13e68e93184f5dd279783e5208",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/32f9d1c1078937b093fef4ba9c99c27f327caa6d",
+                "reference": "32f9d1c1078937b093fef4ba9c99c27f327caa6d",
                 "shasum": ""
             },
             "require": {
@@ -1132,7 +1132,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-04-18 07:00:58"
+            "time": "2018-04-19 16:40:27"
         },
         {
             "name": "drd-plus/codes",
@@ -1275,12 +1275,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-fight-properties.git",
-                "reference": "f0072c5939a649ec24b3192ec781957052459ad7"
+                "reference": "234910f5f36d5e15707313d27cadd18476879002"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-fight-properties/zipball/f0072c5939a649ec24b3192ec781957052459ad7",
-                "reference": "f0072c5939a649ec24b3192ec781957052459ad7",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-fight-properties/zipball/234910f5f36d5e15707313d27cadd18476879002",
+                "reference": "234910f5f36d5e15707313d27cadd18476879002",
                 "shasum": ""
             },
             "require": {
@@ -1306,7 +1306,7 @@
                 "MIT"
             ],
             "description": "Final properties including battle statistics, current afflictions and boosts and by first and next levels of them for Drd+",
-            "time": "2017-10-07 14:42:06"
+            "time": "2018-04-19 14:33:33"
         },
         {
             "name": "drd-plus/health",
@@ -1739,12 +1739,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-skills.git",
-                "reference": "e66f9ee887ee87aa882596856187f55d6e774d33"
+                "reference": "35be2f4ec92c020c80c9a3e99b0a7dd7825f3c82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-skills/zipball/e66f9ee887ee87aa882596856187f55d6e774d33",
-                "reference": "e66f9ee887ee87aa882596856187f55d6e774d33",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-skills/zipball/35be2f4ec92c020c80c9a3e99b0a7dd7825f3c82",
+                "reference": "35be2f4ec92c020c80c9a3e99b0a7dd7825f3c82",
                 "shasum": ""
             },
             "require": {
@@ -1776,7 +1776,7 @@
                 "MIT"
             ],
             "description": "Skills for Drd+",
-            "time": "2017-11-29 07:58:52"
+            "time": "2018-04-19 16:52:46"
         },
         {
             "name": "drd-plus/tables",

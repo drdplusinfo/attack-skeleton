@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 namespace DrdPlus\Calculators\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\HelmCode;
@@ -40,7 +41,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     private $currentValues;
     /** @var CurrentProperties */
     private $currentProperties;
-    /** @var Attack */
+    /** @var AttackForCalculator */
     private $attack;
     /** @var array|string[] */
     private $messagesAbout = [];
@@ -54,7 +55,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         parent::__construct($cookiesPostfix);
         $this->currentValues = new CurrentValues($_GET, $this->getHistory());
         $this->currentProperties = new CurrentProperties($this->currentValues);
-        $this->attack = new Attack(
+        $this->attack = new AttackForCalculator(
             $this->currentValues,
             $this->currentProperties,
             $this->getHistory(),
@@ -89,9 +90,9 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     }
 
     /**
-     * @return Attack
+     * @return AttackForCalculator
      */
-    public function getAttack(): Attack
+    public function getAttack(): AttackForCalculator
     {
         return $this->attack;
     }

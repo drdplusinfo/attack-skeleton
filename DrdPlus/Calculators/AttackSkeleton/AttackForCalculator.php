@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 namespace DrdPlus\Calculators\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\ArmamentCode;
@@ -9,7 +11,7 @@ use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\Armaments\WeaponlikeCode;
-use DrdPlus\Codes\Body\WoundTypeCode;
+use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Configurator\Skeleton\History;
 use DrdPlus\Properties\Base\Strength;
@@ -21,7 +23,7 @@ use Granam\Integer\PositiveIntegerObject;
 use Granam\Integer\Tools\ToInteger;
 use Granam\Strict\Object\StrictObject;
 
-class Attack extends StrictObject
+class AttackForCalculator extends StrictObject
 {
     use UsingArmaments;
 
@@ -29,8 +31,6 @@ class Attack extends StrictObject
     protected $currentValues;
     /** @var CurrentProperties */
     protected $currentProperties;
-    /** @var History */
-    protected $history;
     /** @var PreviousProperties */
     protected $previousProperties;
     /** @var PreviousArmaments */
@@ -40,29 +40,24 @@ class Attack extends StrictObject
 
     /**
      * @param CurrentValues $currentValues
-     * @param CurrentProperties $currentProperties
      * @param History $history
-     * @param PreviousProperties $previousProperties
-     * @param CustomArmamentsService $newWeaponService
+     * @param CustomArmamentsService $customArmamentsService
      * @param Tables $tables
      * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
         CurrentValues $currentValues,
-        CurrentProperties $currentProperties,
         History $history,
-        PreviousProperties $previousProperties,
-        CustomArmamentsService $newWeaponService,
+        CustomArmamentsService $customArmamentsService,
         Tables $tables
     )
     {
         $this->currentValues = $currentValues;
-        $this->currentProperties = $currentProperties;
-        $this->history = $history;
-        $this->previousProperties = $previousProperties;
-        $this->previousArmaments = new PreviousArmaments($history, $previousProperties, $tables);
+        $this->currentProperties = new CurrentProperties($currentValues);
+        $this->previousProperties = new PreviousProperties($history);
+        $this->previousArmaments = new PreviousArmaments($history, $this->previousProperties, $tables);
         $this->tables = $tables;
-        $this->registerCustomArmaments($currentValues, $newWeaponService);
+        $this->registerCustomArmaments($currentValues, $customArmamentsService);
     }
 
     /**
@@ -94,7 +89,7 @@ class Attack extends StrictObject
                 ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_OFFENSIVENESS]),
                 ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_LENGTH]),
                 ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WOUNDS]),
-                WoundTypeCode::getIt($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WOUND_TYPE]),
+                PhysicalWoundTypeCode::getIt($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WOUND_TYPE]),
                 ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_COVER]),
                 new Weight(
                     $customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WEIGHT],
@@ -126,7 +121,7 @@ class Attack extends StrictObject
                     Tables::getIt()->getDistanceTable()
                 ))->getBonus(),
                 ToInteger::toInteger($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WOUNDS]),
-                WoundTypeCode::getIt($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WOUND_TYPE]),
+                PhysicalWoundTypeCode::getIt($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WOUND_TYPE]),
                 ToInteger::toInteger($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_COVER]),
                 new Weight(
                     $customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WEIGHT],
@@ -199,14 +194,6 @@ class Attack extends StrictObject
     protected function getCurrentProperties(): CurrentProperties
     {
         return $this->currentProperties;
-    }
-
-    /**
-     * @return History
-     */
-    protected function getHistory(): History
-    {
-        return $this->history;
     }
 
     /**
@@ -392,7 +379,6 @@ class Attack extends StrictObject
             );
     }
 
-
     /**
      * @return ShieldCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
@@ -517,11 +503,11 @@ class Attack extends StrictObject
     }
 
     /**
-     * @return array
+     * @return array|BodyArmorCode[][][]
      */
     public function getPossibleBodyArmors(): array
     {
-        $bodyArmors = array_map(function (string $armorValue) {
+        $bodyArmors = \array_map(function (string $armorValue) {
             return BodyArmorCode::getIt($armorValue);
         }, BodyArmorCode::getPossibleValues());
 
@@ -533,7 +519,7 @@ class Attack extends StrictObject
      */
     public function getPossibleHelms(): array
     {
-        $helmCodes = array_map(function (string $helmValue) {
+        $helmCodes = \array_map(function (string $helmValue) {
             return HelmCode::getIt($helmValue);
         }, HelmCode::getPossibleValues());
 
@@ -545,7 +531,7 @@ class Attack extends StrictObject
      */
     public function getPossibleShields(): array
     {
-        $shieldCodes = array_map(function (string $shieldValue) {
+        $shieldCodes = \array_map(function (string $shieldValue) {
             return ShieldCode::getIt($shieldValue);
         }, ShieldCode::getPossibleValues());
 

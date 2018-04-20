@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
+/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 namespace DrdPlus\Calculators\AttackSkeleton;
 
 use DrdPlus\Configurator\Skeleton\History;
+use DrdPlus\Configurator\Skeleton\Memory;
 use Granam\Strict\Object\StrictObject;
 
 class CurrentValues extends StrictObject
@@ -45,7 +48,7 @@ class CurrentValues extends StrictObject
     /** @var array */
     private $valuesFromInput;
     /** @var History */
-    private $history;
+    private $memory;
     /** @var array */
     private $customRangedWeaponsValues;
     /** @var array */
@@ -57,12 +60,12 @@ class CurrentValues extends StrictObject
 
     /**
      * @param array $valuesFromInput
-     * @param History $history
+     * @param Memory $memory
      */
-    public function __construct(array $valuesFromInput, History $history)
+    public function __construct(array $valuesFromInput, Memory $memory)
     {
         $this->valuesFromInput = $valuesFromInput;
-        $this->history = $history;
+        $this->memory = $memory;
     }
 
     /**
@@ -75,7 +78,7 @@ class CurrentValues extends StrictObject
             return $this->valuesFromInput[$name];
         }
 
-        return $this->history->getValue($name);
+        return $this->memory->getValue($name);
     }
 
     /**
@@ -232,7 +235,7 @@ class CurrentValues extends StrictObject
                 self::CUSTOM_BODY_ARMOR_ROUNDS_TO_PUT_ON,
             ],
             self::CUSTOM_BODY_ARMOR_NAME,
-            false /* no boolean parameter */
+            self::CUSTOM_BODY_ARMOR_NAME
         );
     }
 
@@ -265,7 +268,7 @@ class CurrentValues extends StrictObject
                 self::CUSTOM_HELM_WEIGHT,
             ],
             self::CUSTOM_HELM_NAME,
-            false /* no boolean parameter */
+            self::CUSTOM_HELM_NAME
         );
     }
 }

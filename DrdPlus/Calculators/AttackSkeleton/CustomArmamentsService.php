@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 namespace DrdPlus\Calculators\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\BodyArmorCode;
@@ -6,7 +7,7 @@ use DrdPlus\Codes\Armaments\HelmCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
-use DrdPlus\Codes\Body\WoundTypeCode;
+use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Tables\Measurements\Distance\DistanceBonus;
 use DrdPlus\Tables\Measurements\Weight\Weight;
@@ -24,7 +25,7 @@ class CustomArmamentsService extends StrictObject
      * @param int $offensiveness
      * @param int $weaponLength
      * @param int $wounds
-     * @param WoundTypeCode $woundTypeCode
+     * @param PhysicalWoundTypeCode $woundTypeCode
      * @param int $cover
      * @param Weight $weight
      * @param bool $twoHandedOnly
@@ -43,7 +44,7 @@ class CustomArmamentsService extends StrictObject
         int $offensiveness,
         int $weaponLength,
         int $wounds,
-        WoundTypeCode $woundTypeCode,
+        PhysicalWoundTypeCode $woundTypeCode,
         int $cover,
         Weight $weight,
         bool $twoHandedOnly
@@ -83,7 +84,7 @@ class CustomArmamentsService extends StrictObject
      * @param int $offensiveness
      * @param DistanceBonus $range
      * @param int $wounds
-     * @param WoundTypeCode $woundTypeCode
+     * @param PhysicalWoundTypeCode $woundTypeCode
      * @param int $cover
      * @param Weight $weight
      * @param bool $twoHandedOnly
@@ -102,7 +103,7 @@ class CustomArmamentsService extends StrictObject
         int $offensiveness,
         DistanceBonus $range,
         int $wounds,
-        WoundTypeCode $woundTypeCode,
+        PhysicalWoundTypeCode $woundTypeCode,
         int $cover,
         Weight $weight,
         bool $twoHandedOnly
