@@ -223,7 +223,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn(ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD));
         $controller->shouldReceive('getCurrentValues')
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
-        $currentValues->shouldReceive('getCustomShieldValues')
+        $currentValues->shouldReceive('getCustomShieldsValues')
             ->andReturn([]);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
@@ -231,9 +231,9 @@ class TemplatesTest extends TestWithMockery
             ->andReturn('');
         $controller->shouldReceive('getShields')
             ->andReturn([]);
-        $attack->shouldReceive('getCurrentShieldWeaponHolding')
+        $attack->shouldReceive('getCurrentShieldHolding')
             ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutShield')
+        $controller->shouldReceive('getMessagesAboutShields')
             ->andReturn([]);
         \ob_start();
         include __DIR__ . '/../../../parts/shield.php';

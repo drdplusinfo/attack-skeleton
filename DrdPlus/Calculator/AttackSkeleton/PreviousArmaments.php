@@ -69,7 +69,7 @@ class PreviousArmaments extends StrictObject
             return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
         }
         $meleeWeapon = MeleeWeaponCode::getIt($meleeWeaponValue);
-        $weaponHolding = $this->getWeaponHolding(
+        $weaponHolding = $this->getWeaponlikeHolding(
             $meleeWeapon,
             $this->history->getValue(Controller::MELEE_WEAPON_HOLDING),
             $this->tables
@@ -95,7 +95,7 @@ class PreviousArmaments extends StrictObject
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponHolding(
+        return $this->getWeaponlikeHolding(
             $this->getPreviousMeleeWeapon(),
             $previousMeleeWeaponHoldingValue,
             $this->tables
@@ -116,7 +116,7 @@ class PreviousArmaments extends StrictObject
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
-        $weaponHolding = $this->getWeaponHolding(
+        $weaponHolding = $this->getWeaponlikeHolding(
             $rangedWeapon,
             $this->history->getValue(Controller::RANGED_WEAPON_HOLDING),
             $this->tables
@@ -229,7 +229,7 @@ class PreviousArmaments extends StrictObject
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponHolding(
+        return $this->getWeaponlikeHolding(
             $this->getPreviousRangedWeapon(),
             $rangedWeaponHoldingValue,
             $this->tables

@@ -1104,12 +1104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "e4f41794c9a9e89dff33f99f5d7e80b7ba8e9a38"
+                "reference": "7f711a06234627886d1974d67ee5dfcca29efd80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/e4f41794c9a9e89dff33f99f5d7e80b7ba8e9a38",
-                "reference": "e4f41794c9a9e89dff33f99f5d7e80b7ba8e9a38",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/7f711a06234627886d1974d67ee5dfcca29efd80",
+                "reference": "7f711a06234627886d1974d67ee5dfcca29efd80",
                 "shasum": ""
             },
             "require": {
@@ -1117,6 +1117,7 @@
                 "php": ">=7.1"
             },
             "require-dev": {
+                "granam/tools": "dev-master",
                 "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "^6.2",
                 "roave/security-advisories": "dev-master"
@@ -1132,7 +1133,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-05-03 17:33:35"
+            "time": "2018-05-08 13:22:13"
         },
         {
             "name": "drd-plus/codes",
@@ -1829,21 +1830,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/granam-boolean.git",
-                "reference": "08b1769bc6345e17ba61f4098dd7c81190f71672"
+                "reference": "a5a9e5718ba67f01cf3f649235eb23d484266bda"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/granam-boolean/zipball/08b1769bc6345e17ba61f4098dd7c81190f71672",
-                "reference": "08b1769bc6345e17ba61f4098dd7c81190f71672",
+                "url": "https://api.github.com/repos/jaroslavtyc/granam-boolean/zipball/a5a9e5718ba67f01cf3f649235eb23d484266bda",
+                "reference": "a5a9e5718ba67f01cf3f649235eb23d484266bda",
                 "shasum": ""
             },
             "require": {
                 "granam/scalar": "dev-master",
-                "php": ">=7.0"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "granam/exceptions-hierarchy": "~4.0",
-                "mockery/mockery": "~0.9",
+                "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "~6.0"
             },
             "type": "project",
@@ -1870,7 +1871,7 @@
                 "converter",
                 "php"
             ],
-            "time": "2017-02-19 12:08:54"
+            "time": "2018-05-08 13:36:07"
         },
         {
             "name": "granam/date-interval",
@@ -2266,16 +2267,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/granam-tools.git",
-                "reference": "537b3598cdd6ea4b25c242a62477bc581afd8f06"
+                "reference": "d0e8759aedd1c26c117616102941d38e49ccd1a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/granam-tools/zipball/537b3598cdd6ea4b25c242a62477bc581afd8f06",
-                "reference": "537b3598cdd6ea4b25c242a62477bc581afd8f06",
+                "url": "https://api.github.com/repos/jaroslavtyc/granam-tools/zipball/d0e8759aedd1c26c117616102941d38e49ccd1a6",
+                "reference": "d0e8759aedd1c26c117616102941d38e49ccd1a6",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "granam/strict-object": "dev-master",
+                "php": ">=7.1"
             },
             "require-dev": {
                 "doctrine/orm": "2.*",
@@ -2308,7 +2310,7 @@
                 "php",
                 "string"
             ],
-            "time": "2018-04-22 12:55:42"
+            "time": "2018-05-08 13:20:02"
         },
         {
             "name": "roave/security-advisories",
@@ -2693,16 +2695,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "1bac8c362b12f522fdd1f1fa3556284c91affa38"
+                "reference": "99e29d3596b16dabe4982548527d5ddf90232e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/1bac8c362b12f522fdd1f1fa3556284c91affa38",
-                "reference": "1bac8c362b12f522fdd1f1fa3556284c91affa38",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/99e29d3596b16dabe4982548527d5ddf90232e99",
+                "reference": "99e29d3596b16dabe4982548527d5ddf90232e99",
                 "shasum": ""
             },
             "require": {
@@ -2711,7 +2713,8 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7|~6.1"
+                "phpdocumentor/phpdocumentor": "^2.9",
+                "phpunit/phpunit": "~5.7.10|~6.5"
             },
             "type": "library",
             "extra": {
@@ -2740,8 +2743,8 @@
                     "homepage": "http://davedevelopment.co.uk"
                 }
             ],
-            "description": "Mockery is a simple yet flexible PHP mock object framework for use in unit testing with PHPUnit, PHPSpec or any other testing framework. Its core goal is to offer a test double framework with a succinct API capable of clearly defining all possible object operations and interactions using a human readable Domain Specific Language (DSL). Designed as a drop in alternative to PHPUnit's phpunit-mock-objects library, Mockery is easy to integrate with PHPUnit and can operate alongside phpunit-mock-objects without the World ending.",
-            "homepage": "http://github.com/mockery/mockery",
+            "description": "Mockery is a simple yet flexible PHP mock object framework",
+            "homepage": "https://github.com/mockery/mockery",
             "keywords": [
                 "BDD",
                 "TDD",
@@ -2754,7 +2757,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2017-10-06 16:20:43"
+            "time": "2018-05-08 08:54:48"
         },
         {
             "name": "myclabs/deep-copy",

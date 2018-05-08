@@ -247,7 +247,7 @@ class AttackForCalculator extends StrictObject
             $weaponlikeCode,
             Tables::getIt()->getArmourer()->getStrengthForWeaponOrShield(
                 $weaponlikeCode,
-                $this->getWeaponHolding($weaponlikeCode, $itemHoldingCode->getValue(), $this->tables),
+                $this->getWeaponlikeHolding($weaponlikeCode, $itemHoldingCode->getValue(), $this->tables),
                 $this->currentProperties->getCurrentStrength()
             )
         );
@@ -264,10 +264,10 @@ class AttackForCalculator extends StrictObject
     {
         $meleeWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::MELEE_WEAPON_HOLDING);
         if ($meleeWeaponHoldingValue === null) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
+            $meleeWeaponHoldingValue = ItemHoldingCode::MAIN_HAND;
         }
 
-        return $this->getWeaponHolding(
+        return $this->getWeaponlikeHolding(
             $currentWeapon ?? $this->getCurrentMeleeWeapon(),
             $meleeWeaponHoldingValue,
             $this->tables
@@ -340,7 +340,7 @@ class AttackForCalculator extends StrictObject
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
-        $weaponHolding = $this->getWeaponHolding(
+        $weaponHolding = $this->getWeaponlikeHolding(
             $rangedWeapon,
             $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING),
             $this->tables
@@ -362,10 +362,10 @@ class AttackForCalculator extends StrictObject
     {
         $rangedWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING);
         if ($rangedWeaponHoldingValue === null) {
-            return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
+            $rangedWeaponHoldingValue = ItemHoldingCode::MAIN_HAND;
         }
 
-        return $this->getWeaponHolding($this->getCurrentRangedWeapon(), $rangedWeaponHoldingValue, $this->tables);
+        return $this->getWeaponlikeHolding($this->getCurrentRangedWeapon(), $rangedWeaponHoldingValue, $this->tables);
     }
 
     protected function canUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
@@ -660,6 +660,24 @@ class AttackForCalculator extends StrictObject
             $this->getCurrentRangedWeaponHolding(),
             $this->getCurrentRangedWeapon(),
             $shield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
+            $this->tables
+        );
+    }
+
+    /**
+     * @param ShieldCode|null $currentShield
+     * @return ItemHoldingCode
+     */
+    public function getCurrentShieldHolding(ShieldCode $currentShield = null): ItemHoldingCode
+    {
+        $shieldHolding = $this->currentValues->getCurrentValue(Controller::SHIELD_HOLDING);
+        if ($shieldHolding === null) {
+            $shieldHolding = ItemHoldingCode::OFFHAND;
+        }
+
+        return $this->getWeaponlikeHolding(
+            $currentShield ?? $this->getCurrentShield(),
+            $shieldHolding,
             $this->tables
         );
     }

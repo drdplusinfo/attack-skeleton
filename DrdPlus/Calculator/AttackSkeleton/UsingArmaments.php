@@ -36,7 +36,7 @@ trait UsingArmaments
             $weaponlikeCode,
             $tables->getArmourer()->getStrengthForWeaponOrShield(
                 $weaponlikeCode,
-                $this->getWeaponHolding($weaponlikeCode, $itemHoldingCode->getValue(), $tables),
+                $this->getWeaponlikeHolding($weaponlikeCode, $itemHoldingCode->getValue(), $tables),
                 $previousProperties->getPreviousStrength()
             ),
             $previousProperties,
@@ -74,7 +74,7 @@ trait UsingArmaments
      * @return ItemHoldingCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    protected function getWeaponHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding, Tables $tables): ItemHoldingCode
+    protected function getWeaponlikeHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding, Tables $tables): ItemHoldingCode
     {
         if ($tables->getArmourer()->isTwoHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);

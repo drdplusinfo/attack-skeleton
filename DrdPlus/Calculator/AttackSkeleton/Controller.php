@@ -31,6 +31,7 @@ class Controller extends \DrdPlus\Calculator\Skeleton\Controller
     public const HEIGHT_IN_CM = PropertyCode::HEIGHT_IN_CM;
     public const MELEE_WEAPON_HOLDING = 'melee_weapon_holding';
     public const RANGED_WEAPON_HOLDING = 'ranged_weapon_holding';
+    public const SHIELD_HOLDING = 'shield_holding';
     public const SHIELD = 'shield';
     public const BODY_ARMOR = 'body_armor';
     public const HELM = 'helm';
