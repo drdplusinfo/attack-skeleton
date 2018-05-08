@@ -1,18 +1,23 @@
 <?php
-declare(strict_types=1);/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\Calculators\AttackSkeleton;
+declare(strict_types=1);
+/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
+namespace DrdPlus\Calculator\AttackSkeleton;
 
+use DrdPlus\Calculator\Skeleton\CurrentValues;
+use DrdPlus\Calculator\Skeleton\Memory;
 use DrdPlus\Codes\Armaments\HelmCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Properties\PropertyCode;
-use DrdPlus\Configurator\Skeleton\History;
 use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\Tools\ToInteger;
 
-class Controller extends \DrdPlus\Configurator\Skeleton\Controller
+/**
+ * @method CurrentAttackValues getCurrentValues
+ */
+class Controller extends \DrdPlus\Calculator\Skeleton\Controller
 {
     public const MELEE_WEAPON = 'melee_weapon';
     public const RANGED_WEAPON = 'ranged_weapon';
@@ -34,11 +39,10 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
     public const ACTION = 'action';
     public const ADD_NEW_MELEE_WEAPON = 'add_new_melee_weapon';
     public const ADD_NEW_RANGED_WEAPON = 'add_new_ranged_weapon';
+    public const ADD_NEW_SHIELD = 'add_new_shield';
     public const ADD_NEW_BODY_ARMOR = 'add_new_body_armor';
     public const ADD_NEW_HELM = 'add_new_helm';
 
-    /** @var CurrentValues */
-    private $currentValues;
     /** @var CurrentProperties */
     private $currentProperties;
     /** @var AttackForCalculator */
@@ -48,43 +52,28 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     /**
      * @param string $cookiesPostfix
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(string $cookiesPostfix)
     {
         parent::__construct($cookiesPostfix);
-        $this->currentValues = new CurrentValues($_GET, $this->getMemory());
-        $this->currentProperties = new CurrentProperties($this->currentValues);
+        $this->currentProperties = new CurrentProperties($this->getCurrentValues());
         $this->attack = new AttackForCalculator(
-            $this->currentValues,
+            $this->getCurrentValues(),
             $this->getHistory(),
             new CustomArmamentsService(),
             Tables::getIt()
         );
     }
 
-    protected function createHistory(string $cookiesPostfix, int $cookiesTtl = null): History
-    {
-        return new History(
-            $this->shouldDeleteHistory(),
-            $_GET, // values to remember
-            !empty($_GET[self::REMEMBER_CURRENT]), // should remember given values
-            $cookiesPostfix,
-            $cookiesTtl
-        );
-    }
-
-    private function shouldDeleteHistory(): bool
-    {
-        return !empty($_POST[self::DELETE_HISTORY]);
-    }
-
     /**
-     * @return CurrentValues
+     * @param array $selectedValues
+     * @param Memory $memory
+     * @return \DrdPlus\Calculator\Skeleton\CurrentValues|CurrentAttackValues
      */
-    public function getCurrentValues(): CurrentValues
+    protected function createCurrentValues(array $selectedValues, Memory $memory): CurrentValues
     {
-        return $this->currentValues;
+        return new CurrentAttackValues($selectedValues, $memory);
     }
 
     /**
@@ -105,7 +94,7 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
 
     public function getScrollFromTop(): int
     {
-        return (int)$this->currentValues->getValue(self::SCROLL_FROM_TOP);
+        return (int)$this->getCurrentValues()->getCurrentValue(self::SCROLL_FROM_TOP);
     }
 
     /**
@@ -314,23 +303,28 @@ class Controller extends \DrdPlus\Configurator\Skeleton\Controller
         return $query;
     }
 
-    public function addingNewMeleeWeapon(): bool
+    public function isAddingNewMeleeWeapon(): bool
     {
-        return $this->currentValues->getCurrentValue(self::ACTION) === self::ADD_NEW_MELEE_WEAPON;
+        return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_MELEE_WEAPON;
     }
 
-    public function addingNewRangedWeapon(): bool
+    public function isAddingNewRangedWeapon(): bool
     {
-        return $this->currentValues->getCurrentValue(self::ACTION) === self::ADD_NEW_RANGED_WEAPON;
+        return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_RANGED_WEAPON;
     }
 
-    public function addingNewBodyArmor(): bool
+    public function isAddingNewBodyArmor(): bool
     {
-        return $this->currentValues->getCurrentValue(self::ACTION) === self::ADD_NEW_BODY_ARMOR;
+        return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_BODY_ARMOR;
     }
 
-    public function addingNewHelm(): bool
+    public function isAddingNewHelm(): bool
     {
-        return $this->currentValues->getCurrentValue(self::ACTION) === self::ADD_NEW_HELM;
+        return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_HELM;
+    }
+
+    public function isAddingNewShield(): bool
+    {
+        return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_SHIELD;
     }
 }

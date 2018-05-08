@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
@@ -8,7 +8,7 @@ use DrdPlus\Codes\ItemHoldingCode;
 /** @var Controller $controller */
 $selectedMeleeWeapon = $controller->getAttack()->getCurrentMeleeWeapon();
 $selectedMeleeWeaponValue = $selectedMeleeWeapon ? $selectedMeleeWeapon->getValue() : null;
-if ($controller->addingNewMeleeWeapon()) { ?>
+if ($controller->isAddingNewMeleeWeapon()) { ?>
     <div id="addMeleeWeapon" class="block add">
         <?php include __DIR__ . '/add_custom_melee_weapon.php' ?>
     </div>
@@ -19,7 +19,7 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
         <input type="hidden" name="<?= $typeName ?>[<?= $weaponName ?>]" value="<?= $weaponValue ?>">
     <?php }
 } ?>
-<div class="block <?php if ($controller->addingNewMeleeWeapon()) { ?>hidden<?php } ?>" id="chooseMeleeWeapon">
+<div class="block <?php if ($controller->isAddingNewMeleeWeapon()) { ?>hidden<?php } ?>" id="chooseMeleeWeapon">
     <div class="panel">
         <a title="Přidat vlastní zbraň na blízko"
            href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_MELEE_WEAPON]) ?>"

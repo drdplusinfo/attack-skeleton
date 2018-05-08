@@ -1,13 +1,9 @@
 <?php
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
-use DrdPlus\Configurator\Skeleton\History;
-use DrdPlus\Configurator\Skeleton\Memory;
-use Granam\Strict\Object\StrictObject;
-
-class CurrentValues extends StrictObject
+class CurrentAttackValues extends \DrdPlus\Calculator\Skeleton\CurrentValues
 {
     // melee weapon
     public const CUSTOM_MELEE_WEAPON_NAME = 'custom_melee_weapon_name';
@@ -44,11 +40,14 @@ class CurrentValues extends StrictObject
     public const CUSTOM_HELM_RESTRICTION = 'custom_helm_restriction';
     public const CUSTOM_HELM_PROTECTION = 'custom_helm_protection';
     public const CUSTOM_HELM_WEIGHT = 'custom_helm_weight';
+    // shield
+    public const CUSTOM_SHIELD_NAME = 'custom_shield_name';
+    public const CUSTOM_SHIELD_REQUIRED_STRENGTH = 'custom_shield_required_strength';
+    public const CUSTOM_SHIELD_RESTRICTION = 'custom_shield_restriction';
+    public const CUSTOM_SHIELD_COVER = 'custom_shield_cover';
+    public const CUSTOM_SHIELD_WEIGHT = 'custom_shield_weight';
+    public const CUSTOM_SHIELD_TWO_HANDED_ONLY = 'custom_shield_two_handed_only';
 
-    /** @var array */
-    private $valuesFromInput;
-    /** @var History */
-    private $memory;
     /** @var array */
     private $customRangedWeaponsValues;
     /** @var array */
@@ -57,42 +56,12 @@ class CurrentValues extends StrictObject
     private $customBodyArmorsValues;
     /** @var array */
     private $customHelmsValues;
-
-    /**
-     * @param array $valuesFromInput
-     * @param Memory $memory
-     */
-    public function __construct(array $valuesFromInput, Memory $memory)
-    {
-        $this->valuesFromInput = $valuesFromInput;
-        $this->memory = $memory;
-    }
-
-    /**
-     * @param string $name
-     * @return string|string[]|null
-     */
-    public function getValue(string $name)
-    {
-        if (\array_key_exists($name, $this->valuesFromInput)) {
-            return $this->valuesFromInput[$name];
-        }
-
-        return $this->memory->getValue($name);
-    }
-
-    /**
-     * @param string $name
-     * @return null|string[]|array|string
-     */
-    public function getCurrentValue(string $name)
-    {
-        return $this->valuesFromInput[$name] ?? null;
-    }
+    /** @var array */
+    private $customShieldsValues;
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomMeleeWeaponsValues(): array
     {
@@ -106,7 +75,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomMeleeWeaponsValues(): array
     {
@@ -133,7 +102,7 @@ class CurrentValues extends StrictObject
      * @param string $customArmamentNameKey
      * @param string $customArmamentTwoHandedOnlyKey
      * @return array
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomArmamentsValues(
         array $customArmamentKeys,
@@ -142,13 +111,13 @@ class CurrentValues extends StrictObject
     ): array
     {
         $nameIndexedValues = [];
-        $armamentNames = (array)$this->getValue($customArmamentNameKey);
+        $armamentNames = (array)$this->getCurrentValue($customArmamentNameKey);
         foreach ($armamentNames as $index => $armamentName) {
             $customArmament = [];
             foreach ($customArmamentKeys as $typeName) {
                 $sameTypeValues = $typeName === $customArmamentNameKey
                     ? $armamentNames
-                    : (array)$this->getValue($typeName);
+                    : (array)$this->getCurrentValue($typeName);
                 if ($typeName === $customArmamentTwoHandedOnlyKey) {
                     $sameTypeValues[$index] = (bool)($sameTypeValues[$index] ?? false);
                 } else {
@@ -169,7 +138,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomRangedWeaponsValues(): array
     {
@@ -183,7 +152,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomRangedWeaponsValues(): array
     {
@@ -207,7 +176,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomBodyArmorsValues(): array
     {
@@ -221,7 +190,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomBodyArmorsValues(): array
     {
@@ -241,7 +210,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomHelmsValues(): array
     {
@@ -255,7 +224,7 @@ class CurrentValues extends StrictObject
 
     /**
      * @return array
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomHelmsValues(): array
     {
@@ -271,4 +240,38 @@ class CurrentValues extends StrictObject
             self::CUSTOM_HELM_NAME
         );
     }
+
+    /**
+     * @return array|string[][]
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     */
+    public function getCustomShieldsValues(): array
+    {
+        if ($this->customShieldsValues !== null) {
+            return $this->customShieldsValues;
+        }
+        $this->customShieldsValues = $this->assembleCustomShieldsValues();
+
+        return $this->customShieldsValues;
+    }
+
+    /**
+     * @return array
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     */
+    private function assembleCustomShieldsValues(): array
+    {
+        return $this->assembleCustomArmamentsValues(
+            [
+                self::CUSTOM_SHIELD_NAME,
+                self::CUSTOM_SHIELD_COVER,
+                self::CUSTOM_SHIELD_RESTRICTION,
+                self::CUSTOM_SHIELD_WEIGHT,
+                self::CUSTOM_SHIELD_REQUIRED_STRENGTH,
+            ],
+            self::CUSTOM_SHIELD_NAME,
+            self::CUSTOM_SHIELD_TWO_HANDED_ONLY
+        );
+    }
+
 }

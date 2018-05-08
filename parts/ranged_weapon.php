@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
@@ -8,9 +8,9 @@ use DrdPlus\Tables\Tables;
 
 /** @var Controller $controller */
 /** @var Tables $tables */
-$selectedRangedWeapon = $controller->getAttack()->getSelectedRangedWeapon();
-$selectedRangedWeaponValue = $selectedRangedWeapon ? $selectedRangedWeapon->getValue() : null;
-if ($controller->addingNewRangedWeapon()) { ?>
+$currentRangedWeapon = $controller->getAttack()->getCurrentRangedWeapon();
+$currentRangedWeaponValue = $currentRangedWeapon ? $currentRangedWeapon->getValue() : null;
+if ($controller->isAddingNewRangedWeapon()) { ?>
     <div id="addRangedWeapon" class="block add">
         <?php include __DIR__ . '/add_custom_ranged_weapon.php' ?>
     </div>
@@ -22,7 +22,7 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
     <?php }
 } ?>
 
-<div class="block <?php if ($controller->addingNewRangedWeapon()) { ?>hidden<?php } ?>" id="chooseRangedWeapon">
+<div class="block <?php if ($controller->isAddingNewRangedWeapon()) { ?>hidden<?php } ?>" id="chooseRangedWeapon">
     <div class="panel">
         <a title="Přidat vlastní zbraň na dálku"
            href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_RANGED_WEAPON]) ?>"
@@ -38,7 +38,7 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
                             /** @var RangedWeaponCode $rangedWeaponCode */
                             $rangedWeaponCode = $rangedWeapon['code']; ?>
                             <option value="<?= $rangedWeaponCode->getValue() ?>"
-                                    <?php if ($selectedRangedWeaponValue && $selectedRangedWeaponValue === $rangedWeaponCode->getValue()) { ?>selected<?php }
+                                    <?php if ($currentRangedWeaponValue && $currentRangedWeaponValue === $rangedWeaponCode->getValue()) { ?>selected<?php }
                                     if (!$rangedWeapon['canUseIt']) { ?>disabled<?php } ?>>
                                 <?= (!$rangedWeapon['canUseIt'] ? '💪 ' : '') . $rangedWeaponCode->translateTo('cs') ?>
                             </option>
@@ -52,20 +52,20 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
         <label>
             <input type="radio" value="<?= ItemHoldingCode::MAIN_HAND ?>"
                    name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
             v dominantní ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
             v druhé ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::TWO_HANDS ?>"
                    name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
-                   <?php if ($controller->getAttack()->getSelectedRangedWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
+                   <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
             obouručně
         </label>
     </div>

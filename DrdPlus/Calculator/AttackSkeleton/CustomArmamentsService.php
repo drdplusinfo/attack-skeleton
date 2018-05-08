@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\Armaments\HelmCode;
@@ -144,7 +144,7 @@ class CustomArmamentsService extends StrictObject
      * @param Weight $weight
      * @param PositiveInteger $roundsToPutOn
      * @return bool
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\NameOfCustomBodyArmorCanNotBeEmpty
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\NameOfCustomBodyArmorCanNotBeEmpty
      * @throws \DrdPlus\Tables\Armaments\Armors\Exceptions\DifferentBodyArmorIsUnderSameName
      */
     public function addCustomBodyArmor(
@@ -185,7 +185,7 @@ class CustomArmamentsService extends StrictObject
      * @param int $protection
      * @param Weight $weight
      * @return bool
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\NameOfCustomHelmCanNotBeEmpty
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\NameOfCustomHelmCanNotBeEmpty
      * @throws \DrdPlus\Tables\Armaments\Armors\Exceptions\DifferentHelmIsUnderSameName
      */
     public function addCustomHelm(

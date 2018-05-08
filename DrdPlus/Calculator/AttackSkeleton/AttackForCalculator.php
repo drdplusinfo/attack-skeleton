@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\ArmamentCode;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
@@ -13,7 +13,7 @@ use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\Armaments\WeaponlikeCode;
 use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Configurator\Skeleton\History;
+use DrdPlus\Calculator\Skeleton\History;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Tables\Measurements\Distance\Distance;
 use DrdPlus\Tables\Measurements\Weight\Weight;
@@ -27,7 +27,7 @@ class AttackForCalculator extends StrictObject
 {
     use UsingArmaments;
 
-    /** @var CurrentValues */
+    /** @var CurrentAttackValues */
     protected $currentValues;
     /** @var CurrentProperties */
     protected $currentProperties;
@@ -39,14 +39,14 @@ class AttackForCalculator extends StrictObject
     protected $tables;
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param History $history
      * @param CustomArmamentsService $customArmamentsService
      * @param Tables $tables
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
-        CurrentValues $currentValues,
+        CurrentAttackValues $currentValues,
         History $history,
         CustomArmamentsService $customArmamentsService,
         Tables $tables
@@ -61,11 +61,11 @@ class AttackForCalculator extends StrictObject
     }
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    protected function registerCustomArmaments(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomArmaments(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         $this->registerCustomMeleeWeapons($currentValues, $newWeaponsService);
         $this->registerCustomRangedWeapons($currentValues, $newWeaponsService);
@@ -74,105 +74,105 @@ class AttackForCalculator extends StrictObject
     }
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    protected function registerCustomMeleeWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomMeleeWeapons(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomMeleeWeaponsValues() as $customMeleeWeaponsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             $newWeaponsService->addCustomMeleeWeapon(
-                $customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_NAME],
-                WeaponCategoryCode::getIt($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_CATEGORY]),
-                Strength::getIt($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_REQUIRED_STRENGTH]),
-                ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_OFFENSIVENESS]),
-                ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_LENGTH]),
-                ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WOUNDS]),
-                PhysicalWoundTypeCode::getIt($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WOUND_TYPE]),
-                ToInteger::toInteger($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_COVER]),
+                $customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_NAME],
+                WeaponCategoryCode::getIt($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_CATEGORY]),
+                Strength::getIt($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_REQUIRED_STRENGTH]),
+                ToInteger::toInteger($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_OFFENSIVENESS]),
+                ToInteger::toInteger($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_LENGTH]),
+                ToInteger::toInteger($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_WOUNDS]),
+                PhysicalWoundTypeCode::getIt($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_WOUND_TYPE]),
+                ToInteger::toInteger($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_COVER]),
                 new Weight(
-                    $customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_WEIGHT],
+                    $customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_WEIGHT],
                     Weight::KG,
                     Tables::getIt()->getWeightTable()
                 ),
-                ToBoolean::toBoolean($customMeleeWeaponsValue[CurrentValues::CUSTOM_MELEE_WEAPON_TWO_HANDED_ONLY])
+                ToBoolean::toBoolean($customMeleeWeaponsValue[CurrentAttackValues::CUSTOM_MELEE_WEAPON_TWO_HANDED_ONLY])
             );
         }
     }
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    protected function registerCustomRangedWeapons(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomRangedWeapons(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomRangedWeaponsValues() as $customRangedWeaponsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             $newWeaponsService->addCustomRangedWeapon(
-                $customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_NAME],
-                WeaponCategoryCode::getIt($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_CATEGORY]),
-                Strength::getIt($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_REQUIRED_STRENGTH]),
-                ToInteger::toInteger($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_OFFENSIVENESS]),
+                $customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_NAME],
+                WeaponCategoryCode::getIt($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_CATEGORY]),
+                Strength::getIt($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_REQUIRED_STRENGTH]),
+                ToInteger::toInteger($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_OFFENSIVENESS]),
                 (new Distance(
-                    $customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_RANGE_IN_M],
+                    $customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_RANGE_IN_M],
                     Distance::METER,
                     Tables::getIt()->getDistanceTable()
                 ))->getBonus(),
-                ToInteger::toInteger($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WOUNDS]),
-                PhysicalWoundTypeCode::getIt($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WOUND_TYPE]),
-                ToInteger::toInteger($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_COVER]),
+                ToInteger::toInteger($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_WOUNDS]),
+                PhysicalWoundTypeCode::getIt($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_WOUND_TYPE]),
+                ToInteger::toInteger($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_COVER]),
                 new Weight(
-                    $customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_WEIGHT],
+                    $customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_WEIGHT],
                     Weight::KG,
                     Tables::getIt()->getWeightTable()
                 ),
-                ToBoolean::toBoolean($customRangedWeaponsValue[CurrentValues::CUSTOM_RANGED_WEAPON_TWO_HANDED_ONLY])
+                ToBoolean::toBoolean($customRangedWeaponsValue[CurrentAttackValues::CUSTOM_RANGED_WEAPON_TWO_HANDED_ONLY])
             );
         }
     }
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    protected function registerCustomBodyArmors(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomBodyArmors(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomBodyArmorsValues() as $customBodyArmorsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             $newWeaponsService->addCustomBodyArmor(
-                $customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_NAME],
-                Strength::getIt($customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_REQUIRED_STRENGTH]),
-                ToInteger::toInteger($customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_RESTRICTION]),
-                ToInteger::toInteger($customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_PROTECTION]),
+                $customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_NAME],
+                Strength::getIt($customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_REQUIRED_STRENGTH]),
+                ToInteger::toInteger($customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_RESTRICTION]),
+                ToInteger::toInteger($customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_PROTECTION]),
                 new Weight(
-                    $customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_WEIGHT],
+                    $customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_WEIGHT],
                     Weight::KG,
                     Tables::getIt()->getWeightTable()
                 ),
-                new PositiveIntegerObject($customBodyArmorsValue[CurrentValues::CUSTOM_BODY_ARMOR_ROUNDS_TO_PUT_ON])
+                new PositiveIntegerObject($customBodyArmorsValue[CurrentAttackValues::CUSTOM_BODY_ARMOR_ROUNDS_TO_PUT_ON])
             );
         }
     }
 
     /**
-     * @param CurrentValues $currentValues
+     * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\Calculators\AttackSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
-    protected function registerCustomHelms(CurrentValues $currentValues, CustomArmamentsService $newWeaponsService): void
+    protected function registerCustomHelms(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
         foreach ($currentValues->getCustomHelmsValues() as $customHelmsValue) {
             /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
             $newWeaponsService->addCustomHelm(
-                $customHelmsValue[CurrentValues::CUSTOM_HELM_NAME],
-                Strength::getIt($customHelmsValue[CurrentValues::CUSTOM_HELM_REQUIRED_STRENGTH]),
-                ToInteger::toInteger($customHelmsValue[CurrentValues::CUSTOM_HELM_RESTRICTION]),
-                ToInteger::toInteger($customHelmsValue[CurrentValues::CUSTOM_HELM_PROTECTION]),
+                $customHelmsValue[CurrentAttackValues::CUSTOM_HELM_NAME],
+                Strength::getIt($customHelmsValue[CurrentAttackValues::CUSTOM_HELM_REQUIRED_STRENGTH]),
+                ToInteger::toInteger($customHelmsValue[CurrentAttackValues::CUSTOM_HELM_RESTRICTION]),
+                ToInteger::toInteger($customHelmsValue[CurrentAttackValues::CUSTOM_HELM_PROTECTION]),
                 new Weight(
-                    $customHelmsValue[CurrentValues::CUSTOM_HELM_WEIGHT],
+                    $customHelmsValue[CurrentAttackValues::CUSTOM_HELM_WEIGHT],
                     Weight::KG,
                     Tables::getIt()->getWeightTable()
                 )
@@ -181,9 +181,9 @@ class AttackForCalculator extends StrictObject
     }
 
     /**
-     * @return CurrentValues
+     * @return CurrentAttackValues
      */
-    protected function getCurrentValues(): CurrentValues
+    protected function getCurrentValues(): CurrentAttackValues
     {
         return $this->currentValues;
     }
@@ -220,7 +220,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentMeleeWeapon(): MeleeWeaponCode
     {
-        $meleeWeaponValue = $this->currentValues->getValue(Controller::MELEE_WEAPON);
+        $meleeWeaponValue = $this->currentValues->getCurrentValue(Controller::MELEE_WEAPON);
         if (!$meleeWeaponValue) {
             return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
         }
@@ -262,7 +262,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentMeleeWeaponHolding(MeleeWeaponCode $currentWeapon = null): ItemHoldingCode
     {
-        $meleeWeaponHoldingValue = $this->currentValues->getValue(Controller::MELEE_WEAPON_HOLDING);
+        $meleeWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::MELEE_WEAPON_HOLDING);
         if ($meleeWeaponHoldingValue === null) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
@@ -283,7 +283,7 @@ class AttackForCalculator extends StrictObject
      */
     protected function getSelectedShieldForMelee(): ShieldCode
     {
-        $selectedShield = $this->getSelectedShield();
+        $selectedShield = $this->getCurrentShield();
         if ($selectedShield->isUnarmed()) {
             return $selectedShield;
         }
@@ -333,16 +333,16 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getSelectedRangedWeapon(): RangedWeaponCode
+    public function getCurrentRangedWeapon(): RangedWeaponCode
     {
-        $rangedWeaponValue = $this->currentValues->getValue(Controller::RANGED_WEAPON);
+        $rangedWeaponValue = $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON);
         if (!$rangedWeaponValue) {
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
         $weaponHolding = $this->getWeaponHolding(
             $rangedWeapon,
-            $this->currentValues->getValue(Controller::RANGED_WEAPON_HOLDING),
+            $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING),
             $this->tables
         );
         if (!$this->canUseWeaponlike($rangedWeapon, $weaponHolding)) {
@@ -358,14 +358,14 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getSelectedRangedWeaponHolding(): ItemHoldingCode
+    public function getCurrentRangedWeaponHolding(): ItemHoldingCode
     {
-        $rangedWeaponHoldingValue = $this->currentValues->getValue(Controller::RANGED_WEAPON_HOLDING);
+        $rangedWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING);
         if ($rangedWeaponHoldingValue === null) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponHolding($this->getSelectedRangedWeapon(), $rangedWeaponHoldingValue, $this->tables);
+        return $this->getWeaponHolding($this->getCurrentRangedWeapon(), $rangedWeaponHoldingValue, $this->tables);
     }
 
     protected function canUseArmament(ArmamentCode $armamentCode, Strength $strengthForArmament): bool
@@ -388,11 +388,11 @@ class AttackForCalculator extends StrictObject
      */
     public function getSelectedShieldForRanged(): ShieldCode
     {
-        $selectedShield = $this->getSelectedShield();
+        $selectedShield = $this->getCurrentShield();
         if ($selectedShield->isUnarmed()) {
             return $selectedShield;
         }
-        if ($this->getSelectedRangedWeaponHolding()->holdsByTwoHands()
+        if ($this->getCurrentRangedWeaponHolding()->holdsByTwoHands()
             || !$this->canUseShield($selectedShield, $this->getSelectedRangedShieldHolding($selectedShield))
         ) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
@@ -499,7 +499,7 @@ class AttackForCalculator extends StrictObject
             $meleeWeaponCodes[] = RangedWeaponCode::getIt($rangedWeaponCodeValue);
         }
 
-        return $this->addWeaponlikeUsability($meleeWeaponCodes, $this->getSelectedRangedWeaponHolding());
+        return $this->addWeaponlikeUsability($meleeWeaponCodes, $this->getCurrentRangedWeaponHolding());
     }
 
     /**
@@ -555,9 +555,9 @@ class AttackForCalculator extends StrictObject
         return $withUsagePossibility;
     }
 
-    public function getSelectedBodyArmor(): BodyArmorCode
+    public function getCurrentBodyArmor(): BodyArmorCode
     {
-        $selectedBodyArmorValue = $this->currentValues->getValue(Controller::BODY_ARMOR);
+        $selectedBodyArmorValue = $this->currentValues->getCurrentValue(Controller::BODY_ARMOR);
         if (!$selectedBodyArmorValue) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
@@ -575,7 +575,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getProtectionOfSelectedBodyArmor(): int
     {
-        return $this->getProtectionOfBodyArmor($this->getSelectedBodyArmor());
+        return $this->getProtectionOfBodyArmor($this->getCurrentBodyArmor());
     }
 
     /**
@@ -588,9 +588,9 @@ class AttackForCalculator extends StrictObject
         return Tables::getIt()->getBodyArmorsTable()->getProtectionOf($bodyArmorCode);
     }
 
-    public function getSelectedHelm(): HelmCode
+    public function getCurrentHelm(): HelmCode
     {
-        $selectedHelmValue = $this->currentValues->getValue(Controller::HELM);
+        $selectedHelmValue = $this->currentValues->getCurrentValue(Controller::HELM);
         if (!$selectedHelmValue) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
@@ -608,7 +608,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getSelectedHelmProtection(): int
     {
-        return $this->getProtectionOfHelm($this->getSelectedHelm());
+        return $this->getProtectionOfHelm($this->getCurrentHelm());
     }
 
     /**
@@ -636,9 +636,9 @@ class AttackForCalculator extends StrictObject
      *
      * @return ShieldCode
      */
-    public function getSelectedShield(): ShieldCode
+    public function getCurrentShield(): ShieldCode
     {
-        $selectedShieldValue = $this->currentValues->getValue(Controller::SHIELD);
+        $selectedShieldValue = $this->currentValues->getCurrentValue(Controller::SHIELD);
         if (!$selectedShieldValue) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
@@ -657,8 +657,8 @@ class AttackForCalculator extends StrictObject
     public function getSelectedRangedShieldHolding(ShieldCode $shield = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
-            $this->getSelectedRangedWeaponHolding(),
-            $this->getSelectedRangedWeapon(),
+            $this->getCurrentRangedWeaponHolding(),
+            $this->getCurrentRangedWeapon(),
             $shield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
             $this->tables
         );

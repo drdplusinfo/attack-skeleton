@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\Calculators;
 
-use DrdPlus\Calculators\AttackSkeleton\AttackForCalculator;
-use DrdPlus\Calculators\AttackSkeleton\CurrentValues;
-use DrdPlus\Calculators\AttackSkeleton\CustomArmamentsService;
+use DrdPlus\Calculator\AttackSkeleton\AttackForCalculator;
+use DrdPlus\Calculator\AttackSkeleton\CurrentAttackValues;
+use DrdPlus\Calculator\AttackSkeleton\CustomArmamentsService;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Configurator\Skeleton\History;
-use DrdPlus\Configurator\Skeleton\Memory;
+use DrdPlus\Calculator\Skeleton\History;
+use DrdPlus\Calculator\Skeleton\Memory;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\Tables\Tables;
@@ -26,7 +26,7 @@ class AttackForCalculatorTest extends TestWithMockery
     public function I_can_use_it(): void
     {
         $attackForCalculator = new AttackForCalculator(
-            new CurrentValues([], new Memory(true, [], true, static::class)),
+            new CurrentAttackValues([], new Memory(true, [], true, static::class)),
             new History(true, [], true, static::class),
             new CustomArmamentsService(),
             Tables::getIt()

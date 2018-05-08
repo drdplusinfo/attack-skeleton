@@ -3,20 +3,20 @@ namespace DrdPlus\Calculator\AttackSkeleton;
 
 /** @var \DrdPlus\Calculator\AttackSkeleton\Controller $controller */
 ?>
-<label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_HELM_NAME ?>[0]"
+<label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_SHIELD_NAME ?>[0]"
                     required="required"></label>
 <label>Potřebná síla <input type="number" min="-20" max="50" value="0"
-                            name="<?= CurrentAttackValues::CUSTOM_HELM_REQUIRED_STRENGTH ?>[0]"
+                            name="<?= CurrentAttackValues::CUSTOM_SHIELD_REQUIRED_STRENGTH ?>[0]"
                             required="required"></label>
 <label>Omezení <input type="number" min="-10" max="20" value="0"
-                      name="<?= CurrentAttackValues::CUSTOM_HELM_RESTRICTION ?>[0]"
+                      name="<?= CurrentAttackValues::CUSTOM_SHIELD_RESTRICTION ?>[0]"
                       required="required"></label>
-<label>Ochrana <input type="number" min="-10" max="20" value="1"
-                      name="<?= CurrentAttackValues::CUSTOM_HELM_PROTECTION ?>[0]"
+<label>Kryt <input type="number" min="-10" max="20" value="1"
+                      name="<?= CurrentAttackValues::CUSTOM_SHIELD_COVER ?>[0]"
                       required="required"></label>
 <label>Váha v kg <input type="number" min="0" max="99.99" value="0.5"
-                        name="<?= CurrentAttackValues::CUSTOM_HELM_WEIGHT ?>[0]"
+                        name="<?= CurrentAttackValues::CUSTOM_SHIELD_WEIGHT ?>[0]"
                         required="required"></label>
-<input type="submit" value="Přidat helmu">
-<a class="button cancel" id="cancelNewHelm"
+<input type="submit" value="Přidat štít">
+<a class="button cancel" id="cancelNewShield"
    href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => '']); ?>">Zrušit</a>

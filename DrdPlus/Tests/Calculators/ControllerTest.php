@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\Calculators;
 
-use DrdPlus\Calculators\AttackSkeleton\Controller;
+use DrdPlus\Calculator\AttackSkeleton\AttackForCalculator;
+use DrdPlus\Calculator\AttackSkeleton\Controller;
 use Granam\Tests\Tools\TestWithMockery;
 
 class ControllerTest extends TestWithMockery
 {
     /**
      * @test
-     * @runInSeparateProcess because of cookies
+     * @runInSeparateProcess
      */
-    public function I_can_use_it(): void
+    public function I_can_get_attack_object(): void
     {
-        $controller = new Controller(static::class);
-        self::assertTrue($controller->shouldRemember(), 'Memory should be remembered by default');
+        $controller = new Controller(__CLASS__ /* as cookie postfix */);
+        self::assertInstanceOf(AttackForCalculator::class, $controller->getAttack());
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\Calculators\AttackSkeleton;
+namespace DrdPlus\Calculator\AttackSkeleton;
 
 /** @var Controller $controller */
 ?>
