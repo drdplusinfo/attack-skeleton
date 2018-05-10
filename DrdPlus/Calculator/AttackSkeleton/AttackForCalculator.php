@@ -281,14 +281,14 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    protected function getSelectedShieldForMelee(): ShieldCode
+    protected function getCurrentShieldForMelee(): ShieldCode
     {
         $selectedShield = $this->getCurrentShield();
         if ($selectedShield->isUnarmed()) {
             return $selectedShield;
         }
         if ($this->getCurrentMeleeWeaponHolding()->holdsByTwoHands()
-            || !$this->canUseShield($selectedShield, $this->getSelectedMeleeShieldHolding($selectedShield))
+            || !$this->canUseShield($selectedShield, $this->getCurrentMeleeShieldHolding($selectedShield))
         ) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
@@ -317,7 +317,7 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getSelectedMeleeShieldHolding(ShieldCode $selectedShield = null): ItemHoldingCode
+    public function getCurrentMeleeShieldHolding(ShieldCode $selectedShield = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
             $this->getCurrentMeleeWeaponHolding(),
@@ -386,14 +386,14 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    public function getSelectedShieldForRanged(): ShieldCode
+    public function getCurrentShieldForRanged(): ShieldCode
     {
         $selectedShield = $this->getCurrentShield();
         if ($selectedShield->isUnarmed()) {
             return $selectedShield;
         }
         if ($this->getCurrentRangedWeaponHolding()->holdsByTwoHands()
-            || !$this->canUseShield($selectedShield, $this->getSelectedRangedShieldHolding($selectedShield))
+            || !$this->canUseShield($selectedShield, $this->getCurrentRangedShieldHolding($selectedShield))
         ) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
@@ -606,7 +606,7 @@ class AttackForCalculator extends StrictObject
      * @return int
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmor
      */
-    public function getSelectedHelmProtection(): int
+    public function getCurrentHelmProtection(): int
     {
         return $this->getProtectionOfHelm($this->getCurrentHelm());
     }
@@ -654,7 +654,7 @@ class AttackForCalculator extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getSelectedRangedShieldHolding(ShieldCode $shield = null): ItemHoldingCode
+    public function getCurrentRangedShieldHolding(ShieldCode $shield = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
             $this->getCurrentRangedWeaponHolding(),
