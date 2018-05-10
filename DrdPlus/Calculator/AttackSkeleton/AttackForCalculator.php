@@ -28,7 +28,7 @@ class AttackForCalculator extends StrictObject
     use UsingArmaments;
 
     /** @var CurrentAttackValues */
-    protected $currentValues;
+    protected $currentAttackValues;
     /** @var CurrentProperties */
     protected $currentProperties;
     /** @var PreviousProperties */
@@ -39,25 +39,25 @@ class AttackForCalculator extends StrictObject
     protected $tables;
 
     /**
-     * @param CurrentAttackValues $currentValues
+     * @param CurrentAttackValues $currentAttackValues
      * @param History $history
      * @param CustomArmamentsService $customArmamentsService
      * @param Tables $tables
      * @throws \DrdPlus\Calculator\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
-        CurrentAttackValues $currentValues,
+        CurrentAttackValues $currentAttackValues,
         History $history,
         CustomArmamentsService $customArmamentsService,
         Tables $tables
     )
     {
-        $this->currentValues = $currentValues;
-        $this->currentProperties = new CurrentProperties($currentValues);
+        $this->currentAttackValues = $currentAttackValues;
+        $this->currentProperties = new CurrentProperties($currentAttackValues);
         $this->previousProperties = new PreviousProperties($history);
         $this->previousArmaments = new PreviousArmaments($history, $this->previousProperties, $tables);
         $this->tables = $tables;
-        $this->registerCustomArmaments($currentValues, $customArmamentsService);
+        $this->registerCustomArmaments($currentAttackValues, $customArmamentsService);
     }
 
     /**
@@ -183,9 +183,9 @@ class AttackForCalculator extends StrictObject
     /**
      * @return CurrentAttackValues
      */
-    protected function getCurrentValues(): CurrentAttackValues
+    protected function getCurrentAttackValues(): CurrentAttackValues
     {
-        return $this->currentValues;
+        return $this->currentAttackValues;
     }
 
     /**
@@ -220,7 +220,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentMeleeWeapon(): MeleeWeaponCode
     {
-        $meleeWeaponValue = $this->currentValues->getCurrentValue(Controller::MELEE_WEAPON);
+        $meleeWeaponValue = $this->currentAttackValues->getCurrentValue(Controller::MELEE_WEAPON);
         if (!$meleeWeaponValue) {
             return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
         }
@@ -262,7 +262,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentMeleeWeaponHolding(MeleeWeaponCode $currentWeapon = null): ItemHoldingCode
     {
-        $meleeWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::MELEE_WEAPON_HOLDING);
+        $meleeWeaponHoldingValue = $this->currentAttackValues->getCurrentValue(Controller::MELEE_WEAPON_HOLDING);
         if ($meleeWeaponHoldingValue === null) {
             $meleeWeaponHoldingValue = ItemHoldingCode::MAIN_HAND;
         }
@@ -335,14 +335,14 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentRangedWeapon(): RangedWeaponCode
     {
-        $rangedWeaponValue = $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON);
+        $rangedWeaponValue = $this->currentAttackValues->getCurrentValue(Controller::RANGED_WEAPON);
         if (!$rangedWeaponValue) {
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
         $weaponHolding = $this->getWeaponlikeHolding(
             $rangedWeapon,
-            $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING),
+            $this->currentAttackValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING),
             $this->tables
         );
         if (!$this->canUseWeaponlike($rangedWeapon, $weaponHolding)) {
@@ -360,7 +360,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentRangedWeaponHolding(): ItemHoldingCode
     {
-        $rangedWeaponHoldingValue = $this->currentValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING);
+        $rangedWeaponHoldingValue = $this->currentAttackValues->getCurrentValue(Controller::RANGED_WEAPON_HOLDING);
         if ($rangedWeaponHoldingValue === null) {
             $rangedWeaponHoldingValue = ItemHoldingCode::MAIN_HAND;
         }
@@ -557,7 +557,7 @@ class AttackForCalculator extends StrictObject
 
     public function getCurrentBodyArmor(): BodyArmorCode
     {
-        $selectedBodyArmorValue = $this->currentValues->getCurrentValue(Controller::BODY_ARMOR);
+        $selectedBodyArmorValue = $this->currentAttackValues->getCurrentValue(Controller::BODY_ARMOR);
         if (!$selectedBodyArmorValue) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
@@ -590,7 +590,7 @@ class AttackForCalculator extends StrictObject
 
     public function getCurrentHelm(): HelmCode
     {
-        $selectedHelmValue = $this->currentValues->getCurrentValue(Controller::HELM);
+        $selectedHelmValue = $this->currentAttackValues->getCurrentValue(Controller::HELM);
         if (!$selectedHelmValue) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
@@ -638,7 +638,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentShield(): ShieldCode
     {
-        $selectedShieldValue = $this->currentValues->getCurrentValue(Controller::SHIELD);
+        $selectedShieldValue = $this->currentAttackValues->getCurrentValue(Controller::SHIELD);
         if (!$selectedShieldValue) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
@@ -670,7 +670,7 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentShieldHolding(ShieldCode $currentShield = null): ItemHoldingCode
     {
-        $shieldHolding = $this->currentValues->getCurrentValue(Controller::SHIELD_HOLDING);
+        $shieldHolding = $this->currentAttackValues->getCurrentValue(Controller::SHIELD_HOLDING);
         if ($shieldHolding === null) {
             $shieldHolding = ItemHoldingCode::OFFHAND;
         }
