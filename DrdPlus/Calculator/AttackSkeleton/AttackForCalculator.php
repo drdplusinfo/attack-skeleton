@@ -283,17 +283,17 @@ class AttackForCalculator extends StrictObject
      */
     protected function getCurrentShieldForMelee(): ShieldCode
     {
-        $selectedShield = $this->getCurrentShield();
-        if ($selectedShield->isUnarmed()) {
-            return $selectedShield;
+        $currentShield = $this->getCurrentShield();
+        if ($currentShield->isUnarmed()) {
+            return $currentShield;
         }
         if ($this->getCurrentMeleeWeaponHolding()->holdsByTwoHands()
-            || !$this->canUseShield($selectedShield, $this->getCurrentMeleeShieldHolding($selectedShield))
+            || !$this->canUseShield($currentShield, $this->getCurrentMeleeShieldHolding($currentShield))
         ) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
 
-        return $selectedShield;
+        return $currentShield;
     }
 
     protected function canUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
@@ -310,19 +310,19 @@ class AttackForCalculator extends StrictObject
     }
 
     /**
-     * @param ShieldCode|null $selectedShield
+     * @param ShieldCode|null $curentShield
      * @return ItemHoldingCode
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      */
-    public function getCurrentMeleeShieldHolding(ShieldCode $selectedShield = null): ItemHoldingCode
+    public function getCurrentMeleeShieldHolding(ShieldCode $curentShield = null): ItemHoldingCode
     {
         return $this->getShieldHolding(
             $this->getCurrentMeleeWeaponHolding(),
             $this->getCurrentMeleeWeapon(),
-            $selectedShield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
+            $curentShield ?? ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD),
             $this->tables
         );
     }
@@ -388,17 +388,17 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentShieldForRanged(): ShieldCode
     {
-        $selectedShield = $this->getCurrentShield();
-        if ($selectedShield->isUnarmed()) {
-            return $selectedShield;
+        $currentShield = $this->getCurrentShield();
+        if ($currentShield->isUnarmed()) {
+            return $currentShield;
         }
         if ($this->getCurrentRangedWeaponHolding()->holdsByTwoHands()
-            || !$this->canUseShield($selectedShield, $this->getCurrentRangedShieldHolding($selectedShield))
+            || !$this->canUseShield($currentShield, $this->getCurrentRangedShieldHolding($currentShield))
         ) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
 
-        return $selectedShield;
+        return $currentShield;
     }
 
     /**
@@ -557,23 +557,23 @@ class AttackForCalculator extends StrictObject
 
     public function getCurrentBodyArmor(): BodyArmorCode
     {
-        $selectedBodyArmorValue = $this->currentAttackValues->getCurrentValue(Controller::BODY_ARMOR);
-        if (!$selectedBodyArmorValue) {
+        $currentBodyArmorValue = $this->currentAttackValues->getCurrentValue(Controller::BODY_ARMOR);
+        if (!$currentBodyArmorValue) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
-        $selectedBodyArmor = BodyArmorCode::getIt($selectedBodyArmorValue);
-        if (!$this->canUseArmament($selectedBodyArmor, $this->currentProperties->getCurrentStrength())) {
+        $currentBodyArmor = BodyArmorCode::getIt($currentBodyArmorValue);
+        if (!$this->canUseArmament($currentBodyArmor, $this->currentProperties->getCurrentStrength())) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
 
-        return BodyArmorCode::getIt($selectedBodyArmorValue);
+        return BodyArmorCode::getIt($currentBodyArmorValue);
     }
 
     /**
      * @return int
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmor
      */
-    public function getProtectionOfSelectedBodyArmor(): int
+    public function getProtectionOfCurrentBodyArmor(): int
     {
         return $this->getProtectionOfBodyArmor($this->getCurrentBodyArmor());
     }
@@ -590,16 +590,16 @@ class AttackForCalculator extends StrictObject
 
     public function getCurrentHelm(): HelmCode
     {
-        $selectedHelmValue = $this->currentAttackValues->getCurrentValue(Controller::HELM);
-        if (!$selectedHelmValue) {
+        $currentHelmValue = $this->currentAttackValues->getCurrentValue(Controller::HELM);
+        if (!$currentHelmValue) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
-        $selectedHelm = HelmCode::getIt($selectedHelmValue);
-        if (!$this->canUseArmament($selectedHelm, $this->currentProperties->getCurrentStrength())) {
+        $currentHelm = HelmCode::getIt($currentHelmValue);
+        if (!$this->canUseArmament($currentHelm, $this->currentProperties->getCurrentStrength())) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
 
-        return HelmCode::getIt($selectedHelmValue);
+        return HelmCode::getIt($currentHelmValue);
     }
 
     /**
@@ -638,12 +638,12 @@ class AttackForCalculator extends StrictObject
      */
     public function getCurrentShield(): ShieldCode
     {
-        $selectedShieldValue = $this->currentAttackValues->getCurrentValue(Controller::SHIELD);
-        if (!$selectedShieldValue) {
+        $currentShieldValue = $this->currentAttackValues->getCurrentValue(Controller::SHIELD);
+        if (!$currentShieldValue) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
 
-        return ShieldCode::getIt($selectedShieldValue);
+        return ShieldCode::getIt($currentShieldValue);
     }
 
     /**
