@@ -2,16 +2,16 @@
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
-namespace DrdPlus\Tests\Calculators;
+namespace DrdPlus\Tests\AttackCalculatorSkeleton;
 
-use DrdPlus\Calculator\AttackSkeleton\AttackForCalculator;
-use DrdPlus\Calculator\AttackSkeleton\CurrentAttackValues;
-use DrdPlus\Calculator\AttackSkeleton\CustomArmamentsService;
+use DrdPlus\AttackCalculatorSkeleton\AttackForCalculator;
+use DrdPlus\AttackCalculatorSkeleton\CurrentAttackValues;
+use DrdPlus\AttackCalculatorSkeleton\CustomArmamentsService;
+use DrdPlus\CalculatorSkeleton\History;
+use DrdPlus\CalculatorSkeleton\Memory;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Calculator\Skeleton\History;
-use DrdPlus\Calculator\Skeleton\Memory;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\Tables\Tables;
