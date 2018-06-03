@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\CalculatorSkeleton\Memory;
@@ -57,7 +57,7 @@ class Controller extends \DrdPlus\CalculatorSkeleton\Controller
      * @param string $cookiesPostfix
      * @param int|null $cookiesTtl = null
      * @param array|null $selectedValues = null
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
         string $documentRoot,

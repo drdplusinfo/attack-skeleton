@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 /** @var Controller $controller */
 if ($controller->isAddingNewShield()) { ?>

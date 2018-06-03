@@ -1,5 +1,5 @@
 <?php
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;

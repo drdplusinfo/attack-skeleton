@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 {
@@ -61,7 +61,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomMeleeWeaponsValues(): array
     {
@@ -75,7 +75,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomMeleeWeaponsValues(): array
     {
@@ -102,7 +102,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
      * @param string $customArmamentNameKey
      * @param string $customArmamentTwoHandedOnlyKey
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomArmamentsValues(
         array $customArmamentKeys,
@@ -138,7 +138,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomRangedWeaponsValues(): array
     {
@@ -152,7 +152,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomRangedWeaponsValues(): array
     {
@@ -176,7 +176,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomBodyArmorsValues(): array
     {
@@ -190,7 +190,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomBodyArmorsValues(): array
     {
@@ -210,7 +210,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomHelmsValues(): array
     {
@@ -224,7 +224,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomHelmsValues(): array
     {
@@ -243,7 +243,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array|string[][]
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function getCustomShieldsValues(): array
     {
@@ -257,7 +257,7 @@ class CurrentAttackValues extends \DrdPlus\CalculatorSkeleton\CurrentValues
 
     /**
      * @return array
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     private function assembleCustomShieldsValues(): array
     {

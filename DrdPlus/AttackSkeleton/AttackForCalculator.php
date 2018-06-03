@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\Codes\Armaments\ArmamentCode;
@@ -43,7 +43,7 @@ class AttackForCalculator extends StrictObject
      * @param History $history
      * @param CustomArmamentsService $customArmamentsService
      * @param Tables $tables
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
         CurrentAttackValues $currentAttackValues,
@@ -63,7 +63,7 @@ class AttackForCalculator extends StrictObject
     /**
      * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     protected function registerCustomArmaments(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
@@ -76,7 +76,7 @@ class AttackForCalculator extends StrictObject
     /**
      * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     protected function registerCustomMeleeWeapons(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
@@ -104,7 +104,7 @@ class AttackForCalculator extends StrictObject
     /**
      * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     protected function registerCustomRangedWeapons(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
@@ -136,7 +136,7 @@ class AttackForCalculator extends StrictObject
     /**
      * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     protected function registerCustomBodyArmors(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {
@@ -160,7 +160,7 @@ class AttackForCalculator extends StrictObject
     /**
      * @param CurrentAttackValues $currentValues
      * @param CustomArmamentsService $newWeaponsService
-     * @throws \DrdPlus\AttackCalculatorSkeleton\Exceptions\BrokenNewArmamentValues
+     * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     protected function registerCustomHelms(CurrentAttackValues $currentValues, CustomArmamentsService $newWeaponsService): void
     {

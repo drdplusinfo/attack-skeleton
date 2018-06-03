@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1); // on PHP 7+ are standard PHP methods strict to types of given parameters
 
-namespace DrdPlus\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\Codes\Armaments\BodyArmorCode;

@@ -1,10 +1,10 @@
 <?php
-namespace DrdPlus\Calculator\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
 use \DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 
-/** @var \DrdPlus\Calculator\AttackCalculatorSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\Controller $controller */
 
 ?>
 <label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_RANGED_WEAPON_NAME ?>[0]"

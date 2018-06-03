@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\Calculators;
 
-use DrdPlus\AttackCalculatorSkeleton\AttackForCalculator;
-use DrdPlus\AttackCalculatorSkeleton\Controller;
+use DrdPlus\AttackSkeleton\AttackForCalculator;
+use DrdPlus\AttackSkeleton\Controller;
 use Granam\Tests\Tools\TestWithMockery;
 
 class ControllerTest extends TestWithMockery

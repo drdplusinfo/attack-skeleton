@@ -1,7 +1,7 @@
 <?php
-namespace DrdPlus\Calculator\AttackCalculatorSkeleton;
+namespace DrdPlus\AttackSkeleton;
 
-/** @var \DrdPlus\Calculator\AttackCalculatorSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\Controller $controller */
 ?>
 <label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_HELM_NAME ?>[0]"
                     required="required"></label>

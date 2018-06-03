@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\Calculators;
 
-use DrdPlus\Calculator\AttackSkeleton\AttackForCalculator;
-use DrdPlus\Calculator\AttackSkeleton\Controller;
-use DrdPlus\Calculator\AttackSkeleton\CurrentAttackValues;
-use DrdPlus\Calculator\AttackSkeleton\CurrentProperties;
+use DrdPlus\AttackSkeleton\AttackForCalculator;
+use DrdPlus\AttackSkeleton\Controller;
+use DrdPlus\AttackSkeleton\CurrentAttackValues;
+use DrdPlus\AttackSkeleton\CurrentProperties;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
@@ -29,7 +29,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_melee_weapon(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/add_custom_melee_weapon.php');
+        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_melee_weapon.php');
     }
 
     private function I_can_use_template_to_add_custom_armament(string $templatePath): void
@@ -50,7 +50,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_ranged_weapon(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/add_custom_ranged_weapon.php');
+        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_ranged_weapon.php');
     }
 
     /**
@@ -58,7 +58,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_body_armor(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/add_custom_body_armor.php');
+        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_body_armor.php');
     }
 
     /**
@@ -66,7 +66,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_helm(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/add_custom_helm.php');
+        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_helm.php');
     }
 
     /**
@@ -74,7 +74,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_shield(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/add_custom_shield.php');
+        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_shield.php');
     }
 
     /**
@@ -110,7 +110,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('getMessagesAboutHelms')
             ->andReturn([]);
         \ob_start();
-        include __DIR__ . '/../../../parts/armor_and_helm.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/armor_and_helm.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }
@@ -140,7 +140,7 @@ class TemplatesTest extends TestWithMockery
         $currentProperties->shouldReceive('getCurrentSize')
             ->andReturn(Size::getIt(5));
         \ob_start();
-        include __DIR__ . '/../../../parts/body_properties.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/body_properties.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }
@@ -172,7 +172,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('getMessagesAboutMelee')
             ->andReturn([]);
         \ob_start();
-        include __DIR__ . '/../../../parts/melee_weapon.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/melee_weapon.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }
@@ -204,7 +204,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('getMessagesAboutRanged')
             ->andReturn([]);
         \ob_start();
-        include __DIR__ . '/../../../parts/ranged_weapon.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/ranged_weapon.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }
@@ -236,7 +236,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('getMessagesAboutShields')
             ->andReturn([]);
         \ob_start();
-        include __DIR__ . '/../../../parts/shield.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/shield.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }
