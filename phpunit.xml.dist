@@ -14,6 +14,15 @@
         <testsuite name="all">
             <directory>./DrdPlus</directory>
         </testsuite>
+        <testsuite name="FrontendSkeleton">
+            <directory>./DrdPlus/Tests/FrontendSkeleton</directory>
+        </testsuite>
+        <testsuite name="CalculatorSkeleton">
+            <directory>./DrdPlus/Tests/CalculatorSkeleton</directory>
+        </testsuite>
+        <testsuite name="AttackSkeleton">
+            <directory>./DrdPlus/Tests/CalculatorSkeleton</directory>
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true" processUncoveredFilesFromWhitelist="false">

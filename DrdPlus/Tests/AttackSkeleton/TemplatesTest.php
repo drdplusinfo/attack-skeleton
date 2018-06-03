@@ -22,6 +22,9 @@ use DrdPlus\Properties\Body\HeightInCm;
 use DrdPlus\Properties\Body\Size;
 use Granam\Tests\Tools\TestWithMockery;
 
+/**
+ * @runTestsInSeparateProcesses because of affected global variables
+ */
 class TemplatesTest extends TestWithMockery
 {
     /**

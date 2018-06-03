@@ -22,6 +22,7 @@ class AttackForCalculatorTest extends TestWithMockery
     /**
      * @test
      * @runInSeparateProcess because of cookies
+     * @backupGlobals enabled
      */
     public function I_can_use_it(): void
     {

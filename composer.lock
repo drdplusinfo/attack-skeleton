@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3312d608750e171661e2bd12479ec5ad",
+    "hash": "8282e32fcec3bd88aa1e114f16b12680",
     "content-hash": "e28754251a168622ea86a946685520fa",
     "packages": [
         {
@@ -1104,12 +1104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "4843c79b2e401c03ee428fbfbf9a2107282f43de"
+                "reference": "19c95990f7c934a1acd7d6150374a3e59272812d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/4843c79b2e401c03ee428fbfbf9a2107282f43de",
-                "reference": "4843c79b2e401c03ee428fbfbf9a2107282f43de",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/19c95990f7c934a1acd7d6150374a3e59272812d",
+                "reference": "19c95990f7c934a1acd7d6150374a3e59272812d",
                 "shasum": ""
             },
             "require": {
@@ -1137,7 +1137,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-06-03 05:03:28"
+            "time": "2018-06-03 14:35:30"
         },
         {
             "name": "drd-plus/codes",
@@ -1319,12 +1319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-frontend-skeleton.git",
-                "reference": "20d24b291ded520246dc6e3abe003b125bc2970d"
+                "reference": "051adb73df585ef115025a2e727c9fa4670c3d47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/20d24b291ded520246dc6e3abe003b125bc2970d",
-                "reference": "20d24b291ded520246dc6e3abe003b125bc2970d",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/051adb73df585ef115025a2e727c9fa4670c3d47",
+                "reference": "051adb73df585ef115025a2e727c9fa4670c3d47",
                 "shasum": ""
             },
             "require": {
@@ -1364,7 +1364,7 @@
                 "pages",
                 "view"
             ],
-            "time": "2018-06-02 13:45:58"
+            "time": "2018-06-03 05:51:07"
         },
         {
             "name": "drd-plus/health",
