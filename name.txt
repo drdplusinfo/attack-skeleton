@@ -1,1 +1,1 @@
-HTML skeleton pro DrD+ kalkulátor útoku
+HTML kostra pro DrD+ kalkulátory
