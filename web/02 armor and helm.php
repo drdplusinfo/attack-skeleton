@@ -1,3 +1,3 @@
 <?php
-/** @noinspection PhpIncludeInspection */
-include $genericPartsRoot . '/armor_and_helm.php';
+/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+echo $controller->getArmorAndHelmContent();

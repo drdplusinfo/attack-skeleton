@@ -6,3 +6,4 @@ $testsConfiguration->disableHasTables();
 $testsConfiguration->disableHasNotes();
 $testsConfiguration->disableHasExternalAnchorsWithHashes();
 $testsConfiguration->disableHasLinksToAltar();
+$testsConfiguration->setExpectedPageTitle('HTML skeleton pro DrD+ kalkulátor útoku');

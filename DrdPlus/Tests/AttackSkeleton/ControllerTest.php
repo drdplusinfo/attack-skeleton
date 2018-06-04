@@ -12,14 +12,14 @@ class ControllerTest extends TestWithMockery
 {
     /**
      * @test
-     * @runInSeparateProcess
      */
     public function I_can_get_attack_object(): void
     {
         $controller = new Controller(
-            __DIR__ . '/../../..',
             'https://example.com',
-            __CLASS__ /* as cookie postfix */
+            __CLASS__, /* as cookie postfix */
+            __DIR__ . '/../../..',
+            __DIR__ . '/../../../vendor'
         );
         self::assertInstanceOf(AttackForCalculator::class, $controller->getAttack());
     }

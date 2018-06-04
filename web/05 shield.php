@@ -1,3 +1,3 @@
 <?php
-/** @noinspection PhpIncludeInspection */
-include $genericPartsRoot . '/shield.php';
+/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+echo $controller->getShieldContent();

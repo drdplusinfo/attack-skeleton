@@ -1,3 +1,3 @@
 <?php
-/** @noinspection PhpIncludeInspection */
-include $genericPartsRoot . '/body_properties.php';
+/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+echo $controller->getBodyPropertiesContent();

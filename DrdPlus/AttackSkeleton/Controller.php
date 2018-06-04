@@ -53,21 +53,40 @@ class Controller extends \DrdPlus\CalculatorSkeleton\Controller
 
     /**
      * @param string $documentRoot
+     * @param string $vendorRoot
      * @param string $sourceCodeUrl
      * @param string $cookiesPostfix
+     * @param string|null $partsRoot
+     * @param string|null $genericPartsRoot
      * @param int|null $cookiesTtl = null
      * @param array|null $selectedValues = null
      * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
-        string $documentRoot,
         string $sourceCodeUrl,
         string $cookiesPostfix,
+        string $documentRoot,
+        string $vendorRoot,
+        string $partsRoot = null,
+        string $genericPartsRoot = null,
         int $cookiesTtl = null,
         array $selectedValues = null
     )
     {
-        parent::__construct($documentRoot, $sourceCodeUrl, $cookiesPostfix, $cookiesTtl, $selectedValues);
+        $partsRoot = $partsRoot ?? \file_exists($documentRoot . '/parts')
+                ? ($documentRoot . '/parts')
+                : ($vendorRoot . '/drd-plus/attack-skeleton/parts');
+        $genericPartsRoot = $genericPartsRoot ?? (__DIR__ . '/../../parts/attack-skeleton');
+        parent::__construct(
+            $sourceCodeUrl,
+            $cookiesPostfix,
+            $documentRoot,
+            $vendorRoot,
+            $partsRoot,
+            $genericPartsRoot,
+            $cookiesTtl,
+            $selectedValues
+        );
         $this->currentProperties = new CurrentProperties($this->getCurrentValues());
         $this->attack = new AttackForCalculator(
             $this->getCurrentValues(),
@@ -338,4 +357,41 @@ class Controller extends \DrdPlus\CalculatorSkeleton\Controller
     {
         return $this->getCurrentValues()->getSelectedValue(self::ACTION) === self::ADD_NEW_SHIELD;
     }
+
+    public function getBodyPropertiesContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/body_properties.php'));
+    }
+
+    private function getGenericPartContent(string $partScriptName): string
+    {
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $controller = $this;
+        \ob_start();
+        /** @noinspection PhpIncludeInspection */
+        include $this->getGenericPartsRoot() . '/' . $partScriptName;
+
+        return \ob_get_clean();
+    }
+
+    public function getArmorAndHelmContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/armor_and_helm.php'));
+    }
+
+    public function getMeleeWeaponContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/melee_weapon.php'));
+    }
+
+    public function getRangedWeaponContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/ranged_weapon.php'));
+    }
+
+    public function getShieldContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/shield.php'));
+    }
+
 }
