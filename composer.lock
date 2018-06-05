@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8870386eb6a978a9ee958411ae3dbdde",
+    "hash": "c0fea5f387c556cc50339046f3754213",
     "content-hash": "85f12324888bd20b50dc2785650c054c",
     "packages": [
         {
@@ -1104,12 +1104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "42318aab81b4724df885c4b2741c599be37e9895"
+                "reference": "f61becfa9afba0839b32580fee77f3e4d5c3dd77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/42318aab81b4724df885c4b2741c599be37e9895",
-                "reference": "42318aab81b4724df885c4b2741c599be37e9895",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/f61becfa9afba0839b32580fee77f3e4d5c3dd77",
+                "reference": "f61becfa9afba0839b32580fee77f3e4d5c3dd77",
                 "shasum": ""
             },
             "require": {
@@ -1137,7 +1137,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-06-04 15:57:21"
+            "time": "2018-06-05 14:09:43"
         },
         {
             "name": "drd-plus/codes",

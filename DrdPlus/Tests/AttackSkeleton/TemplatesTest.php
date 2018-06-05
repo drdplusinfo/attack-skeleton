@@ -2,7 +2,7 @@
 declare(strict_types=1);
 /** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
-namespace DrdPlus\Tests\Calculators;
+namespace DrdPlus\Tests\AttackSkeleton;
 
 use DrdPlus\AttackSkeleton\AttackForCalculator;
 use DrdPlus\AttackSkeleton\Controller;
@@ -43,6 +43,7 @@ class TemplatesTest extends TestWithMockery
             ->with([Controller::ACTION => ''])
             ->andReturn('');
         \ob_start();
+        /** @noinspection PhpIncludeInspection */
         include $templatePath;
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
