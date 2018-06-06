@@ -35,9 +35,9 @@
   "scripts": {
     "pre-autoload-dump": [
       "cp ./vendor/drd-plus/calculator-skeleton/parts/calculator-skeleton/* ./parts/attack-skeleton/",
-      "rm -fr ./images/generic/frontend-skeleton && rm -fr ./images/generic/calculator-skeleton && cp -r ./vendor/drd-plus/frontend-skeleton/images/generic/ ./images/",
-      "rm -fr ./css/generic/frontend-skeleton && rm -fr ./css/generic/calculator-skeleton && cp -r ./vendor/drd-plus/frontend-skeleton/css/generic/ ./css/",
-      "rm -fr ./js/generic/frontend-skeleton && rm -fr ./js/generic/calculator-skeleton && cp -r ./vendor/drd-plus/frontend-skeleton/js/generic/ ./js/",
+      "rm -fr ./images/generic/frontend-skeleton && rm -fr ./images/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/images/generic/ ./images/",
+      "rm -fr ./css/generic/frontend-skeleton && rm -fr ./css/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/css/generic/ ./css/",
+      "rm -fr ./js/generic/frontend-skeleton && rm -fr ./js/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/js/generic/ ./js/",
       "find ./vendor/drd-plus/calculator-skeleton/web/*.html -exec cp {} ./web/ \\;",
       "find ./cache -mindepth 2 -type f -exec rm {} +"
     ],

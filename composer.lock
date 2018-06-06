@@ -1104,12 +1104,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-calculator-skeleton.git",
-                "reference": "f61becfa9afba0839b32580fee77f3e4d5c3dd77"
+                "reference": "565098fb42b4d2d1d6f29a1ad9d248d1506c6396"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/f61becfa9afba0839b32580fee77f3e4d5c3dd77",
-                "reference": "f61becfa9afba0839b32580fee77f3e4d5c3dd77",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-calculator-skeleton/zipball/565098fb42b4d2d1d6f29a1ad9d248d1506c6396",
+                "reference": "565098fb42b4d2d1d6f29a1ad9d248d1506c6396",
                 "shasum": ""
             },
             "require": {
@@ -1137,7 +1137,7 @@
                 "MIT"
             ],
             "description": "Style and functionality helper of a DrD+ calculator",
-            "time": "2018-06-05 14:09:43"
+            "time": "2018-06-06 03:56:22"
         },
         {
             "name": "drd-plus/codes",
