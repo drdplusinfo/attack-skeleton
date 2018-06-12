@@ -3,7 +3,7 @@ namespace DrdPlus\AttackSkeleton;
 
 /** @var AttackController $controller */
 if ($controller->isAddingNewBodyArmor()) { ?>
-  <div id="addBodyArmor" class="block add">
+  <div id="addBodyArmor" class="row add">
       <?php include __DIR__ . '/add-custom/add_custom_body_armor.php' ?>
   </div>
 <?php }
@@ -13,9 +13,14 @@ foreach ($controller->getCurrentValues()->getCustomBodyArmorsValues() as $armorN
       <input type="hidden" name="<?= $typeName ?>[<?= $armorName ?>]" value="<?= $armorValue ?>">
     <?php }
 } ?>
-<div class="block <?php if ($controller->isAddingNewBodyArmor() || $controller->isAddingNewHelm()) { ?>hidden<?php } ?>"
+<div class="row <?php if ($controller->isAddingNewBodyArmor() || $controller->isAddingNewHelm()) { ?>hidden<?php } ?>"
      id="chooseBodyArmor">
-  <div class="panel">
+  <div class="col">
+    <div class="messages">
+        <?php foreach ($controller->getMessagesAboutArmors() as $messageAboutArmor) { ?>
+          <div class="info"><?= $messageAboutArmor ?></div>
+        <?php } ?>
+    </div>
     <a title="Přidat vlastní zbroj"
        href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR]) ?>"
        class="button add">+</a>
@@ -33,15 +38,10 @@ foreach ($controller->getCurrentValues()->getCustomBodyArmorsValues() as $armorN
       </select>
     </label>
   </div>
-  <div class="block messages">
-      <?php foreach ($controller->getMessagesAboutArmors() as $messageAboutArmor) { ?>
-        <div class="message info"><?= $messageAboutArmor ?></div>
-      <?php } ?>
-  </div>
 </div>
 <?php
 if ($controller->isAddingNewHelm()) { ?>
-  <div id="addHelm" class="block add">
+  <div id="addHelm" class="row add">
       <?php include __DIR__ . '/add-custom/add_custom_helm.php' ?>
   </div>
 <?php }
@@ -51,9 +51,14 @@ foreach ($controller->getCurrentValues()->getCustomHelmsValues() as $helmName =>
       <input type="hidden" name="<?= $typeName ?>[<?= $helmName ?>]" value="<?= $helmValue ?>">
     <?php }
 } ?>
-<div class="block <?php if ($controller->isAddingNewBodyArmor() || $controller->isAddingNewHelm()) { ?>hidden<?php } ?>"
+<div class="row <?php if ($controller->isAddingNewBodyArmor() || $controller->isAddingNewHelm()) { ?>hidden<?php } ?>"
      id="chooseHelm">
-  <div class="panel">
+  <div class="col">
+    <div class="messages">
+        <?php foreach ($controller->getMessagesAboutHelms() as $messageAboutHelm) { ?>
+          <div class="info"><?= $messageAboutHelm ?></div>
+        <?php } ?>
+    </div>
     <a title="Přidat vlastní helmu"
        href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_HELM]) ?>"
        class="button add">+</a>
@@ -70,10 +75,5 @@ foreach ($controller->getCurrentValues()->getCustomHelmsValues() as $helmName =>
           <?php } ?>
       </select>
     </label>
-  </div>
-  <div class="block messages">
-      <?php foreach ($controller->getMessagesAboutHelms() as $messageAboutHelm) { ?>
-        <div class="info"><?= $messageAboutHelm ?></div>
-      <?php } ?>
   </div>
 </div>

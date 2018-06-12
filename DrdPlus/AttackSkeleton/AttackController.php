@@ -241,8 +241,7 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
     public function getHelms(): array
     {
         $helmCodes = $this->attack->getPossibleHelms();
-        $countOfUnusable = $this->countUnusable($helmCodes);
-        $this->addUnusableMessage($countOfUnusable, 'helms', 'helmu', 'helmy', 'helem');
+        $this->addUnusableMessage($this->countUnusable($helmCodes), 'helms', 'helmu', 'helmy', 'helem');
 
         return $helmCodes;
     }
@@ -280,28 +279,38 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
         return '';
     }
 
-    public function getMessagesAboutMelee(): array
+    public function getMessagesAboutMeleeWeapons(): array
     {
+        $this->getMeleeWeapons();
+
         return $this->messagesAbout['melee'] ?? [];
     }
 
-    public function getMessagesAboutRanged(): array
+    public function getMessagesAboutRangedWeapons(): array
     {
+        $this->getRangedWeapons();
+
         return $this->messagesAbout['ranged'] ?? [];
     }
 
     public function getMessagesAboutShields(): array
     {
+        $this->getShields();
+
         return $this->messagesAbout['shields'] ?? [];
     }
 
     public function getMessagesAboutHelms(): array
     {
+        $this->getHelms();
+
         return $this->messagesAbout['helms'] ?? [];
     }
 
     public function getMessagesAboutArmors(): array
     {
+        $this->getBodyArmors();
+
         return $this->messagesAbout['armors'] ?? [];
     }
 
