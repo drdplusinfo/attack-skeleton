@@ -4,7 +4,7 @@ namespace DrdPlus\AttackSkeleton;
 use \DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 
-/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\AttackController $controller */
 
 ?>
 <label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_MELEE_WEAPON_NAME ?>[0]"
@@ -47,4 +47,4 @@ use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
                               name="<?= CurrentAttackValues::CUSTOM_MELEE_WEAPON_TWO_HANDED_ONLY ?>[0]"></label>
 <input type="submit" value="Přidat">
 <a class="button cancel" id="cancelNewMeleeWeapon"
-   href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => '']); ?>">Zrušit</a>
+   href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>

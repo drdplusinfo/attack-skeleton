@@ -17,7 +17,7 @@ $genericPartsRoot = $genericPartsRoot ?? (__DIR__ . '/parts/attack-skeleton');
 /** @noinspection PhpIncludeInspection */
 require_once $vendorRoot . '/autoload.php';
 
-$controller = $controller ?? new \DrdPlus\AttackSkeleton\Controller(
+$controller = $controller ?? new \DrdPlus\AttackSkeleton\AttackController(
         'https://github.com/jaroslavtyc/drd-plus-attack-skeleton',
         \basename($documentRoot), // cookies postfix
         $documentRoot,

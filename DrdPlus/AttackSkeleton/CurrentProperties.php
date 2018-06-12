@@ -26,42 +26,42 @@ class CurrentProperties extends StrictObject
 
     public function getCurrentStrength(): Strength
     {
-        return Strength::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::STRENGTH));
+        return Strength::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::STRENGTH));
     }
 
     public function getCurrentAgility(): Agility
     {
-        return Agility::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::AGILITY));
+        return Agility::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::AGILITY));
     }
 
     public function getCurrentKnack(): Knack
     {
-        return Knack::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::KNACK));
+        return Knack::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::KNACK));
     }
 
     public function getCurrentWill(): Will
     {
-        return Will::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::WILL));
+        return Will::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::WILL));
     }
 
     public function getCurrentIntelligence(): Intelligence
     {
-        return Intelligence::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::INTELLIGENCE));
+        return Intelligence::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::INTELLIGENCE));
     }
 
     public function getCurrentCharisma(): Charisma
     {
-        return Charisma::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::CHARISMA));
+        return Charisma::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::CHARISMA));
     }
 
     public function getCurrentSize(): Size
     {
-        return Size::getIt((int)$this->currentAttackValues->getCurrentValue(Controller::SIZE));
+        return Size::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::SIZE));
     }
 
     public function getCurrentHeightInCm(): HeightInCm
     {
-        return HeightInCm::getIt($this->currentAttackValues->getCurrentValue(Controller::HEIGHT_IN_CM) ?? 150);
+        return HeightInCm::getIt($this->currentAttackValues->getCurrentValue(AttackController::HEIGHT_IN_CM) ?? 150);
     }
 
 }

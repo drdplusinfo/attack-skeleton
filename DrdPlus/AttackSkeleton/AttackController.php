@@ -17,7 +17,7 @@ use Granam\Integer\Tools\ToInteger;
 /**
  * @method CurrentAttackValues getCurrentValues
  */
-class Controller extends \DrdPlus\CalculatorSkeleton\Controller
+class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
 {
     public const MELEE_WEAPON = 'melee_weapon';
     public const RANGED_WEAPON = 'ranged_weapon';

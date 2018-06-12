@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DrdPlus\Tests\AttackSkeleton;
 
 use DrdPlus\AttackSkeleton\AttackForCalculator;
-use DrdPlus\AttackSkeleton\Controller;
+use DrdPlus\AttackSkeleton\AttackController;
 use DrdPlus\AttackSkeleton\CurrentAttackValues;
 use DrdPlus\AttackSkeleton\CurrentProperties;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
@@ -37,10 +37,10 @@ class TemplatesTest extends TestWithMockery
 
     private function I_can_use_template_to_add_custom_armament(string $templatePath): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->atLeast()->once()
-            ->with([Controller::ACTION => ''])
+            ->with([AttackController::ACTION => ''])
             ->andReturn('');
         \ob_start();
         /** @noinspection PhpIncludeInspection */
@@ -86,7 +86,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_armors_and_helms(): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('isAddingNewBodyArmor')
             ->andReturn(false);
         $controller->shouldReceive('isAddingNewHelm')
@@ -99,11 +99,11 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
-            ->with([Controller::ACTION => Controller::ADD_NEW_HELM])
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_HELM])
             ->andReturn('');
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
-            ->with([Controller::ACTION => Controller::ADD_NEW_BODY_ARMOR])
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR])
             ->andReturn('');
         $controller->shouldReceive('getBodyArmors')
             ->andReturn([]);
@@ -124,7 +124,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_body_properties(): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('getCurrentProperties')
             ->andReturn($currentProperties = $this->mockery(CurrentProperties::class));
         $currentProperties->shouldReceive('getCurrentStrength')
@@ -154,7 +154,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_melee_weapons(): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('isAddingNewMeleeWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -167,7 +167,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
-            ->with([Controller::ACTION => Controller::ADD_NEW_MELEE_WEAPON])
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON])
             ->andReturn('');
         $controller->shouldReceive('getMeleeWeapons')
             ->andReturn([]);
@@ -186,7 +186,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_ranged_weapons(): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('isAddingNewRangedWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -199,7 +199,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
-            ->with([Controller::ACTION => Controller::ADD_NEW_RANGED_WEAPON])
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON])
             ->andReturn('');
         $controller->shouldReceive('getRangedWeapons')
             ->andReturn([]);
@@ -218,7 +218,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_shields(): void
     {
-        $controller = $this->mockery(Controller::class);
+        $controller = $this->mockery(AttackController::class);
         $controller->shouldReceive('isAddingNewShield')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -231,7 +231,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
-            ->with([Controller::ACTION => Controller::ADD_NEW_SHIELD])
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_SHIELD])
             ->andReturn('');
         $controller->shouldReceive('getShields')
             ->andReturn([]);

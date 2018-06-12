@@ -26,42 +26,42 @@ class PreviousProperties extends StrictObject
 
     public function getPreviousStrength(): Strength
     {
-        return Strength::getIt((int)$this->history->getValue(Controller::STRENGTH));
+        return Strength::getIt((int)$this->history->getValue(AttackController::STRENGTH));
     }
 
     public function getPreviousAgility(): Agility
     {
-        return Agility::getIt((int)$this->history->getValue(Controller::AGILITY));
+        return Agility::getIt((int)$this->history->getValue(AttackController::AGILITY));
     }
 
     public function getPreviousKnack(): Knack
     {
-        return Knack::getIt((int)$this->history->getValue(Controller::KNACK));
+        return Knack::getIt((int)$this->history->getValue(AttackController::KNACK));
     }
 
     public function getPreviousWill(): Will
     {
-        return Will::getIt((int)$this->history->getValue(Controller::WILL));
+        return Will::getIt((int)$this->history->getValue(AttackController::WILL));
     }
 
     public function getPreviousIntelligence(): Intelligence
     {
-        return Intelligence::getIt((int)$this->history->getValue(Controller::INTELLIGENCE));
+        return Intelligence::getIt((int)$this->history->getValue(AttackController::INTELLIGENCE));
     }
 
     public function getPreviousCharisma(): Charisma
     {
-        return Charisma::getIt((int)$this->history->getValue(Controller::CHARISMA));
+        return Charisma::getIt((int)$this->history->getValue(AttackController::CHARISMA));
     }
 
     public function getPreviousSize(): Size
     {
-        return Size::getIt((int)$this->history->getValue(Controller::SIZE));
+        return Size::getIt((int)$this->history->getValue(AttackController::SIZE));
     }
 
     public function getPreviousHeightInCm(): HeightInCm
     {
-        return HeightInCm::getIt($this->history->getValue(Controller::HEIGHT_IN_CM) ?? 150);
+        return HeightInCm::getIt($this->history->getValue(AttackController::HEIGHT_IN_CM) ?? 150);
     }
 
 }

@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-class ControllerTest extends \DrdPlus\Tests\CalculatorSkeleton\ControllerTest
+class FrontendControllerTest extends \DrdPlus\Tests\CalculatorSkeleton\FrontendControllerTest
 {
 }

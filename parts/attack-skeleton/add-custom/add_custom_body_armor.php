@@ -1,7 +1,7 @@
 <?php
 namespace DrdPlus\AttackSkeleton;
 
-/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\AttackController $controller */
 ?>
 <label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_BODY_ARMOR_NAME ?>[0]"
                     required="required"></label>
@@ -21,4 +21,4 @@ namespace DrdPlus\AttackSkeleton;
                                      name="<?= CurrentAttackValues::CUSTOM_BODY_ARMOR_ROUNDS_TO_PUT_ON ?>[0]"></label>
 <input type="submit" value="Přidat zbroj">
 <a class="button cancel" id="cancelNewBodyArmor"
-   href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => '']); ?>">Zrušit</a>
+   href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>

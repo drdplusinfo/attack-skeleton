@@ -1,3 +1,3 @@
 <?php
-/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\AttackController $controller */
 echo $controller->getArmorAndHelmContent();

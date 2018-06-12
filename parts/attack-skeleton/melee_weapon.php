@@ -5,7 +5,7 @@ use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\ItemHoldingCode;
 
-/** @var Controller $controller */
+/** @var AttackController $controller */
 $selectedMeleeWeapon = $controller->getAttack()->getCurrentMeleeWeapon();
 $selectedMeleeWeaponValue = $selectedMeleeWeapon ? $selectedMeleeWeapon->getValue() : null;
 if ($controller->isAddingNewMeleeWeapon()) { ?>
@@ -22,10 +22,10 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
 <div class="block <?php if ($controller->isAddingNewMeleeWeapon()) { ?>hidden<?php } ?>" id="chooseMeleeWeapon">
     <div class="panel">
         <a title="Přidat vlastní zbraň na blízko"
-           href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_MELEE_WEAPON]) ?>"
+           href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON]) ?>"
            class="button add">+</a>
         <label>
-            <select name="<?= Controller::MELEE_WEAPON ?>" title="Melee weapon">
+            <select name="<?= AttackController::MELEE_WEAPON ?>" title="Melee weapon">
                 <?php /** @var array $meleeWeaponsFromCategory */
                 foreach ($controller->getMeleeWeapons() as $weaponCategory => $meleeWeaponsFromCategory) {
                     ?>
@@ -49,13 +49,13 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::MAIN_HAND ?>"
-                   name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
+                   name="<?= AttackController::MELEE_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
             v dominantní ruce</label>
     </div>
     <div class="panel">
         <label>
-            <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
+            <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= AttackController::MELEE_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
             v druhé
             ruce</label>
@@ -63,7 +63,7 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::TWO_HANDS ?>"
-                   name="<?= Controller::MELEE_WEAPON_HOLDING ?>"
+                   name="<?= AttackController::MELEE_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentMeleeWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
             obouručně
         </label>

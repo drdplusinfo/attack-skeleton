@@ -1,7 +1,7 @@
 <?php
 namespace DrdPlus\AttackSkeleton;
 
-/** @var Controller $controller */
+/** @var AttackController $controller */
 if ($controller->isAddingNewBodyArmor()) { ?>
   <div id="addBodyArmor" class="block add">
       <?php include __DIR__ . '/add-custom/add_custom_body_armor.php' ?>
@@ -17,10 +17,10 @@ foreach ($controller->getCurrentValues()->getCustomBodyArmorsValues() as $armorN
      id="chooseBodyArmor">
   <div class="panel">
     <a title="Přidat vlastní zbroj"
-       href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_BODY_ARMOR]) ?>"
+       href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR]) ?>"
        class="button add">+</a>
     <label>
-      <select name="<?= Controller::BODY_ARMOR ?>">
+      <select name="<?= AttackController::BODY_ARMOR ?>">
           <?php /** @var array $bodyArmor */
           foreach ($controller->getBodyArmors() as $bodyArmor) {
               $bodyArmorCode = $bodyArmor['code']; ?>
@@ -55,10 +55,10 @@ foreach ($controller->getCurrentValues()->getCustomHelmsValues() as $helmName =>
      id="chooseHelm">
   <div class="panel">
     <a title="Přidat vlastní helmu"
-       href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_HELM]) ?>"
+       href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_HELM]) ?>"
        class="button add">+</a>
     <label>
-      <select name="<?= Controller::HELM ?>">
+      <select name="<?= AttackController::HELM ?>">
           <?php /** @var array $helm */
           foreach ($controller->getHelms() as $helm) {
               $helmCode = $helm['code']; ?>

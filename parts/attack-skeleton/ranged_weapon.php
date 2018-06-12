@@ -6,7 +6,7 @@ use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Tables\Tables;
 
-/** @var Controller $controller */
+/** @var AttackController $controller */
 /** @var Tables $tables */
 $currentRangedWeapon = $controller->getAttack()->getCurrentRangedWeapon();
 $currentRangedWeaponValue = $currentRangedWeapon ? $currentRangedWeapon->getValue() : null;
@@ -25,10 +25,10 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
 <div class="block <?php if ($controller->isAddingNewRangedWeapon()) { ?>hidden<?php } ?>" id="chooseRangedWeapon">
     <div class="panel">
         <a title="Přidat vlastní zbraň na dálku"
-           href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_RANGED_WEAPON]) ?>"
+           href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON]) ?>"
            class="button add">+</a>
         <label>
-            <select name="<?= Controller::RANGED_WEAPON ?>" title="Ranged weapon">
+            <select name="<?= AttackController::RANGED_WEAPON ?>" title="Ranged weapon">
                 <?php /** @var string[] $rangedWeaponsFromCategory */
                 foreach ($controller->getRangedWeapons() as $weaponCategory => $rangedWeaponsFromCategory) {
                     ?>
@@ -51,20 +51,20 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::MAIN_HAND ?>"
-                   name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
+                   name="<?= AttackController::RANGED_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::MAIN_HAND) { ?>checked<?php } ?>>
             v dominantní ruce</label>
     </div>
     <div class="panel">
         <label>
-            <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
+            <input type="radio" value="<?= ItemHoldingCode::OFFHAND ?>" name="<?= AttackController::RANGED_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::OFFHAND) { ?>checked<?php } ?>>
             v druhé ruce</label>
     </div>
     <div class="panel">
         <label>
             <input type="radio" value="<?= ItemHoldingCode::TWO_HANDS ?>"
-                   name="<?= Controller::RANGED_WEAPON_HOLDING ?>"
+                   name="<?= AttackController::RANGED_WEAPON_HOLDING ?>"
                    <?php if ($controller->getAttack()->getCurrentRangedWeaponHolding()->getValue() === ItemHoldingCode::TWO_HANDS) { ?>checked<?php } ?>>
             obouručně
         </label>

@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-class CalculatorSkeletonExceptionsHierarchyTest extends \DrdPlus\Tests\CalculatorSkeleton\CalculatorSkeletonExceptionsHierarchyTest
+class CalculatorControllerTest extends \DrdPlus\Tests\CalculatorSkeleton\CalculatorControllerTest
 {
 }

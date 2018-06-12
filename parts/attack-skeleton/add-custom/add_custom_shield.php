@@ -1,7 +1,7 @@
 <?php
 namespace DrdPlus\AttackSkeleton;
 
-/** @var \DrdPlus\AttackSkeleton\Controller $controller */
+/** @var \DrdPlus\AttackSkeleton\AttackController $controller */
 ?>
 <label>Název <input type="text" name="<?= CurrentAttackValues::CUSTOM_SHIELD_NAME ?>[0]"
                     required="required"></label>
@@ -19,4 +19,4 @@ namespace DrdPlus\AttackSkeleton;
                         required="required"></label>
 <input type="submit" value="Přidat štít">
 <a class="button cancel" id="cancelNewShield"
-   href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => '']); ?>">Zrušit</a>
+   href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>

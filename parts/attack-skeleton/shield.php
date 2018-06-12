@@ -1,7 +1,7 @@
 <?php
 namespace DrdPlus\AttackSkeleton;
 
-/** @var Controller $controller */
+/** @var AttackController $controller */
 if ($controller->isAddingNewShield()) { ?>
   <div id="addShield" class="block add">
       <?php include __DIR__ . '/add-custom/add_custom_shield.php' ?>
@@ -10,10 +10,10 @@ if ($controller->isAddingNewShield()) { ?>
 <div class="row">
   <div class="panel">
     <a title="Přidat vlastní štít"
-       href="<?= $controller->getCurrentUrlWithQuery([Controller::ACTION => Controller::ADD_NEW_SHIELD]) ?>"
+       href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_SHIELD]) ?>"
        class="button add">+</a>
     <label>
-      <select name="<?= Controller::SHIELD ?>"><?php
+      <select name="<?= AttackController::SHIELD ?>"><?php
           /** @var array $shield */
           foreach ($controller->getShields() as $shield) {
               $shieldCode = $shield['code']; ?>
