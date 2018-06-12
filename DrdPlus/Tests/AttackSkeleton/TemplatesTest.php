@@ -173,7 +173,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $attack->shouldReceive('getCurrentMeleeWeaponHolding')
             ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutMelee')
+        $controller->shouldReceive('getMessagesAboutMeleeWeapons')
             ->andReturn([]);
         \ob_start();
         include __DIR__ . '/../../../parts/attack-skeleton/melee_weapon.php';
@@ -205,7 +205,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $attack->shouldReceive('getCurrentRangedWeaponHolding')
             ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutRanged')
+        $controller->shouldReceive('getMessagesAboutRangedWeapons')
             ->andReturn([]);
         \ob_start();
         include __DIR__ . '/../../../parts/attack-skeleton/ranged_weapon.php';
