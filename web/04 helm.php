@@ -1,3 +1,3 @@
 <?php
 /** @var \DrdPlus\AttackSkeleton\AttackController $controller */
-echo $controller->getArmorAndHelmContent();
+echo $controller->getHelmContent();

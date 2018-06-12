@@ -114,7 +114,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('getMessagesAboutHelms')
             ->andReturn([]);
         \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/armor_and_helm.php';
+        include __DIR__ . '/../../../parts/attack-skeleton/helm.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
     }

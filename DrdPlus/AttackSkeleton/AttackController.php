@@ -383,9 +383,14 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
         return \ob_get_clean();
     }
 
-    public function getArmorAndHelmContent(): string
+    public function getArmorContent(): string
     {
-        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/armor_and_helm.php'));
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/armor.php'));
+    }
+
+    public function getHelmContent(): string
+    {
+        return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/helm.php'));
     }
 
     public function getMeleeWeaponContent(): string
@@ -403,4 +408,38 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
         return $this->getGenericPartContent(\basename(__DIR__ . '/../../parts/attack-skeleton/shield.php'));
     }
 
+    public function getAddCustomBodyArmorContent(): string
+    {
+        return $this->getGenericPartContent(
+            'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_body_armor.php')
+        );
+    }
+
+    public function getAddCustomHelmContent(): string
+    {
+        return $this->getGenericPartContent(
+            'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_helm.php')
+        );
+    }
+
+    public function getAddCustomMeleeWeaponContent(): string
+    {
+        return $this->getGenericPartContent(
+            'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_melee_weapon.php')
+        );
+    }
+
+    public function getAddCustomRangedWeaponContent(): string
+    {
+        return $this->getGenericPartContent(
+            'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_ranged_weapon.php')
+        );
+    }
+
+    public function getAddCustomShield(): string
+    {
+        return $this->getGenericPartContent(
+            'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_shield.php')
+        );
+    }
 }
