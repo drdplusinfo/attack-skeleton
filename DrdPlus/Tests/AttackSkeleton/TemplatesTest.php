@@ -39,7 +39,7 @@ class TemplatesTest extends TestWithMockery
     private function I_can_use_template_to_add_custom_armament(string $templatePath): void
     {
         $controller = $this->createAttackController();
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->atLeast()->once()
             ->with([AttackController::ACTION => ''])
             ->andReturn('');
@@ -112,7 +112,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomBodyArmorsValues')
             ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR])
             ->andReturn('');
@@ -139,7 +139,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomHelmsValues')
             ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_HELM])
             ->andReturn('');
@@ -203,7 +203,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomMeleeWeaponsValues')
             ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON])
             ->andReturn('');
@@ -236,7 +236,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomRangedWeaponsValues')
             ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON])
             ->andReturn('');
@@ -269,7 +269,7 @@ class TemplatesTest extends TestWithMockery
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomShieldsValues')
             ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
+        $controller->shouldReceive('getLocalUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_SHIELD])
             ->andReturn('');
