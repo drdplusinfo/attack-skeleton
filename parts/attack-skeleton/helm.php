@@ -22,7 +22,7 @@ foreach ($controller->getCurrentValues()->getCustomHelmsValues() as $helmName =>
         <?php } ?>
     </div>
     <a title="Přidat vlastní helmu"
-       href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_HELM]) ?>"
+       href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_HELM]) ?>"
        class="button add">+</a>
     <label>
       <select name="<?= AttackController::HELM ?>">

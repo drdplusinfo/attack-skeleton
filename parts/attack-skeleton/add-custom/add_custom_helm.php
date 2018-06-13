@@ -21,5 +21,5 @@ namespace DrdPlus\AttackSkeleton;
   <input type="submit" value="Přidat helmu">
 </div>
 <div class="col-sm-1">
-  <a class="button cancel" href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>
+  <a class="button cancel" href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>
 </div>

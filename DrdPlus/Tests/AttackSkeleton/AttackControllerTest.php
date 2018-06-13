@@ -4,15 +4,31 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use PHPUnit\Framework\TestCase;
+use DrdPlus\AttackSkeleton\AttackController;
+use DrdPlus\Tests\FrontendSkeleton\AbstractContentTest;
 
-class AttackControllerTest extends TestCase
+class AttackControllerTest extends AbstractContentTest
 {
     /**
      * @test
      */
-    public function I_am_already_tested(): void
+    public function I_can_get_local_url_with_scalar_but_non_string_additional_parameters(): void
     {
-        self::assertTrue(true, 'Everything is already covered by ' . CalculatorControllerTest::class);
+        $controller = new AttackController('https://example.com', 'foo', $this->getDocumentRoot(), $this->getVendorRoot());
+        $encodedBrackets0 = \urlencode('[0]');
+        $encodedBrackets1 = \urlencode('[1]');
+        self::assertSame(
+            '?just+SOME+boolean+PrOpErTy=1&some+number=123'
+            . "&just+an+array+with+non-string+content$encodedBrackets0=-5"
+            . "&just+an+array+with+non-string+content$encodedBrackets1=",
+            $controller->getLocalUrlWithQuery([
+                'just SOME boolean PrOpErTy' => true,
+                'some number' => 123,
+                'just an array with non-string content' => [
+                    -5,
+                    false
+                ],
+            ])
+        );
     }
 }

@@ -16,7 +16,7 @@ if ($controller->isAddingNewShield()) { ?>
   <div class="row">
     <div class="col">
       <a title="Přidat vlastní štít"
-         href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_SHIELD]) ?>"
+         href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_SHIELD]) ?>"
          class="button add">+</a>
       <label>
         <select name="<?= AttackController::SHIELD ?>"><?php

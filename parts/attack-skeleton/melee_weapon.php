@@ -28,7 +28,7 @@ foreach ($controller->getCurrentValues()->getCustomMeleeWeaponsValues() as $weap
   <div class="row" id="chooseMeleeWeapon">
     <div class="col">
       <a title="Přidat vlastní zbraň na blízko"
-         href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON]) ?>"
+         href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON]) ?>"
          class="button add">+</a>
       <label>
         <select name="<?= AttackController::MELEE_WEAPON ?>" title="Melee weapon">

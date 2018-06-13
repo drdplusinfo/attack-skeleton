@@ -30,7 +30,7 @@ foreach ($controller->getCurrentValues()->getCustomRangedWeaponsValues() as $wea
   <div class="row" id="chooseRangedWeapon">
     <div class="col">
       <a title="Přidat vlastní zbraň na dálku"
-         href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON]) ?>"
+         href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON]) ?>"
          class="button add">+</a>
       <label>
         <select name="<?= AttackController::RANGED_WEAPON ?>" title="Ranged weapon">

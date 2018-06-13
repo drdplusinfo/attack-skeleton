@@ -22,7 +22,7 @@ foreach ($controller->getCurrentValues()->getCustomBodyArmorsValues() as $armorN
         <?php } ?>
     </div>
     <a title="Přidat vlastní zbroj"
-       href="<?= $controller->getCurrentUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR]) ?>"
+       href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR]) ?>"
        class="button add">+</a>
     <label>
       <select name="<?= AttackController::BODY_ARMOR ?>">

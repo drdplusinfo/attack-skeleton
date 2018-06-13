@@ -314,7 +314,11 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
         return $this->messagesAbout['armors'] ?? [];
     }
 
-    public function getCurrentUrlWithQuery(array $additionalParameters = []): string
+    /**
+     * @param array $additionalParameters
+     * @return string
+     */
+    public function getLocalUrlWithQuery(array $additionalParameters = []): string
     {
         /** @var array $parameters */
         $parameters = $_GET;
@@ -328,10 +332,10 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
             if (\is_array($value)) {
                 /** @var array $value */
                 foreach ($value as $index => $item) {
-                    $queryParts[] = \urlencode("{$name}[{$index}]") . '=' . \urlencode($item);
+                    $queryParts[] = \urlencode("{$name}[{$index}]") . '=' . \urlencode((string)$item);
                 }
             } else {
-                $queryParts[] = \urlencode($name) . '=' . \urlencode($value);
+                $queryParts[] = \urlencode((string)$name) . '=' . \urlencode((string)$value);
             }
         }
         $query = '';
