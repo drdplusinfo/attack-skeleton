@@ -21,6 +21,7 @@ use DrdPlus\Properties\Base\Will;
 use DrdPlus\Properties\Body\HeightInCm;
 use DrdPlus\Properties\Body\Size;
 use Granam\Tests\Tools\TestWithMockery;
+use Mockery\MockInterface;
 
 /**
  * @runTestsInSeparateProcesses because of affected global variables
@@ -37,7 +38,7 @@ class TemplatesTest extends TestWithMockery
 
     private function I_can_use_template_to_add_custom_armament(string $templatePath): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->atLeast()->once()
             ->with([AttackController::ACTION => ''])
@@ -47,6 +48,24 @@ class TemplatesTest extends TestWithMockery
         include $templatePath;
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+    }
+
+    /**
+     * @return AttackController|MockInterface
+     */
+    private function createAttackController(): AttackController
+    {
+        $controller = $this->mockery(AttackController::class);
+        $controller->shouldReceive('getGenericPartsRoot')
+            ->andReturn($this->getGenericPartsRoot());
+        $controller->makePartial(); // call original methods in not mocked
+
+        return $controller;
+    }
+
+    private function getGenericPartsRoot(): string
+    {
+        return __DIR__ . '/../../../parts/attack-skeleton';
     }
 
     /**
@@ -84,23 +103,15 @@ class TemplatesTest extends TestWithMockery
     /**
      * @test
      */
-    public function I_can_use_template_with_armors_and_helms(): void
+    public function I_can_use_template_with_armors(): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('isAddingNewBodyArmor')
-            ->andReturn(false);
-        $controller->shouldReceive('isAddingNewHelm')
             ->andReturn(false);
         $controller->shouldReceive('getCurrentValues')
             ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
         $currentValues->shouldReceive('getCustomBodyArmorsValues')
             ->andReturn([]);
-        $currentValues->shouldReceive('getCustomHelmsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getCurrentUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_HELM])
-            ->andReturn('');
         $controller->shouldReceive('getCurrentUrlWithQuery')
             ->zeroOrMoreTimes()
             ->with([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR])
@@ -109,6 +120,29 @@ class TemplatesTest extends TestWithMockery
             ->andReturn([]);
         $controller->shouldReceive('getMessagesAboutArmors')
             ->andReturn([]);
+        \ob_start();
+        include __DIR__ . '/../../../parts/attack-skeleton/armor.php';
+        $content = \ob_get_clean();
+        self::assertNotEmpty($content);
+        self::assertSame($content, $controller->getArmorContent());
+    }
+
+    /**
+     * @test
+     */
+    public function I_can_use_template_with_helms(): void
+    {
+        $controller = $this->createAttackController();
+        $controller->shouldReceive('isAddingNewHelm')
+            ->andReturn(false);
+        $controller->shouldReceive('getCurrentValues')
+            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+        $currentValues->shouldReceive('getCustomHelmsValues')
+            ->andReturn([]);
+        $controller->shouldReceive('getCurrentUrlWithQuery')
+            ->zeroOrMoreTimes()
+            ->with([AttackController::ACTION => AttackController::ADD_NEW_HELM])
+            ->andReturn('');
         $controller->shouldReceive('getHelms')
             ->andReturn([]);
         $controller->shouldReceive('getMessagesAboutHelms')
@@ -117,6 +151,7 @@ class TemplatesTest extends TestWithMockery
         include __DIR__ . '/../../../parts/attack-skeleton/helm.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+        self::assertSame($content, $controller->getHelmContent());
     }
 
     /**
@@ -124,7 +159,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_body_properties(): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('getCurrentProperties')
             ->andReturn($currentProperties = $this->mockery(CurrentProperties::class));
         $currentProperties->shouldReceive('getCurrentStrength')
@@ -147,6 +182,9 @@ class TemplatesTest extends TestWithMockery
         include __DIR__ . '/../../../parts/attack-skeleton/body_properties.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+        $controller->shouldReceive('getGenericPartsRoot')
+            ->andReturn($this->getGenericPartsRoot());
+        self::assertSame($content, $controller->getBodyPropertiesContent());
     }
 
     /**
@@ -154,7 +192,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_melee_weapons(): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('isAddingNewMeleeWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -179,6 +217,7 @@ class TemplatesTest extends TestWithMockery
         include __DIR__ . '/../../../parts/attack-skeleton/melee_weapon.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+        self::assertSame($content, $controller->getMeleeWeaponContent());
     }
 
     /**
@@ -186,7 +225,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_ranged_weapons(): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('isAddingNewRangedWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -211,6 +250,7 @@ class TemplatesTest extends TestWithMockery
         include __DIR__ . '/../../../parts/attack-skeleton/ranged_weapon.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+        self::assertSame($content, $controller->getRangedWeaponContent());
     }
 
     /**
@@ -218,7 +258,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_shields(): void
     {
-        $controller = $this->mockery(AttackController::class);
+        $controller = $this->createAttackController();
         $controller->shouldReceive('isAddingNewShield')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
@@ -243,5 +283,6 @@ class TemplatesTest extends TestWithMockery
         include __DIR__ . '/../../../parts/attack-skeleton/shield.php';
         $content = \ob_get_clean();
         self::assertNotEmpty($content);
+        self::assertSame($content, $controller->getShieldContent());
     }
 }
