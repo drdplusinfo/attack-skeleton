@@ -42,8 +42,8 @@ a.inner {
     text-decoration: none;
 }
 
-.body-properties > .panel {
-    min-width: 5em;
+.body-properties label {
+    display: block;
 }
 
 .decreased {
