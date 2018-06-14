@@ -440,7 +440,7 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
         );
     }
 
-    public function getAddCustomShield(): string
+    public function getAddCustomShieldContent(): string
     {
         return $this->getGenericPartContent(
             'add-custom/' . \basename(__DIR__ . '/../../parts/attack-skeleton/add-custom/add_custom_shield.php')

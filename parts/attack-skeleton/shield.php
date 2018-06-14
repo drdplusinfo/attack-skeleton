@@ -4,7 +4,7 @@ namespace DrdPlus\AttackSkeleton;
 /** @var AttackController $controller */
 if ($controller->isAddingNewShield()) { ?>
   <div id="addShield" class="row add">
-      <?= $controller->getAddCustomShield() ?>
+      <?= $controller->getAddCustomShieldContent() ?>
   </div>
 <?php } ?>
 <div class="<?php if ($controller->isAddingNewShield()) { ?>hidden<?php } ?>">
