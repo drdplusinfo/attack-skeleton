@@ -10,6 +10,7 @@ use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Properties\PropertyCode;
+use DrdPlus\FrontendSkeleton\HtmlHelper;
 use DrdPlus\Tables\Tables;
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\Tools\ToInteger;
@@ -52,6 +53,7 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
     private $messagesAbout = [];
 
     /**
+     * @param HtmlHelper $htmlHelper
      * @param string $documentRoot
      * @param string $vendorRoot
      * @param string $sourceCodeUrl
@@ -63,6 +65,7 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
      * @throws \DrdPlus\AttackSkeleton\Exceptions\BrokenNewArmamentValues
      */
     public function __construct(
+        HtmlHelper $htmlHelper,
         string $sourceCodeUrl,
         string $cookiesPostfix,
         string $documentRoot,
@@ -78,6 +81,7 @@ class AttackController extends \DrdPlus\CalculatorSkeleton\CalculatorController
                 : ($vendorRoot . '/drd-plus/attack-skeleton/parts');
         $genericPartsRoot = $genericPartsRoot ?? (__DIR__ . '/../../parts/attack-skeleton');
         parent::__construct(
+            $htmlHelper,
             $sourceCodeUrl,
             $cookiesPostfix,
             $documentRoot,

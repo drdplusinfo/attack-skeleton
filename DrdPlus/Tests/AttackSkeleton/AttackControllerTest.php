@@ -14,7 +14,13 @@ class AttackControllerTest extends AbstractContentTest
      */
     public function I_can_get_local_url_with_scalar_but_non_string_additional_parameters(): void
     {
-        $controller = new AttackController('https://example.com', 'foo', $this->getDocumentRoot(), $this->getVendorRoot());
+        $controller = new AttackController(
+            $this->createHtmlHelper(),
+            'https://example.com',
+            'foo',
+            $this->getDocumentRoot(),
+            $this->getVendorRoot()
+        );
         $encodedBrackets0 = \urlencode('[0]');
         $encodedBrackets1 = \urlencode('[1]');
         self::assertSame(
