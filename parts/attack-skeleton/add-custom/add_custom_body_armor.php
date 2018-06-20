@@ -21,7 +21,7 @@ namespace DrdPlus\AttackSkeleton;
                           required="required"></label>
   <label>Počet kol na obléknutí <input type="number" min="0" max="99" value="3"
                                        name="<?= CurrentAttackValues::CUSTOM_BODY_ARMOR_ROUNDS_TO_PUT_ON ?>[0]"></label>
-  <input type="submit" value="Přidat zbroj">
+  <input type="submit" class="manual" value="Přidat zbroj">
 </div>
 <div class="col-sm-1">
   <a class="button cancel" href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>

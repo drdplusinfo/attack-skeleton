@@ -19,7 +19,7 @@ namespace DrdPlus\AttackSkeleton;
   <label>Váha v kg <input type="number" min="0" max="99.99" value="0.5"
                           name="<?= CurrentAttackValues::CUSTOM_SHIELD_WEIGHT ?>[0]"
                           required="required"></label>
-  <input type="submit" value="Přidat štít">
+  <input type="submit" class="manual" value="Přidat štít">
 </div>
 <div class="col-sm-1">
   <a class="button cancel" href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>

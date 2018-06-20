@@ -47,7 +47,7 @@ use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
                           required="required"></label>
   <label>Pouze obouruční <input type="checkbox" value="1"
                                 name="<?= CurrentAttackValues::CUSTOM_MELEE_WEAPON_TWO_HANDED_ONLY ?>[0]"></label>
-  <input type="submit" value="Přidat">
+  <input type="submit" class="manual" value="Přidat">
 </div>
 <div class="col-sm-1">
   <a class="button cancel" href="<?= $controller->getLocalUrlWithQuery([AttackController::ACTION => '']); ?>">Zrušit</a>
