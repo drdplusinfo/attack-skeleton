@@ -1319,12 +1319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jaroslavtyc/drd-plus-frontend-skeleton.git",
-                "reference": "770e275785cb10bcb78b72cc11564155cb53d315"
+                "reference": "e4f48982f8f198c19400e578735ea12d55e477a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/770e275785cb10bcb78b72cc11564155cb53d315",
-                "reference": "770e275785cb10bcb78b72cc11564155cb53d315",
+                "url": "https://api.github.com/repos/jaroslavtyc/drd-plus-frontend-skeleton/zipball/e4f48982f8f198c19400e578735ea12d55e477a8",
+                "reference": "e4f48982f8f198c19400e578735ea12d55e477a8",
                 "shasum": ""
             },
             "require": {
@@ -1365,7 +1365,7 @@
                 "pages",
                 "view"
             ],
-            "time": "2018-06-19 14:52:29"
+            "time": "2018-06-19 17:04:01"
         },
         {
             "name": "drd-plus/health",
