@@ -1,5 +1,5 @@
 {
-  "name": "drd-plus/attack-skeleton",
+  "name": "drdplus/attack-skeleton",
   "license": "MIT",
   "type": "project",
   "description": "Configurator skeleton for those using weapons for DrD+",
@@ -17,28 +17,23 @@
     }
   },
   "require": {
-    "php": ">=7.1",
-    "granam/strict-object": "dev-master",
-    "drd-plus/tables": "dev-master",
-    "drd-plus/fight-properties": "dev-master",
-    "drd-plus/calculator-skeleton": "dev-master"
+    "php": ">=7.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
     "phpunit/phpunit": "~7.0",
     "mockery/mockery": "~1.0",
-    "granam/exceptions-hierarchy": "dev-master",
     "phpgt/dom": "^1.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
     "pre-autoload-dump": [
-      "cp ./vendor/drd-plus/calculator-skeleton/parts/calculator-skeleton/* ./parts/attack-skeleton/",
-      "rm -fr ./images/generic/frontend-skeleton && rm -fr ./images/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/images/generic/ ./images/",
-      "rm -fr ./css/generic/frontend-skeleton && rm -fr ./css/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/css/generic/ ./css/",
-      "rm -fr ./js/generic/frontend-skeleton && rm -fr ./js/generic/calculator-skeleton && cp -r ./vendor/drd-plus/calculator-skeleton/js/generic/ ./js/",
-      "find ./vendor/drd-plus/calculator-skeleton/web/*.html -exec cp {} ./web/ \\;",
+      "cp ./vendor/drdplus/calculator-skeleton/parts/calculator-skeleton/* ./parts/attack-skeleton/",
+      "rm -fr ./images/generic/frontend-skeleton && rm -fr ./images/generic/calculator-skeleton && cp -r ./vendor/drdplus/calculator-skeleton/images/generic/ ./images/",
+      "rm -fr ./css/generic/frontend-skeleton && rm -fr ./css/generic/calculator-skeleton && cp -r ./vendor/drdplus/calculator-skeleton/css/generic/ ./css/",
+      "rm -fr ./js/generic/frontend-skeleton && rm -fr ./js/generic/calculator-skeleton && cp -r ./vendor/drdplus/calculator-skeleton/js/generic/ ./js/",
+      "find ./vendor/drdplus/calculator-skeleton/web/*.html -exec cp {} ./web/ \\;",
       "find ./cache -mindepth 2 -type f -exec rm {} +"
     ],
     "post-update-cmd": [
