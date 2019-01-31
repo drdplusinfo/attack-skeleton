@@ -73,6 +73,9 @@ class AttackServicesContainer extends CalculatorServicesContainer
             'bodyProperties' => $this->getBodyPropertiesBody(),
             'bodyArmor' => $this->getBodyArmorBody(),
             'helm' => $this->getHelmBody(),
+            'shield' => $this->getShieldBody(),
+            'meleeWeapon' => $this->getMeleeWeaponBody(),
+            'rangedWeapon' => $this->getRangedWeaponBody(),
         ];
     }
 
