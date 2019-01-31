@@ -6,7 +6,7 @@ namespace DrdPlus\Tests\AttackSkeleton;
 
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
-use DrdPlus\AttackSkeleton\CustomArmamentsService;
+use DrdPlus\AttackSkeleton\CustomArmamentAdder;
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\CalculatorSkeleton\Memory;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
@@ -27,7 +27,7 @@ class AttackForCalculatorTest extends TestWithMockery
         $attackForCalculator = new PossibleArmaments(
             new CurrentArmamentsValues([], new Memory(true, [], true, static::class)),
             new History(true, [], true, static::class),
-            new CustomArmamentsService(),
+            new CustomArmamentAdder(),
             Tables::getIt()
         );
         $this->I_get_main_hand_as_default_item_holding($attackForCalculator);

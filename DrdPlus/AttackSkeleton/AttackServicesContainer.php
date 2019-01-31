@@ -34,8 +34,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $currentArmaments;
     /** @var CustomArmamentsRegistrar */
     private $customArmamentsRegistrar;
-    /** @var CustomArmamentsService */
-    private $customArmamentsService;
+    /** @var CustomArmamentAdder */
+    private $customArmamentAdder;
     /** @var CurrentArmamentsValues */
     private $currentArmamentsValues;
     /** @var ArmamentsUsabilityMessages */
@@ -69,13 +69,13 @@ class AttackServicesContainer extends CalculatorServicesContainer
     {
         return [
             'historyDeletion' => $this->getHistoryDeletionBody(),
-            'calculatorDebugContacts' => $this->getCalculatorDebugContactsBody(),
             'bodyProperties' => $this->getBodyPropertiesBody(),
             'bodyArmor' => $this->getBodyArmorBody(),
             'helm' => $this->getHelmBody(),
-            'shield' => $this->getShieldBody(),
             'meleeWeapon' => $this->getMeleeWeaponBody(),
             'rangedWeapon' => $this->getRangedWeaponBody(),
+            'shield' => $this->getShieldBody(),
+            'calculatorDebugContacts' => $this->getCalculatorDebugContactsBody(),
         ];
     }
 
@@ -252,7 +252,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
             $this->armourer = new Armourer($this->getTables());
         }
 
-        return $this->getArmourer();
+        return $this->armourer;
     }
 
     public function getCurrentArmaments(): CurrentArmaments
@@ -273,7 +273,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     {
         if ($this->customArmamentsRegistrar === null) {
             $this->customArmamentsRegistrar = new CustomArmamentsRegistrar(
-                $this->getCustomArmamentsService(),
+                $this->getCustomArmamentAdder(),
                 $this->getTables()
             );
         }
@@ -299,13 +299,13 @@ class AttackServicesContainer extends CalculatorServicesContainer
         return $this->frontendHelper;
     }
 
-    public function getCustomArmamentsService(): CustomArmamentsService
+    public function getCustomArmamentAdder(): CustomArmamentAdder
     {
-        if ($this->customArmamentsService === null) {
-            $this->customArmamentsService = new CustomArmamentsService($this->getArmourer());
+        if ($this->customArmamentAdder === null) {
+            $this->customArmamentAdder = new CustomArmamentAdder($this->getArmourer());
         }
 
-        return $this->customArmamentsService;
+        return $this->customArmamentAdder;
     }
 
     public function getCurrentArmamentsValues(): CurrentArmamentsValues

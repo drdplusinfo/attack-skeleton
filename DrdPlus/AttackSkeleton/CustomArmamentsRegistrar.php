@@ -16,14 +16,14 @@ use Granam\Strict\Object\StrictObject;
 
 class CustomArmamentsRegistrar extends StrictObject
 {
-    /** @var CustomArmamentsService */
-    private $customArmamentsService;
+    /** @var CustomArmamentAdder */
+    private $customArmamentAdder;
     /** @var Tables */
     private $tables;
 
-    public function __construct(CustomArmamentsService $customArmamentsService, Tables $tables)
+    public function __construct(CustomArmamentAdder $customArmamentAdder, Tables $tables)
     {
-        $this->customArmamentsService = $customArmamentsService;
+        $this->customArmamentAdder = $customArmamentAdder;
         $this->tables = $tables;
     }
 
@@ -46,7 +46,7 @@ class CustomArmamentsRegistrar extends StrictObject
     protected function registerCustomMeleeWeapons(CurrentArmamentsValues $currentValues): void
     {
         foreach ($currentValues->getCurrentCustomMeleeWeaponsValues() as $customMeleeWeaponsValue) {
-            $this->customArmamentsService->addCustomMeleeWeapon(
+            $this->customArmamentAdder->addCustomMeleeWeapon(
                 $customMeleeWeaponsValue[CurrentArmamentsValues::CUSTOM_MELEE_WEAPON_NAME],
                 WeaponCategoryCode::getIt($customMeleeWeaponsValue[CurrentArmamentsValues::CUSTOM_MELEE_WEAPON_CATEGORY]),
                 Strength::getIt($customMeleeWeaponsValue[CurrentArmamentsValues::CUSTOM_MELEE_WEAPON_REQUIRED_STRENGTH]),
@@ -72,7 +72,7 @@ class CustomArmamentsRegistrar extends StrictObject
     protected function registerCustomRangedWeapons(CurrentArmamentsValues $currentValues): void
     {
         foreach ($currentValues->getCurrentCustomRangedWeaponsValues() as $customRangedWeaponsValue) {
-            $this->customArmamentsService->addCustomRangedWeapon(
+            $this->customArmamentAdder->addCustomRangedWeapon(
                 $customRangedWeaponsValue[CurrentArmamentsValues::CUSTOM_RANGED_WEAPON_NAME],
                 WeaponCategoryCode::getIt($customRangedWeaponsValue[CurrentArmamentsValues::CUSTOM_RANGED_WEAPON_CATEGORY]),
                 Strength::getIt($customRangedWeaponsValue[CurrentArmamentsValues::CUSTOM_RANGED_WEAPON_REQUIRED_STRENGTH]),
@@ -102,7 +102,7 @@ class CustomArmamentsRegistrar extends StrictObject
     protected function registerCustomBodyArmors(CurrentArmamentsValues $currentValues): void
     {
         foreach ($currentValues->getCurrentCustomBodyArmorsValues() as $customBodyArmorsValue) {
-            $this->customArmamentsService->addCustomBodyArmor(
+            $this->customArmamentAdder->addCustomBodyArmor(
                 $customBodyArmorsValue[CurrentArmamentsValues::CUSTOM_BODY_ARMOR_NAME],
                 Strength::getIt($customBodyArmorsValue[CurrentArmamentsValues::CUSTOM_BODY_ARMOR_REQUIRED_STRENGTH]),
                 ToInteger::toInteger($customBodyArmorsValue[CurrentArmamentsValues::CUSTOM_BODY_ARMOR_RESTRICTION]),
@@ -124,7 +124,7 @@ class CustomArmamentsRegistrar extends StrictObject
     protected function registerCustomHelms(CurrentArmamentsValues $currentValues): void
     {
         foreach ($currentValues->getCurrentCustomHelmsValues() as $customHelmsValue) {
-            $this->customArmamentsService->addCustomHelm(
+            $this->customArmamentAdder->addCustomHelm(
                 $customHelmsValue[CurrentArmamentsValues::CUSTOM_HELM_NAME],
                 Strength::getIt($customHelmsValue[CurrentArmamentsValues::CUSTOM_HELM_REQUIRED_STRENGTH]),
                 ToInteger::toInteger($customHelmsValue[CurrentArmamentsValues::CUSTOM_HELM_RESTRICTION]),
