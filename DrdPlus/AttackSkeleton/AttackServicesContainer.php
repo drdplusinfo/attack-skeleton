@@ -14,6 +14,7 @@ use DrdPlus\AttackSkeleton\Web\BodyPropertiesBody;
 use DrdPlus\AttackSkeleton\Web\HelmBody;
 use DrdPlus\AttackSkeleton\Web\MeleeWeaponBody;
 use DrdPlus\AttackSkeleton\Web\RangedWeaponBody;
+use DrdPlus\AttackSkeleton\Web\ShieldBody;
 use DrdPlus\CalculatorSkeleton\CalculatorServicesContainer;
 use DrdPlus\Tables\Tables;
 
@@ -59,6 +60,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $rangedWeaponBody;
     /** @var AddCustomRangedWeaponBody */
     private $addCustomRangedWeaponBody;
+    /** @var ShieldBody */
+    private $shieldBody;
     /** @var AddCustomShieldBody */
     private $addCustomShieldBody;
 
@@ -188,6 +191,24 @@ class AttackServicesContainer extends CalculatorServicesContainer
         }
 
         return $this->addCustomRangedWeaponBody;
+    }
+
+    public function getShieldBody(): ShieldBody
+    {
+        if ($this->shieldBody === null) {
+            $this->shieldBody = new ShieldBody(
+                $this->getCustomArmamentsState(),
+                $this->getCurrentArmaments(),
+                $this->getCurrentArmamentsValues(),
+                $this->getPossibleArmaments(),
+                $this->getArmamentsUsabilityMessages(),
+                $this->getFrontendHelper(),
+                $this->getArmourer(),
+                $this->getAddCustomShieldBody()
+            );
+        }
+
+        return $this->shieldBody;
     }
 
     public function getAddCustomShieldBody(): AddCustomShieldBody
