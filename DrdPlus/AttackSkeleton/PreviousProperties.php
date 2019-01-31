@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
-/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
+
 namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\CalculatorSkeleton\History;
+use DrdPlus\Codes\Properties\PropertyCode;
 use DrdPlus\Properties\Base\Agility;
 use DrdPlus\Properties\Base\Charisma;
 use DrdPlus\Properties\Base\Intelligence;
@@ -26,42 +27,42 @@ class PreviousProperties extends StrictObject
 
     public function getPreviousStrength(): Strength
     {
-        return Strength::getIt((int)$this->history->getValue(AttackController::STRENGTH));
+        return Strength::getIt((int)$this->history->getValue(PropertyCode::STRENGTH));
     }
 
     public function getPreviousAgility(): Agility
     {
-        return Agility::getIt((int)$this->history->getValue(AttackController::AGILITY));
+        return Agility::getIt((int)$this->history->getValue(PropertyCode::AGILITY));
     }
 
     public function getPreviousKnack(): Knack
     {
-        return Knack::getIt((int)$this->history->getValue(AttackController::KNACK));
+        return Knack::getIt((int)$this->history->getValue(PropertyCode::KNACK));
     }
 
     public function getPreviousWill(): Will
     {
-        return Will::getIt((int)$this->history->getValue(AttackController::WILL));
+        return Will::getIt((int)$this->history->getValue(PropertyCode::WILL));
     }
 
     public function getPreviousIntelligence(): Intelligence
     {
-        return Intelligence::getIt((int)$this->history->getValue(AttackController::INTELLIGENCE));
+        return Intelligence::getIt((int)$this->history->getValue(PropertyCode::INTELLIGENCE));
     }
 
     public function getPreviousCharisma(): Charisma
     {
-        return Charisma::getIt((int)$this->history->getValue(AttackController::CHARISMA));
+        return Charisma::getIt((int)$this->history->getValue(PropertyCode::CHARISMA));
     }
 
     public function getPreviousSize(): Size
     {
-        return Size::getIt((int)$this->history->getValue(AttackController::SIZE));
+        return Size::getIt((int)$this->history->getValue(PropertyCode::SIZE));
     }
 
     public function getPreviousHeightInCm(): HeightInCm
     {
-        return HeightInCm::getIt($this->history->getValue(AttackController::HEIGHT_IN_CM) ?? 150);
+        return HeightInCm::getIt($this->history->getValue(PropertyCode::HEIGHT_IN_CM) ?? 150);
     }
 
 }

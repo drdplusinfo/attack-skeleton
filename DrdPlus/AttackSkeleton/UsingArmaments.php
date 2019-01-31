@@ -1,15 +1,14 @@
 <?php
 declare(strict_types=1);
-/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
 namespace DrdPlus\AttackSkeleton;
 
+use DrdPlus\Armourer\Armourer;
 use DrdPlus\Codes\Armaments\ArmamentCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Armaments\WeaponlikeCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Properties\Base\Strength;
-use DrdPlus\Tables\Tables;
 
 trait UsingArmaments
 {
@@ -18,7 +17,7 @@ trait UsingArmaments
      * @param WeaponlikeCode $weaponlikeCode
      * @param ItemHoldingCode $itemHoldingCode
      * @param PreviousProperties $previousProperties
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByOneHand
@@ -29,18 +28,18 @@ trait UsingArmaments
         WeaponlikeCode $weaponlikeCode,
         ItemHoldingCode $itemHoldingCode,
         PreviousProperties $previousProperties,
-        Tables $tables
+        Armourer $armourer
     ): bool
     {
         return $this->couldUseArmament(
             $weaponlikeCode,
-            $tables->getArmourer()->getStrengthForWeaponOrShield(
+            $armourer->getStrengthForWeaponOrShield(
                 $weaponlikeCode,
-                $this->getWeaponlikeHolding($weaponlikeCode, $itemHoldingCode->getValue(), $tables),
+                $this->getWeaponlikeHolding($weaponlikeCode, $itemHoldingCode->getValue(), $armourer),
                 $previousProperties->getPreviousStrength()
             ),
             $previousProperties,
-            $tables
+            $armourer
         );
     }
 
@@ -48,7 +47,7 @@ trait UsingArmaments
      * @param ArmamentCode $armamentCode
      * @param Strength $strengthForArmament
      * @param PreviousProperties $previousProperties
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownArmament
      */
@@ -56,30 +55,25 @@ trait UsingArmaments
         ArmamentCode $armamentCode,
         Strength $strengthForArmament,
         PreviousProperties $previousProperties,
-        Tables $tables
+        Armourer $armourer
     ): bool
     {
-        return $tables->getArmourer()
-            ->canUseArmament(
-                $armamentCode,
-                $strengthForArmament,
-                $previousProperties->getPreviousSize()
-            );
+        return $armourer->canUseArmament($armamentCode, $strengthForArmament, $previousProperties->getPreviousSize());
     }
 
     /**
      * @param WeaponlikeCode $weaponlikeCode
      * @param string $weaponHolding
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return ItemHoldingCode
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    protected function getWeaponlikeHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding, Tables $tables): ItemHoldingCode
+    protected function getWeaponlikeHolding(WeaponlikeCode $weaponlikeCode, string $weaponHolding, Armourer $armourer): ItemHoldingCode
     {
-        if ($tables->getArmourer()->isTwoHandedOnly($weaponlikeCode)) {
+        if ($armourer->isTwoHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
         }
-        if ($tables->getArmourer()->isOneHandedOnly($weaponlikeCode)) {
+        if ($armourer->isOneHandedOnly($weaponlikeCode)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
         if (!$weaponHolding) {
@@ -91,31 +85,31 @@ trait UsingArmaments
 
     /**
      * @param WeaponlikeCode $weaponlikeCode
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    public function isOneHandedOnly(WeaponlikeCode $weaponlikeCode, Tables $tables): bool
+    public function isOneHandedOnly(WeaponlikeCode $weaponlikeCode, Armourer $armourer): bool
     {
-        return $tables->getArmourer()->isOneHandedOnly($weaponlikeCode);
+        return $armourer->isOneHandedOnly($weaponlikeCode);
     }
 
     /**
      * @param WeaponlikeCode $weaponlikeCode
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return bool
      * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
      */
-    public function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode, Tables $tables): bool
+    public function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode, Armourer $armourer): bool
     {
-        return $tables->getArmourer()->isTwoHandedOnly($weaponlikeCode);
+        return $armourer->isTwoHandedOnly($weaponlikeCode);
     }
 
     /**
      * @param ItemHoldingCode $weaponHolding
      * @param WeaponlikeCode $weaponlikeCode
      * @param ShieldCode $shield
-     * @param Tables $tables
+     * @param Armourer $armourer
      * @return ItemHoldingCode
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
@@ -123,23 +117,70 @@ trait UsingArmaments
         ItemHoldingCode $weaponHolding,
         WeaponlikeCode $weaponlikeCode,
         ShieldCode $shield,
-        Tables $tables
+        Armourer $armourer
     ): ItemHoldingCode
     {
         if ($weaponHolding->holdsByTwoHands()) {
-            /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-            if ($tables->getArmourer()->canHoldItByTwoHands($shield)) {
+            if ($armourer->canHoldItByTwoHands($shield)) {
                 // because two-handed weapon has to be dropped to use shield and then both hands can be used for shield
                 return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
             }
 
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
-        if ($weaponlikeCode->isUnarmed() && $tables->getArmourer()->canHoldItByTwoHands($shield)) {
+        if ($weaponlikeCode->isUnarmed() && $armourer->canHoldItByTwoHands($shield)) {
             return ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS);
         }
 
         return $weaponHolding->getOpposite();
     }
+
+    protected function canUseWeaponlike(
+        WeaponlikeCode $weaponlikeCode,
+        ItemHoldingCode $itemHoldingCode,
+        Armourer $armourer,
+        CurrentProperties $currentProperties
+    ): bool
+    {
+        return $this->canUseArmament(
+            $weaponlikeCode,
+            $armourer->getStrengthForWeaponOrShield(
+                $weaponlikeCode,
+                $this->getWeaponlikeHolding($weaponlikeCode, $itemHoldingCode->getValue(), $this->armourer),
+                $currentProperties->getCurrentStrength()
+            ),
+            $armourer,
+            $currentProperties
+        );
+    }
+
+    protected function canUseArmament(
+        ArmamentCode $armamentCode,
+        Strength $strengthForArmament,
+        Armourer $armourer,
+        CurrentProperties $currentProperties
+    ): bool
+    {
+        return $armourer->canUseArmament($armamentCode, $strengthForArmament, $currentProperties->getCurrentSize());
+    }
+
+    protected function canUseShield(
+        ShieldCode $shieldCode,
+        ItemHoldingCode $itemHoldingCode,
+        Armourer $armourer,
+        CurrentProperties $currentProperties
+    ): bool
+    {
+        return $this->canUseArmament(
+            $shieldCode,
+            $armourer->getStrengthForWeaponOrShield(
+                $shieldCode,
+                $itemHoldingCode,
+                $currentProperties->getCurrentStrength()
+            ),
+            $armourer,
+            $currentProperties
+        );
+    }
+
 }

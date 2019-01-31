@@ -1,8 +1,9 @@
 <?php
-declare(strict_types=1); // on PHP 7+ are standard PHP methods strict to types of given parameters
+declare(strict_types=1);
 
 namespace DrdPlus\AttackSkeleton;
 
+use DrdPlus\Armourer\Armourer;
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\Armaments\HelmCode;
@@ -21,13 +22,16 @@ class PreviousArmaments extends StrictObject
     private $history;
     /** @var PreviousProperties */
     private $previousProperties;
+    /** @var Armourer */
+    private $armourer;
     /** @var Tables */
     private $tables;
 
-    public function __construct(History $history, PreviousProperties $previousProperties, Tables $tables)
+    public function __construct(History $history, PreviousProperties $previousProperties, Armourer $armourer, Tables $tables)
     {
         $this->history = $history;
         $this->previousProperties = $previousProperties;
+        $this->armourer = $armourer;
         $this->tables = $tables;
     }
 
@@ -47,12 +51,17 @@ class PreviousArmaments extends StrictObject
         return $this->previousProperties;
     }
 
-    /**
-     * @return Tables
-     */
     protected function getTables(): Tables
     {
         return $this->tables;
+    }
+
+    /**
+     * @return Armourer
+     */
+    protected function getArmourer(): Armourer
+    {
+        return $this->armourer;
     }
 
     /**
@@ -64,17 +73,17 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousMeleeWeapon(): MeleeWeaponCode
     {
-        $meleeWeaponValue = $this->history->getValue(AttackController::MELEE_WEAPON);
+        $meleeWeaponValue = $this->history->getValue(FrontendHelper::MELEE_WEAPON);
         if (!$meleeWeaponValue) {
             return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
         }
         $meleeWeapon = MeleeWeaponCode::getIt($meleeWeaponValue);
         $weaponHolding = $this->getWeaponlikeHolding(
             $meleeWeapon,
-            $this->history->getValue(AttackController::MELEE_WEAPON_HOLDING),
-            $this->tables
+            $this->history->getValue(FrontendHelper::MELEE_WEAPON_HOLDING),
+            $this->getArmourer()
         );
-        if (!$this->couldUseWeaponlike($meleeWeapon, $weaponHolding, $this->previousProperties, $this->tables)) {
+        if (!$this->couldUseWeaponlike($meleeWeapon, $weaponHolding, $this->previousProperties, $this->getArmourer())) {
             return MeleeWeaponCode::getIt(MeleeWeaponCode::HAND);
         }
 
@@ -90,7 +99,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousMeleeWeaponHolding(): ItemHoldingCode
     {
-        $previousMeleeWeaponHoldingValue = $this->history->getValue(AttackController::MELEE_WEAPON_HOLDING);
+        $previousMeleeWeaponHoldingValue = $this->history->getValue(FrontendHelper::MELEE_WEAPON_HOLDING);
         if ($previousMeleeWeaponHoldingValue === null) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
@@ -98,7 +107,7 @@ class PreviousArmaments extends StrictObject
         return $this->getWeaponlikeHolding(
             $this->getPreviousMeleeWeapon(),
             $previousMeleeWeaponHoldingValue,
-            $this->tables
+            $this->getArmourer()
         );
     }
 
@@ -111,17 +120,17 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousRangedWeapon(): RangedWeaponCode
     {
-        $rangedWeaponValue = $this->history->getValue(AttackController::RANGED_WEAPON);
+        $rangedWeaponValue = $this->history->getValue(FrontendHelper::RANGED_WEAPON);
         if (!$rangedWeaponValue) {
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
         $rangedWeapon = RangedWeaponCode::getIt($rangedWeaponValue);
         $weaponHolding = $this->getWeaponlikeHolding(
             $rangedWeapon,
-            $this->history->getValue(AttackController::RANGED_WEAPON_HOLDING),
-            $this->tables
+            $this->history->getValue(FrontendHelper::RANGED_WEAPON_HOLDING),
+            $this->getArmourer()
         );
-        if (!$this->couldUseWeaponlike($rangedWeapon, $weaponHolding, $this->previousProperties, $this->tables)) {
+        if (!$this->couldUseWeaponlike($rangedWeapon, $weaponHolding, $this->previousProperties, $this->getArmourer())) {
             return RangedWeaponCode::getIt(RangedWeaponCode::SAND);
         }
 
@@ -134,7 +143,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousBodyArmor(): BodyArmorCode
     {
-        $previousBodyArmorValue = $this->history->getValue(AttackController::BODY_ARMOR);
+        $previousBodyArmorValue = $this->history->getValue(FrontendHelper::BODY_ARMOR);
         if (!$previousBodyArmorValue) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
@@ -143,7 +152,7 @@ class PreviousArmaments extends StrictObject
             $previousBodyArmor,
             $this->previousProperties->getPreviousStrength(),
             $this->previousProperties,
-            $this->tables
+            $this->getArmourer()
         )) {
             return BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR);
         }
@@ -157,7 +166,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousHelm(): HelmCode
     {
-        $previousHelmValue = $this->history->getValue(AttackController::HELM);
+        $previousHelmValue = $this->history->getValue(FrontendHelper::HELM);
         if (!$previousHelmValue) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
@@ -166,7 +175,7 @@ class PreviousArmaments extends StrictObject
             $previousHelm,
             $this->previousProperties->getPreviousStrength(),
             $this->previousProperties,
-            $this->tables
+            $this->getArmourer()
         )) {
             return HelmCode::getIt(HelmCode::WITHOUT_HELM);
         }
@@ -184,7 +193,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousShield(): ShieldCode
     {
-        $previousShieldValue = $this->history->getValue(AttackController::SHIELD);
+        $previousShieldValue = $this->history->getValue(FrontendHelper::SHIELD);
         if (!$previousShieldValue) {
             return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
         }
@@ -202,16 +211,15 @@ class PreviousArmaments extends StrictObject
 
     public function couldUseShield(ShieldCode $shieldCode, ItemHoldingCode $itemHoldingCode): bool
     {
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
         return $this->couldUseArmament(
             $shieldCode,
-            Tables::getIt()->getArmourer()->getStrengthForWeaponOrShield(
+            $this->getArmourer()->getStrengthForWeaponOrShield(
                 $shieldCode,
                 $itemHoldingCode,
                 $this->previousProperties->getPreviousStrength()
             ),
             $this->previousProperties,
-            $this->tables
+            $this->getArmourer()
         );
     }
 
@@ -224,16 +232,12 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousRangedWeaponHolding(): ItemHoldingCode
     {
-        $rangedWeaponHoldingValue = $this->history->getValue(AttackController::RANGED_WEAPON_HOLDING);
+        $rangedWeaponHoldingValue = $this->history->getValue(FrontendHelper::RANGED_WEAPON_HOLDING);
         if ($rangedWeaponHoldingValue === null) {
             return ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND);
         }
 
-        return $this->getWeaponlikeHolding(
-            $this->getPreviousRangedWeapon(),
-            $rangedWeaponHoldingValue,
-            $this->tables
-        );
+        return $this->getWeaponlikeHolding($this->getPreviousRangedWeapon(), $rangedWeaponHoldingValue, $this->getArmourer());
     }
 
     /**
@@ -251,7 +255,7 @@ class PreviousArmaments extends StrictObject
             $this->getPreviousMeleeWeaponHolding(),
             $this->getPreviousMeleeWeapon(),
             $shieldCode ?? $this->getPreviousShield(),
-            $this->tables
+            $this->getArmourer()
         );
     }
 
@@ -270,7 +274,7 @@ class PreviousArmaments extends StrictObject
             $this->getPreviousRangedWeaponHolding(),
             $this->getPreviousRangedWeapon(),
             $shieldCode ?? $this->getPreviousShield(),
-            $this->tables
+            $this->getArmourer()
         );
     }
 
@@ -281,7 +285,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getPreviousHelmProtection(): int
     {
-        return $this->tables->getHelmsTable()->getProtectionOf($this->getPreviousHelm());
+        return $this->getArmourer()->getProtectionOfHelm($this->getPreviousHelm());
     }
 
     /**
@@ -291,7 +295,7 @@ class PreviousArmaments extends StrictObject
      */
     public function getProtectionOfPreviousBodyArmor(): int
     {
-        return $this->tables->getBodyArmorsTable()->getProtectionOf($this->getPreviousBodyArmor());
+        return $this->getArmourer()->getProtectionOfBodyArmor($this->getPreviousBodyArmor());
     }
 
 }

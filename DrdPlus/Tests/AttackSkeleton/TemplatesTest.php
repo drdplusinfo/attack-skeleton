@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\AttackSkeleton\AttackForCalculator;
+use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\AttackController;
-use DrdPlus\AttackSkeleton\CurrentAttackValues;
+use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CurrentProperties;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
@@ -109,7 +109,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('isAddingNewBodyArmor')
             ->andReturn(false);
         $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
         $currentValues->shouldReceive('getCustomBodyArmorsValues')
             ->andReturn([]);
         $controller->shouldReceive('getLocalUrlWithQuery')
@@ -136,7 +136,7 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('isAddingNewHelm')
             ->andReturn(false);
         $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
         $currentValues->shouldReceive('getCustomHelmsValues')
             ->andReturn([]);
         $controller->shouldReceive('getLocalUrlWithQuery')
@@ -196,11 +196,11 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('isAddingNewMeleeWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(AttackForCalculator::class));
+            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
         $attack->shouldReceive('getCurrentMeleeWeapon')
             ->andReturn(MeleeWeaponCode::getIt(MeleeWeaponCode::HAND));
         $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
         $currentValues->shouldReceive('getCustomMeleeWeaponsValues')
             ->andReturn([]);
         $controller->shouldReceive('getLocalUrlWithQuery')
@@ -229,11 +229,11 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('isAddingNewRangedWeapon')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(AttackForCalculator::class));
+            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
         $attack->shouldReceive('getCurrentRangedWeapon')
             ->andReturn(RangedWeaponCode::getIt(RangedWeaponCode::SAND));
         $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
         $currentValues->shouldReceive('getCustomRangedWeaponsValues')
             ->andReturn([]);
         $controller->shouldReceive('getLocalUrlWithQuery')
@@ -262,11 +262,11 @@ class TemplatesTest extends TestWithMockery
         $controller->shouldReceive('isAddingNewShield')
             ->andReturn(false);
         $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(AttackForCalculator::class));
+            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
         $attack->shouldReceive('getCurrentShield')
             ->andReturn(ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD));
         $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentAttackValues::class));
+            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
         $currentValues->shouldReceive('getCustomShieldsValues')
             ->andReturn([]);
         $controller->shouldReceive('getLocalUrlWithQuery')

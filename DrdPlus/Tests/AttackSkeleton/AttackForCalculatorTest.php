@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\AttackSkeleton\AttackForCalculator;
-use DrdPlus\AttackSkeleton\CurrentAttackValues;
+use DrdPlus\AttackSkeleton\PossibleArmaments;
+use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsService;
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\CalculatorSkeleton\Memory;
@@ -24,8 +24,8 @@ class AttackForCalculatorTest extends TestWithMockery
      */
     public function I_can_use_it(): void
     {
-        $attackForCalculator = new AttackForCalculator(
-            new CurrentAttackValues([], new Memory(true, [], true, static::class)),
+        $attackForCalculator = new PossibleArmaments(
+            new CurrentArmamentsValues([], new Memory(true, [], true, static::class)),
             new History(true, [], true, static::class),
             new CustomArmamentsService(),
             Tables::getIt()
@@ -36,25 +36,25 @@ class AttackForCalculatorTest extends TestWithMockery
     }
 
     /**
-     * @param AttackForCalculator $attackForCalculator
+     * @param PossibleArmaments $attackForCalculator
      */
-    private function I_get_main_hand_as_default_item_holding(AttackForCalculator $attackForCalculator): void
+    private function I_get_main_hand_as_default_item_holding(PossibleArmaments $attackForCalculator): void
     {
         self::assertSame(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND), $attackForCalculator->getCurrentMeleeWeaponHolding());
     }
 
     /**
-     * @param AttackForCalculator $attackForCalculator
+     * @param PossibleArmaments $attackForCalculator
      */
-    private function I_get_bare_hands_as_default_melee_weapon(AttackForCalculator $attackForCalculator): void
+    private function I_get_bare_hands_as_default_melee_weapon(PossibleArmaments $attackForCalculator): void
     {
         self::assertSame(MeleeWeaponCode::getIt(MeleeWeaponCode::HAND), $attackForCalculator->getCurrentMeleeWeapon());
     }
 
     /**
-     * @param AttackForCalculator $attackForCalculator
+     * @param PossibleArmaments $attackForCalculator
      */
-    private function I_get_all_armor_codes_with_their_usability(AttackForCalculator $attackForCalculator): void
+    private function I_get_all_armor_codes_with_their_usability(PossibleArmaments $attackForCalculator): void
     {
         $bodyArmors = $attackForCalculator->getPossibleBodyArmors();
         self::assertCount(\count(BodyArmorCode::getPossibleValues()), $bodyArmors);

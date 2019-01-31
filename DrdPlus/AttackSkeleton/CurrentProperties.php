@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
-/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
 namespace DrdPlus\AttackSkeleton;
 
+use DrdPlus\CalculatorSkeleton\CurrentValues;
+use DrdPlus\Codes\Properties\PropertyCode;
 use DrdPlus\Properties\Base\Agility;
 use DrdPlus\Properties\Base\Charisma;
 use DrdPlus\Properties\Base\Intelligence;
@@ -16,52 +17,52 @@ use Granam\Strict\Object\StrictObject;
 
 class CurrentProperties extends StrictObject
 {
-    /** @var CurrentAttackValues */
-    private $currentAttackValues;
+    /** @var CurrentValues */
+    private $currentValues;
 
-    public function __construct(CurrentAttackValues $currentAttackValues)
+    public function __construct(CurrentValues $currentValues)
     {
-        $this->currentAttackValues = $currentAttackValues;
+        $this->currentValues = $currentValues;
     }
 
     public function getCurrentStrength(): Strength
     {
-        return Strength::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::STRENGTH));
+        return Strength::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::STRENGTH));
     }
 
     public function getCurrentAgility(): Agility
     {
-        return Agility::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::AGILITY));
+        return Agility::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::AGILITY));
     }
 
     public function getCurrentKnack(): Knack
     {
-        return Knack::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::KNACK));
+        return Knack::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::KNACK));
     }
 
     public function getCurrentWill(): Will
     {
-        return Will::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::WILL));
+        return Will::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::WILL));
     }
 
     public function getCurrentIntelligence(): Intelligence
     {
-        return Intelligence::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::INTELLIGENCE));
+        return Intelligence::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::INTELLIGENCE));
     }
 
     public function getCurrentCharisma(): Charisma
     {
-        return Charisma::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::CHARISMA));
+        return Charisma::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::CHARISMA));
     }
 
     public function getCurrentSize(): Size
     {
-        return Size::getIt((int)$this->currentAttackValues->getCurrentValue(AttackController::SIZE));
+        return Size::getIt((int)$this->currentValues->getCurrentValue(PropertyCode::SIZE));
     }
 
     public function getCurrentHeightInCm(): HeightInCm
     {
-        return HeightInCm::getIt($this->currentAttackValues->getCurrentValue(AttackController::HEIGHT_IN_CM) ?? 150);
+        return HeightInCm::getIt($this->currentValues->getCurrentValue(PropertyCode::HEIGHT_IN_CM) ?? 150);
     }
 
 }

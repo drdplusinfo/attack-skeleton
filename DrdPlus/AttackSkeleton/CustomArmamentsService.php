@@ -1,7 +1,9 @@
 <?php
-declare(strict_types=1);/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
+declare(strict_types=1);
+
 namespace DrdPlus\AttackSkeleton;
 
+use DrdPlus\Armourer\Armourer;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\Armaments\HelmCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
@@ -11,13 +13,22 @@ use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
 use DrdPlus\Properties\Base\Strength;
 use DrdPlus\Tables\Measurements\Distance\DistanceBonus;
 use DrdPlus\Tables\Measurements\Weight\Weight;
-use DrdPlus\Tables\Tables;
 use Granam\Integer\PositiveInteger;
 use Granam\Strict\Object\StrictObject;
 use Granam\String\StringTools;
 
 class CustomArmamentsService extends StrictObject
 {
+    /**
+     * @var Armourer
+     */
+    private $armourer;
+
+    public function __construct(Armourer $armourer)
+    {
+        $this->armourer = $armourer;
+    }
+
     /**
      * @param string $name
      * @param WeaponCategoryCode $meleeWeaponCategoryCode
@@ -58,12 +69,11 @@ class CustomArmamentsService extends StrictObject
                 . ", cover $cover, weight $weight, two-handed only " . ($twoHandedOnly ? 'yes' : 'no')
             );
         }
-        $meleeWeaponCodeValue = StringTools::toConstant($name);
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        $meleeWeaponCodeValue = StringTools::toConstantLikeValue($name);
         MeleeWeaponCode::addNewMeleeWeaponCode($meleeWeaponCodeValue, $meleeWeaponCategoryCode, ['cs' => ['one' => $name]]);
         $meleeWeaponCode = MeleeWeaponCode::getIt($meleeWeaponCodeValue);
 
-        return Tables::getIt()->getArmourer()->addCustomMeleeWeapon(
+        return $this->armourer->addCustomMeleeWeapon(
             $meleeWeaponCode,
             $meleeWeaponCategoryCode,
             $requiredStrength,
@@ -117,12 +127,11 @@ class CustomArmamentsService extends StrictObject
                 . ", cover $cover, weight $weight, two-handed only " . ($twoHandedOnly ? 'yes' : 'no')
             );
         }
-        $rangedWeaponCodeValue = StringTools::toConstant($name);
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        $rangedWeaponCodeValue = StringTools::toConstantLikeValue($name);
         RangedWeaponCode::addNewRangedWeaponCode($rangedWeaponCodeValue, $rangedWeaponCategoryCode, ['cs' => ['one' => $name]]);
         $rangedWeaponCode = RangedWeaponCode::getIt($rangedWeaponCodeValue);
 
-        return Tables::getIt()->getArmourer()->addCustomRangedWeapon(
+        return $this->armourer->addCustomRangedWeapon(
             $rangedWeaponCode,
             $rangedWeaponCategoryCode,
             $requiredStrength,
@@ -163,12 +172,11 @@ class CustomArmamentsService extends StrictObject
                 . ", rounds to put on $roundsToPutOn"
             );
         }
-        $bodyArmorWeaponValue = StringTools::toConstant($name);
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        $bodyArmorWeaponValue = StringTools::toConstantLikeValue($name);
         BodyArmorCode::addNewBodyArmorCode($bodyArmorWeaponValue, ['cs' => ['one' => $name]]);
         $bodyArmorWeaponCode = BodyArmorCode::getIt($bodyArmorWeaponValue);
 
-        return Tables::getIt()->getArmourer()->addCustomBodyArmor(
+        return $this->armourer->addCustomBodyArmor(
             $bodyArmorWeaponCode,
             $requiredStrength,
             $restriction,
@@ -202,12 +210,11 @@ class CustomArmamentsService extends StrictObject
                 . " required strength $requiredStrength, protection $protection, weight $weight"
             );
         }
-        $helmCodeValue = StringTools::toConstant($name);
-        /** @noinspection ExceptionsAnnotatingAndHandlingInspection */
+        $helmCodeValue = StringTools::toConstantLikeValue($name);
         HelmCode::addNewHelmCode($helmCodeValue, ['cs' => ['one' => $name]]);
         $helmCode = HelmCode::getIt($helmCodeValue);
 
-        return Tables::getIt()->getArmourer()->addCustomHelm(
+        return $this->armourer->addCustomHelm(
             $helmCode,
             $requiredStrength,
             $restriction,
