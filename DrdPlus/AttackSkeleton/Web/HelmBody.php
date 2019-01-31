@@ -85,7 +85,7 @@ HTML;
 
     private function getSelected(HelmCode $helmCode): string
     {
-        return $this->currentArmaments->getCurrentBodyArmor()->getValue() === $helmCode->getValue()
+        return $this->currentArmaments->getCurrentHelm()->getValue() === $helmCode->getValue()
             ? 'selected'
             : '';
     }
