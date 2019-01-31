@@ -12,6 +12,8 @@ use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomShieldBody;
 use DrdPlus\AttackSkeleton\Web\BodyArmorBody;
 use DrdPlus\AttackSkeleton\Web\BodyPropertiesBody;
 use DrdPlus\AttackSkeleton\Web\HelmBody;
+use DrdPlus\AttackSkeleton\Web\MeleeWeaponBody;
+use DrdPlus\AttackSkeleton\Web\RangedWeaponBody;
 use DrdPlus\CalculatorSkeleton\CalculatorServicesContainer;
 use DrdPlus\Tables\Tables;
 
@@ -45,10 +47,16 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $bodyArmorBody;
     /** @var AddCustomBodyArmorBody */
     private $addCustomBodyArmorBody;
+    /** @var HelmBody */
+    private $helmBody;
     /** @var AddCustomHelmBody */
     private $addCustomHelmBody;
+    /** @var MeleeWeaponBody */
+    private $meleeWeaponBody;
     /** @var AddCustomMeleeWeaponBody */
     private $addCustomMeleeWeaponBody;
+    /** @var RangedWeaponBody */
+    private $rangedWeaponBody;
     /** @var AddCustomRangedWeaponBody */
     private $addCustomRangedWeaponBody;
     /** @var AddCustomShieldBody */
@@ -103,8 +111,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
 
     public function getHelmBody(): HelmBody
     {
-        if ($this->bodyArmorBody === null) {
-            $this->bodyArmorBody = new HelmBody(
+        if ($this->helmBody === null) {
+            $this->helmBody = new HelmBody(
                 $this->getCustomArmamentsState(),
                 $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
@@ -116,7 +124,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
             );
         }
 
-        return $this->bodyArmorBody;
+        return $this->helmBody;
     }
 
     public function getAddCustomHelmBody(): AddCustomHelmBody
@@ -130,8 +138,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
 
     public function getMeleeWeaponBody(): MeleeWeaponBody
     {
-        if ($this->bodyArmorBody === null) {
-            $this->bodyArmorBody = new MeleeWeaponBody(
+        if ($this->meleeWeaponBody === null) {
+            $this->meleeWeaponBody = new MeleeWeaponBody(
                 $this->getCustomArmamentsState(),
                 $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
@@ -143,7 +151,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
             );
         }
 
-        return $this->bodyArmorBody;
+        return $this->meleeWeaponBody;
     }
 
     public function getAddCustomMeleeWeaponBody(): AddCustomMeleeWeaponBody
@@ -153,6 +161,24 @@ class AttackServicesContainer extends CalculatorServicesContainer
         }
 
         return $this->addCustomMeleeWeaponBody;
+    }
+
+    public function getRangedWeaponBody(): RangedWeaponBody
+    {
+        if ($this->rangedWeaponBody === null) {
+            $this->rangedWeaponBody = new RangedWeaponBody(
+                $this->getCustomArmamentsState(),
+                $this->getCurrentArmaments(),
+                $this->getCurrentArmamentsValues(),
+                $this->getPossibleArmaments(),
+                $this->getArmamentsUsabilityMessages(),
+                $this->getFrontendHelper(),
+                $this->getArmourer(),
+                $this->getAddCustomRangedWeaponBody()
+            );
+        }
+
+        return $this->rangedWeaponBody;
     }
 
     public function getAddCustomRangedWeaponBody(): AddCustomRangedWeaponBody
