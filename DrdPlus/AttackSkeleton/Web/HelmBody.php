@@ -111,7 +111,7 @@ HTML;
         $messagesAboutHelms = [];
         foreach ($this->armamentsUsabilityMessages->getMessagesAboutHelms() as $messageAboutHelm) {
             $messagesAboutHelms [] = <<<HTML
-          <div class="info"><?= $messageAboutHelm ?></div>
+          <div class="info">{$messageAboutHelm}</div>
 HTML;
         }
 
