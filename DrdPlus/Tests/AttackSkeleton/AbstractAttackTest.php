@@ -118,9 +118,15 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
 
     /**
      * @param int $activePropertiesMaximum = 999
+     * @param int $sizeMaximum = 0
+     * @param int $heightInCmMaximum = 200
      * @return CurrentProperties|MockInterface
      */
-    protected function createMaximalCurrentProperties(int $activePropertiesMaximum = 999): CurrentProperties
+    protected function createMaximalCurrentProperties(
+        int $activePropertiesMaximum = 999,
+        int $sizeMaximum = 0,
+        int $heightInCmMaximum = 200
+    ): CurrentProperties
     {
         $currentProperties = $this->mockery(CurrentProperties::class);
         $currentProperties->shouldReceive('getCurrentStrength')
@@ -136,9 +142,9 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         $currentProperties->shouldReceive('getCurrentCharisma')
             ->andReturn(Charisma::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentSize')
-            ->andReturn(Size::getIt(0));
+            ->andReturn(Size::getIt($sizeMaximum));
         $currentProperties->shouldReceive('getCurrentHeightInCm')
-            ->andReturn(HeightInCm::getIt(200));
+            ->andReturn(HeightInCm::getIt($heightInCmMaximum));
         return $currentProperties;
     }
 
