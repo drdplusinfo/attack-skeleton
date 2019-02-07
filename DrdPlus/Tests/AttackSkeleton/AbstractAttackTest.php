@@ -77,7 +77,33 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
      */
     protected function createEmptyArmamentsUsabilityMessages(): ArmamentsUsabilityMessages
     {
-        return new ArmamentsUsabilityMessages($this->createAllPossibleArmaments());
+        $armamentsUsabilityMessages = new ArmamentsUsabilityMessages($this->createAllPossibleArmaments());
+        self::assertCount(
+            0,
+            $armamentsUsabilityMessages->getMessagesAboutHelms(),
+            'No messages about usability of helms expected'
+        );
+        self::assertCount(
+            0,
+            $armamentsUsabilityMessages->getMessagesAboutMeleeWeapons(),
+            'No messages about usability of melee weapons expected'
+        );
+        self::assertCount(
+            0,
+            $armamentsUsabilityMessages->getMessagesAboutRangedWeapons(),
+            'No messages about usability of ranged weapons expected'
+        );
+        self::assertCount(
+            0,
+            $armamentsUsabilityMessages->getMessagesAboutShields(),
+            'No messages about usability of shields expected'
+        );
+        self::assertCount(
+            0,
+            $armamentsUsabilityMessages->getMessagesAboutBodyArmors(),
+            'No messages about usability of body armors expected'
+        );
+        return $armamentsUsabilityMessages;
     }
 
     protected function createAllPossibleArmaments(): PossibleArmaments
@@ -91,28 +117,28 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
     }
 
     /**
-     * @param int $maximum = 999
+     * @param int $activePropertiesMaximum = 999
      * @return CurrentProperties|MockInterface
      */
-    protected function createMaximalCurrentProperties(int $maximum = 999): CurrentProperties
+    protected function createMaximalCurrentProperties(int $activePropertiesMaximum = 999): CurrentProperties
     {
         $currentProperties = $this->mockery(CurrentProperties::class);
         $currentProperties->shouldReceive('getCurrentStrength')
-            ->andReturn(Strength::getIt($maximum));
+            ->andReturn(Strength::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentAgility')
-            ->andReturn(Agility::getIt($maximum));
+            ->andReturn(Agility::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentKnack')
-            ->andReturn(Knack::getIt($maximum));
+            ->andReturn(Knack::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentWill')
-            ->andReturn(Will::getIt($maximum));
+            ->andReturn(Will::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentIntelligence')
-            ->andReturn(Intelligence::getIt($maximum));
+            ->andReturn(Intelligence::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentCharisma')
-            ->andReturn(Charisma::getIt($maximum));
+            ->andReturn(Charisma::getIt($activePropertiesMaximum));
         $currentProperties->shouldReceive('getCurrentSize')
-            ->andReturn(Size::getIt($maximum));
+            ->andReturn(Size::getIt(0));
         $currentProperties->shouldReceive('getCurrentHeightInCm')
-            ->andReturn(HeightInCm::getIt($maximum));
+            ->andReturn(HeightInCm::getIt(200));
         return $currentProperties;
     }
 

@@ -70,7 +70,7 @@ class TemplatesTest extends AbstractAttackTest
     /**
      * @test
      */
-    public function I_can_use_template_with_armors(): void
+    public function I_can_use_template_with_body_armors(): void
     {
         $bodyArmorBody = new BodyArmorBody(
             $this->createCustomArmamentsState(),
