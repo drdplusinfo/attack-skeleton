@@ -84,28 +84,6 @@ trait UsingArmaments
     }
 
     /**
-     * @param WeaponlikeCode $weaponlikeCode
-     * @param Armourer $armourer
-     * @return bool
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    public function isOneHandedOnly(WeaponlikeCode $weaponlikeCode, Armourer $armourer): bool
-    {
-        return $armourer->isOneHandedOnly($weaponlikeCode);
-    }
-
-    /**
-     * @param WeaponlikeCode $weaponlikeCode
-     * @param Armourer $armourer
-     * @return bool
-     * @throws \DrdPlus\Tables\Armaments\Exceptions\UnknownWeaponlike
-     */
-    public function isTwoHandedOnly(WeaponlikeCode $weaponlikeCode, Armourer $armourer): bool
-    {
-        return $armourer->isTwoHandedOnly($weaponlikeCode);
-    }
-
-    /**
      * @param ItemHoldingCode $weaponHolding
      * @param WeaponlikeCode $weaponlikeCode
      * @param ShieldCode $shield
@@ -113,7 +91,7 @@ trait UsingArmaments
      * @return ItemHoldingCode
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    public function getShieldHolding(
+    protected function getShieldHolding(
         ItemHoldingCode $weaponHolding,
         WeaponlikeCode $weaponlikeCode,
         ShieldCode $shield,

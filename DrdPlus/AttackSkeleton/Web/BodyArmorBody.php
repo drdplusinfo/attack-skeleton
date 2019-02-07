@@ -8,6 +8,7 @@ use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
+use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\FrontendHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomBodyArmorBody;
@@ -55,7 +56,7 @@ class BodyArmorBody extends AbstractArmamentBody
     <a title="Přidat vlastní zbroj" href="{$this->getUrlToAddNewBodyArmor()}" class="button add">+</a>
     <label>
       <select name="{$this->getBodyArmorSelectName()}" title="Zbroj">
-          {$this->getPossibleBodyArmors()}
+        {$this->getPossibleBodyArmors()}
       </select>
     </label>
   </div>
@@ -78,22 +79,22 @@ HTML;
 
     private function getCurrentCustomBodyArmors(): string
     {
-        $possibleCustomBodyArmors = '';
+        $possibleCustomBodyArmors = [];
         foreach ($this->currentArmamentsValues->getCurrentCustomBodyArmorsValues() as $armorName => $armorValues) {
             /** @var array|string[] $armorValues */
             foreach ($armorValues as $typeName => $armorValue) {
-                $possibleCustomBodyArmors .= <<<HTML
+                $possibleCustomBodyArmors[] = <<<HTML
 <input type="hidden" name="{$typeName}[{$armorName}]" value="<{$armorValue}">
 HTML;
             }
         }
 
-        return $possibleCustomBodyArmors;
+        return \implode("\n", $possibleCustomBodyArmors);
     }
 
     private function getBodyArmorSelectName(): string
     {
-        return FrontendHelper::BODY_ARMOR;
+        return AttackRequest::BODY_ARMOR;
     }
 
     private function getVisibilityClass(): string
@@ -105,42 +106,40 @@ HTML;
 
     private function getMessagesAboutBodyArmors(): string
     {
-        $messagesAboutBodyArmors = '';
+        $messagesAboutBodyArmors = [];
         foreach ($this->armamentsUsabilityMessages->getMessagesAboutBodyArmors() as $messageAboutBodyArmor) {
-            $messagesAboutBodyArmors .= <<<HTML
+            $messagesAboutBodyArmors[] = <<<HTML
 <div class="info">{$messageAboutBodyArmor}</div>
 HTML;
         }
 
-        return $messagesAboutBodyArmors;
+        return \implode("\n", $messagesAboutBodyArmors);
     }
 
     private function getUrlToAddNewBodyArmor(): string
     {
-        return $this->frontendHelper->getLocalUrlWithQuery([FrontendHelper::ACTION => FrontendHelper::ADD_NEW_BODY_ARMOR]);
+        return $this->frontendHelper->getLocalUrlWithQuery([AttackRequest::ACTION => AttackRequest::ADD_NEW_BODY_ARMOR]);
     }
 
     private function getPossibleBodyArmors(): string
     {
-        $bodyArmors = '';
+        $bodyArmors = [];
         foreach ($this->possibleArmaments->getPossibleBodyArmors() as $possibleBodyArmor) {
             /** @var BodyArmorCode $bodyArmorCode */
             $bodyArmorCode = $possibleBodyArmor['code'];
-            $bodyArmors .= <<<HTML
-<option value="{$bodyArmorCode->getValue()}" {$this->getSelected($bodyArmorCode)} {$this->getDisabled($possibleBodyArmor['canUseIt'])}>
+            $bodyArmors[] = <<<HTML
+<option value="{$bodyArmorCode->getValue()}" {$this->getBodyArmorSelected($bodyArmorCode)} {$this->getDisabled($possibleBodyArmor['canUseIt'])}>
   {$this->getUsabilityPictogram($possibleBodyArmor['canUseIt'])}{$bodyArmorCode->translateTo('cs')} {$this->getBodyArmorProtection($bodyArmorCode)}
 </option>
 HTML;
         }
 
-        return $bodyArmors;
+        return \implode("\n", $bodyArmors);
     }
 
-    private function getSelected(BodyArmorCode $bodyArmorCode): string
+    private function getBodyArmorSelected(BodyArmorCode $bodyArmorCode): string
     {
-        return $this->currentArmaments->getCurrentBodyArmor()->getValue() === $bodyArmorCode->getValue()
-            ? 'selected'
-            : '';
+        return $this->getSelected($this->currentArmaments->getCurrentBodyArmor()->getValue(), $bodyArmorCode->getValue());
     }
 
     private function getBodyArmorProtection(BodyArmorCode $bodyArmorCode): string

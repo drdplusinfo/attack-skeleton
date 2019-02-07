@@ -284,42 +284,42 @@ class CurrentArmamentsValues extends StrictObject
 
     public function getMeleeWeaponValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::MELEE_WEAPON);
+            return $this->currentValues->getCurrentValue(AttackRequest::MELEE_WEAPON);
     }
 
     public function getMeleeWeaponHoldingValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::MELEE_WEAPON_HOLDING);
+        return $this->currentValues->getCurrentValue(AttackRequest::MELEE_WEAPON_HOLDING);
     }
 
     public function getShieldValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::SHIELD);
+        return $this->currentValues->getCurrentValue(AttackRequest::SHIELD);
     }
 
     public function getShieldHoldingValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::SHIELD_HOLDING);
+        return $this->currentValues->getCurrentValue(AttackRequest::SHIELD_HOLDING);
     }
 
     public function getRangedWeaponValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::RANGED_WEAPON);
+        return $this->currentValues->getCurrentValue(AttackRequest::RANGED_WEAPON);
     }
 
     public function getRangedWeaponHoldingValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::RANGED_WEAPON_HOLDING);
+        return $this->currentValues->getCurrentValue(AttackRequest::RANGED_WEAPON_HOLDING);
     }
 
     public function getHelmValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::HELM);
+        return $this->currentValues->getCurrentValue(AttackRequest::HELM);
     }
 
     public function getBodyArmorValue(): ?string
     {
-        return $this->currentValues->getCurrentValue(FrontendHelper::BODY_ARMOR);
+        return $this->currentValues->getCurrentValue(AttackRequest::BODY_ARMOR);
     }
 
 }

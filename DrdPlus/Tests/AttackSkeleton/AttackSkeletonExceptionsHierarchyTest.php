@@ -1,26 +1,22 @@
 <?php
 declare(strict_types=1);
-/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\AttackSkeleton\AttackController;
-use Granam\Tests\ExceptionsHierarchy\Exceptions\AbstractExceptionsHierarchyTest;
+use DrdPlus\Tests\CalculatorSkeleton\CalculatorSkeletonExceptionsHierarchyTest;
 
-class AttackSkeletonExceptionsHierarchyTest extends AbstractExceptionsHierarchyTest
+class AttackSkeletonExceptionsHierarchyTest extends CalculatorSkeletonExceptionsHierarchyTest
 {
     /**
      * @return string
-     * @throws \ReflectionException
      */
     protected function getTestedNamespace(): string
     {
-        return (new \ReflectionClass(AttackController::class))->getNamespaceName();
+        return \str_replace('\Tests', '', __NAMESPACE__);
     }
 
     /**
      * @return string
-     * @throws \ReflectionException
      */
     protected function getRootNamespace(): string
     {

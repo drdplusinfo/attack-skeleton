@@ -16,6 +16,16 @@
       "DrdPlus\\": "DrdPlus/"
     }
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "/var/www/kalkulator.skeleton"
+    },
+    {
+      "type": "vcs",
+      "url": "/var/www/rules.skeleton"
+    }
+  ],
   "require": {
     "php": ">=7.1",
     "drdplus/calculator-skeleton": "^1.0",
@@ -26,7 +36,8 @@
     "phpunit/phpunit": "~7.0",
     "mockery/mockery": "~1.0",
     "phpgt/dom": "^1.0",
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "composer/composer": "^1.8"
   },
   "scripts": {
     "pre-autoload-dump": [

@@ -20,26 +20,26 @@ class CustomArmamentsState extends StrictObject
 
     public function isAddingNewMeleeWeapon(): bool
     {
-        return $this->currentValues->getSelectedValue(FrontendHelper::ACTION) === FrontendHelper::ADD_NEW_MELEE_WEAPON;
+        return $this->currentValues->getSelectedValue(AttackRequest::ACTION) === AttackRequest::ADD_NEW_MELEE_WEAPON;
     }
 
     public function isAddingNewRangedWeapon(): bool
     {
-        return $this->currentValues->getSelectedValue(FrontendHelper::ACTION) === FrontendHelper::ADD_NEW_RANGED_WEAPON;
+        return $this->currentValues->getSelectedValue(AttackRequest::ACTION) === AttackRequest::ADD_NEW_RANGED_WEAPON;
     }
 
     public function isAddingNewBodyArmor(): bool
     {
-        return $this->currentValues->getSelectedValue(FrontendHelper::ACTION) === FrontendHelper::ADD_NEW_BODY_ARMOR;
+        return $this->currentValues->getSelectedValue(AttackRequest::ACTION) === AttackRequest::ADD_NEW_BODY_ARMOR;
     }
 
     public function isAddingNewHelm(): bool
     {
-        return $this->currentValues->getSelectedValue(FrontendHelper::ACTION) === FrontendHelper::ADD_NEW_HELM;
+        return $this->currentValues->getSelectedValue(AttackRequest::ACTION) === AttackRequest::ADD_NEW_HELM;
     }
 
     public function isAddingNewShield(): bool
     {
-        return $this->currentValues->getSelectedValue(FrontendHelper::ACTION) === FrontendHelper::ADD_NEW_SHIELD;
+        return $this->currentValues->getSelectedValue(AttackRequest::ACTION) === AttackRequest::ADD_NEW_SHIELD;
     }
 }

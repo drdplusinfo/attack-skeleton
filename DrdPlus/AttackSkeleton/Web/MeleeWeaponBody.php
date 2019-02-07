@@ -8,6 +8,7 @@ use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
+use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\FrontendHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody;
@@ -92,12 +93,12 @@ HTML;
 
     private function getUrlToAddNewMeleeWeapon(): string
     {
-        return $this->frontendHelper->getLocalUrlToAction(FrontendHelper::ADD_NEW_MELEE_WEAPON);
+        return $this->frontendHelper->getLocalUrlToAction(AttackRequest::ADD_NEW_MELEE_WEAPON);
     }
 
     private function getMeleeWeaponSelectName(): string
     {
-        return FrontendHelper::MELEE_WEAPON;
+        return AttackRequest::MELEE_WEAPON;
     }
 
     private function getTranslatedWeaponCategory(string $weaponCategory): string
@@ -113,7 +114,7 @@ HTML;
             /** @var MeleeWeaponCode $meleeWeaponCode */
             $meleeWeaponCode = $meleeWeapon['code'];
             $possibleMeleeWeaponsOfCategory .= <<<HTML
-<option value="{$meleeWeaponCode->getValue()}" {$this->getSelected($meleeWeaponCode)} {$this->getDisabled($meleeWeapon['canUseIt'])}>
+<option value="{$meleeWeaponCode->getValue()}" {$this->getMeleeWeaponSelected($meleeWeaponCode)} {$this->getDisabled($meleeWeapon['canUseIt'])}>
   {$this->getUsabilityPictogram($meleeWeapon['canUseIt'])}{$meleeWeaponCode->translateTo('cs')}
 </option>
 HTML;
@@ -122,11 +123,9 @@ HTML;
         return $possibleMeleeWeaponsOfCategory;
     }
 
-    private function getSelected(MeleeWeaponCode $meleeWeaponCode): string
+    private function getMeleeWeaponSelected(MeleeWeaponCode $meleeWeaponCode): string
     {
-        return $this->currentArmaments->getCurrentMeleeWeapon()->getValue() === $meleeWeaponCode->getValue()
-            ? 'selected'
-            : '';
+        return $this->getSelected($this->currentArmaments->getCurrentMeleeWeapon()->getValue(), $meleeWeaponCode->getValue());
     }
 
     private function getPossibleMeleeWeapons(): string
@@ -151,29 +150,29 @@ HTML;
 
     private function getMeleeWeaponHoldingName(): string
     {
-        return FrontendHelper::MELEE_WEAPON_HOLDING;
+        return AttackRequest::MELEE_WEAPON_HOLDING;
     }
 
-    private function getCheckedMainHandHolding(): string
+    private function getMainHandHoldingChecked(): string
     {
-        return $this->getCheckedHolding(ItemHoldingCode::MAIN_HAND);
+        return $this->getHoldingChecked(ItemHoldingCode::MAIN_HAND);
     }
 
-    private function getCheckedHolding(string $holdingToCheck): string
+    private function getHoldingChecked(string $holdingToCheck): string
     {
         return $this->currentArmaments->getCurrentMeleeWeaponHolding()->getValue() === $holdingToCheck
             ? 'checked'
             : '';
     }
 
-    private function getCheckedOffhandHolding(): string
+    private function getOffhandHoldingChecked(): string
     {
-        return $this->getCheckedHolding(ItemHoldingCode::OFFHAND);
+        return $this->getHoldingChecked(ItemHoldingCode::OFFHAND);
     }
 
-    private function getCheckedTwoHandsHolding(): string
+    private function getTwoHandsHoldingChecked(): string
     {
-        return $this->getCheckedHolding(ItemHoldingCode::TWO_HANDS);
+        return $this->getHoldingChecked(ItemHoldingCode::TWO_HANDS);
     }
 
     private function getOffhandHolding(): string
@@ -206,20 +205,20 @@ HTML;
         </div>
         <div class="col">
             <label>
-                <input type="radio" value="{$this->getMainHandHolding()}" name="{$this->getMeleeWeaponHoldingName()}" {$this->getCheckedMainHandHolding()}>
+                <input type="radio" value="{$this->getMainHandHolding()}" name="{$this->getMeleeWeaponHoldingName()}" {$this->getMainHandHoldingChecked()}>
                 v dominantní ruce
             </label>
         </div>
         <div class="col">
             <label>
-                <input type="radio" value="{$this->getOffhandHolding()}" name="{$this->getMeleeWeaponHoldingName()}" {$this->getCheckedOffhandHolding()}>
+                <input type="radio" value="{$this->getOffhandHolding()}" name="{$this->getMeleeWeaponHoldingName()}" {$this->getOffhandHoldingChecked()}>
                 v druhé ruce
             </label>
         </div>
         <div class="col">
             <label>
                 <input type="radio" value="{$this->getTwoHandsHolding()}"
-                       name="{$this->getMeleeWeaponHoldingName()}" {$this->getCheckedTwoHandsHolding()}>
+                       name="{$this->getMeleeWeaponHoldingName()}" {$this->getTwoHandsHoldingChecked()}>
                 obouručně
             </label>
         </div>

@@ -5,6 +5,7 @@ namespace DrdPlus\AttackSkeleton\Web;
 
 use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
+use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
@@ -69,7 +70,7 @@ HTML;
             /** @var ShieldCode $shieldCode */
             $shieldCode = $possibleShield['code'];
             $shields .= <<<HTML
-<option value="{$shieldCode->getValue()}" {$this->getSelected($shieldCode)} {$this->getDisabled($possibleShield['canUseIt'])}>
+<option value="{$shieldCode->getValue()}" {$this->getShieldSelected($shieldCode)} {$this->getDisabled($possibleShield['canUseIt'])}>
   {$this->getUsabilityPictogram($possibleShield['canUseIt'])}{$shieldCode->translateTo('cs')} {$this->getShieldProtection($shieldCode)}
 </option>
 HTML;
@@ -83,21 +84,19 @@ HTML;
         return $this->frontendHelper->formatInteger($this->armourer->getCoverOfShield($shieldCode));
     }
 
-    private function getSelected(ShieldCode $shieldCode): string
+    private function getShieldSelected(ShieldCode $shieldCode): string
     {
-        return $this->currentArmaments->getCurrentShield()->getValue() === $shieldCode->getValue()
-            ? 'selected'
-            : '';
+        return $this->getSelected($this->currentArmaments->getCurrentShield()->getValue(), $shieldCode->getValue());
     }
 
     private function getShieldSelectName(): string
     {
-        return FrontendHelper::SHIELD;
+        return AttackRequest::SHIELD;
     }
 
     private function getLinkToAddNewShield(): string
     {
-        return $this->frontendHelper->getLocalUrlToAction(FrontendHelper::ADD_NEW_SHIELD);
+        return $this->frontendHelper->getLocalUrlToAction(AttackRequest::ADD_NEW_SHIELD);
     }
 
     private function getVisibilityClass(): string

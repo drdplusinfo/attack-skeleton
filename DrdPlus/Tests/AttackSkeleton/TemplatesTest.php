@@ -1,71 +1,37 @@
 <?php
 declare(strict_types=1);
-/** be strict for parameter types, https://www.quora.com/Are-strict_types-in-PHP-7-not-a-bad-idea */
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\AttackSkeleton\PossibleArmaments;
-use DrdPlus\AttackSkeleton\AttackController;
-use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
-use DrdPlus\AttackSkeleton\CurrentProperties;
-use DrdPlus\Codes\Armaments\MeleeWeaponCode;
-use DrdPlus\Codes\Armaments\RangedWeaponCode;
-use DrdPlus\Codes\Armaments\ShieldCode;
-use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Properties\Base\Agility;
-use DrdPlus\Properties\Base\Charisma;
-use DrdPlus\Properties\Base\Intelligence;
-use DrdPlus\Properties\Base\Knack;
-use DrdPlus\Properties\Base\Strength;
-use DrdPlus\Properties\Base\Will;
-use DrdPlus\Properties\Body\HeightInCm;
-use DrdPlus\Properties\Body\Size;
-use Granam\Tests\Tools\TestWithMockery;
-use Mockery\MockInterface;
+use DrdPlus\Armourer\Armourer;
+use DrdPlus\AttackSkeleton\CustomArmamentsState;
+use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomBodyArmorBody;
+use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomHelmBody;
+use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody;
+use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomRangedWeaponBody;
+use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomShieldBody;
+use DrdPlus\AttackSkeleton\Web\BodyArmorBody;
+use DrdPlus\AttackSkeleton\Web\BodyPropertiesBody;
+use DrdPlus\AttackSkeleton\Web\HelmBody;
+use DrdPlus\AttackSkeleton\Web\MeleeWeaponBody;
+use DrdPlus\AttackSkeleton\Web\RangedWeaponBody;
+use DrdPlus\AttackSkeleton\Web\ShieldBody;
+use Granam\WebContentBuilder\Web\BodyInterface;
 
-/**
- * @runTestsInSeparateProcesses because of affected global variables
- */
-class TemplatesTest extends TestWithMockery
+class TemplatesTest extends AbstractAttackTest
 {
     /**
      * @test
      */
     public function I_can_use_template_to_add_custom_melee_weapon(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_melee_weapon.php');
+        $this->I_can_use_template_to_add_custom_armament(new AddCustomMeleeWeaponBody(new FrontendHelper()));
     }
 
-    private function I_can_use_template_to_add_custom_armament(string $templatePath): void
+    private function I_can_use_template_to_add_custom_armament(BodyInterface $body): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->atLeast()->once()
-            ->with([AttackController::ACTION => ''])
-            ->andReturn('');
-        \ob_start();
-        /** @noinspection PhpIncludeInspection */
-        include $templatePath;
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-    }
-
-    /**
-     * @return AttackController|MockInterface
-     */
-    private function createAttackController(): AttackController
-    {
-        $controller = $this->mockery(AttackController::class);
-        $controller->shouldReceive('getGenericPartsRoot')
-            ->andReturn($this->getGenericPartsRoot());
-        $controller->makePartial(); // call original methods in not mocked
-
-        return $controller;
-    }
-
-    private function getGenericPartsRoot(): string
-    {
-        return __DIR__ . '/../../../parts/attack-skeleton';
+        self::assertNotSame('', $body->getValue());
     }
 
     /**
@@ -73,7 +39,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_ranged_weapon(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_ranged_weapon.php');
+        $this->I_can_use_template_to_add_custom_armament(new AddCustomRangedWeaponBody(new FrontendHelper()));
     }
 
     /**
@@ -81,7 +47,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_body_armor(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_body_armor.php');
+        $this->I_can_use_template_to_add_custom_armament(new AddCustomBodyArmorBody(new FrontendHelper()));
     }
 
     /**
@@ -89,7 +55,7 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_helm(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_helm.php');
+        $this->I_can_use_template_to_add_custom_armament(new AddCustomHelmBody(new FrontendHelper()));
     }
 
     /**
@@ -97,7 +63,8 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_to_add_custom_shield(): void
     {
-        $this->I_can_use_template_to_add_custom_armament(__DIR__ . '/../../../parts/attack-skeleton/add-custom/add_custom_shield.php');
+        $this->I_can_use_template_to_add_custom_armament(new AddCustomShieldBody(
+            new FrontendHelper()));
     }
 
     /**
@@ -105,26 +72,63 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_armors(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('isAddingNewBodyArmor')
-            ->andReturn(false);
-        $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
-        $currentValues->shouldReceive('getCustomBodyArmorsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_BODY_ARMOR])
-            ->andReturn('');
-        $controller->shouldReceive('getBodyArmors')
-            ->andReturn([]);
-        $controller->shouldReceive('getMessagesAboutArmors')
-            ->andReturn([]);
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/armor.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        self::assertSame($content, $controller->getArmorContent());
+        $bodyArmorBody = new BodyArmorBody(
+            $this->createCustomArmamentsState(),
+            $this->createDefaultCurrentArmaments(),
+            $this->createEmptyCurrentArmamentValues(),
+            $this->createAllPossibleArmaments(),
+            $this->createEmptyArmamentsUsabilityMessages(),
+            $frontendHelper = new FrontendHelper(),
+            Armourer::getIt(),
+            new AddCustomBodyArmorBody($frontendHelper)
+        );
+        self::assertSame(
+            <<<HTML
+<div class="row " id="chooseBodyArmor">
+  <div class="col">
+    <div class="messages">
+      
+    </div>
+    <a title="Přidat vlastní zbroj" href="?action=add_new_body_armor" class="button add">+</a>
+    <label>
+      <select name="body_armor" title="Zbroj">
+        <option value="without_armor" selected >
+  beze zbroje +0
+</option>
+<option value="padded_armor"  >
+  prošívaná zbroj +2
+</option>
+<option value="leather_armor"  >
+  kožená zbroj +3
+</option>
+<option value="hobnailed_armor"  >
+  pobíjená zbroj +4
+</option>
+<option value="chainmail_armor"  >
+  kroužková zbroj +6
+</option>
+<option value="scale_armor"  >
+  šupinová zbroj +7
+</option>
+<option value="plate_armor"  >
+  plátová zbroj +9
+</option>
+<option value="full_plate_armor"  >
+  plná plátová zbroj +10
+</option>
+      </select>
+    </label>
+  </div>
+</div>
+HTML
+            ,
+            \trim($bodyArmorBody->getValue())
+        );
+    }
+
+    private function createCustomArmamentsState(): CustomArmamentsState
+    {
+        return new CustomArmamentsState($this->createEmptyCurrentValues());
     }
 
     /**
@@ -132,26 +136,55 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_helms(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('isAddingNewHelm')
-            ->andReturn(false);
-        $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
-        $currentValues->shouldReceive('getCustomHelmsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_HELM])
-            ->andReturn('');
-        $controller->shouldReceive('getHelms')
-            ->andReturn([]);
-        $controller->shouldReceive('getMessagesAboutHelms')
-            ->andReturn([]);
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/helm.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        self::assertSame($content, $controller->getHelmContent());
+        $helmBody = new HelmBody(
+            $this->createCustomArmamentsState(),
+            $this->createDefaultCurrentArmaments(),
+            $this->createEmptyCurrentArmamentValues(),
+            $this->createAllPossibleArmaments(),
+            $this->createEmptyArmamentsUsabilityMessages(),
+            $frontendHelper = new FrontendHelper(),
+            Armourer::getIt(),
+            new AddCustomHelmBody($frontendHelper)
+        );
+        self::assertSame(
+            <<<HTML
+<div class="row " id="chooseHelm">
+  <div class="col">
+    <div class="messages">
+        
+    </div>
+    <a title="Přidat vlastní helmu" href="?action=add_new_helm" class="button add">+</a>
+    <label>
+      <select name="helm" title="Helma">
+         <option value="without_helm" selected >
+  bez helmy +0
+</option>
+<option value="leather_cap"  >
+  kožená čapka +1
+</option>
+<option value="chainmail_hood"  >
+  kroužková kukla +2
+</option>
+<option value="conical_helm"  >
+  konická helma +3
+</option>
+<option value="full_helm"  >
+  plná přilba +4
+</option>
+<option value="barrel_helm"  >
+  hrncová přilba +5
+</option>
+<option value="great_helm"  >
+  kbelcová přilba +7
+</option> 
+      </select>
+    </label>
+  </div>
+</div>
+HTML
+            ,
+            \trim($helmBody->getValue())
+        );
     }
 
     /**
@@ -159,32 +192,65 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_body_properties(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('getCurrentProperties')
-            ->andReturn($currentProperties = $this->mockery(CurrentProperties::class));
-        $currentProperties->shouldReceive('getCurrentStrength')
-            ->andReturn(Strength::getIt(123));
-        $currentProperties->shouldReceive('getCurrentAgility')
-            ->andReturn(Agility::getIt(456));
-        $currentProperties->shouldReceive('getCurrentKnack')
-            ->andReturn(Knack::getIt(789));
-        $currentProperties->shouldReceive('getCurrentIntelligence')
-            ->andReturn(Intelligence::getIt(167));
-        $currentProperties->shouldReceive('getCurrentWill')
-            ->andReturn(Will::getIt(-80));
-        $currentProperties->shouldReceive('getCurrentCharisma')
-            ->andReturn(Charisma::getIt(99));
-        $currentProperties->shouldReceive('getCurrentHeightInCm')
-            ->andReturn(HeightInCm::getIt(15));
-        $currentProperties->shouldReceive('getCurrentSize')
-            ->andReturn(Size::getIt(5));
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/body_properties.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        $controller->shouldReceive('getGenericPartsRoot')
-            ->andReturn($this->getGenericPartsRoot());
-        self::assertSame($content, $controller->getBodyPropertiesContent());
+        $bodyPropertiesBody = new BodyPropertiesBody($this->createMaximalCurrentProperties(40));
+        self::assertSame(<<<HTML
+<div class="row body-properties">
+  <div class="col">
+    <div><label for="strength">Síla</label></div>
+    <div><input id="strength" type="number" name="<?= AttackController::STRENGTH ?>" min="-40" max="40"
+                value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="agility">Obratnost</label></div>
+    <div><input id="agility" type="number" name="<?= AttackController::AGILITY ?>" min="-40" max="40"
+                value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="knack">Zručnost</label></div>
+    <div><input id="knack" type="number" name="<?= AttackController::KNACK ?>" min="-40" max="40"
+                value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="will">Vůle</label></div>
+    <div><input id="will" type="number" name="<?= AttackController::WILL ?>" min="-40" max="40"
+                value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="intelligence">Inteligence</label></div>
+    <div>
+      <input id="intelligence" type="number" name="<?= AttackController::INTELLIGENCE ?>" min="-40" max="40"
+             value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="charisma">Charisma</label></div>
+    <div>
+      <input id="charisma" type="number" name="<?= AttackController::CHARISMA ?>" min="-40" max="40"
+             value="40"></div>
+  </div>
+  <div class="col">
+    <div><label for="height">Výška v cm</label></div>
+    <div>
+      <input id="height" type="number" name="<?= AttackController::HEIGHT_IN_CM ?>" min="110"
+             max="290"
+             value="40">
+    </div>
+  </div>
+  <div class="col">
+    <div><label for="size">Velikost</label></div>
+    <div><input id="size" type="number" name="<?= AttackController::SIZE ?>" min="-10" max="10"
+                value="40">
+    </div>
+  </div>
+</div>
+HTML
+            ,
+            \trim($bodyPropertiesBody->getValue())
+        );
     }
 
     /**
@@ -192,32 +258,186 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_melee_weapons(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('isAddingNewMeleeWeapon')
-            ->andReturn(false);
-        $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
-        $attack->shouldReceive('getCurrentMeleeWeapon')
-            ->andReturn(MeleeWeaponCode::getIt(MeleeWeaponCode::HAND));
-        $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
-        $currentValues->shouldReceive('getCustomMeleeWeaponsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_MELEE_WEAPON])
-            ->andReturn('');
-        $controller->shouldReceive('getMeleeWeapons')
-            ->andReturn([]);
-        $attack->shouldReceive('getCurrentMeleeWeaponHolding')
-            ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutMeleeWeapons')
-            ->andReturn([]);
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/melee_weapon.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        self::assertSame($content, $controller->getMeleeWeaponContent());
+        $meleeWeaponBody = new MeleeWeaponBody(
+            $this->createCustomArmamentsState(),
+            $this->createDefaultCurrentArmaments(),
+            $this->createEmptyCurrentArmamentValues(),
+            $this->createAllPossibleArmaments(),
+            $this->createEmptyArmamentsUsabilityMessages(),
+            $frontendHelper = new FrontendHelper(),
+            Armourer::getIt(),
+            new AddCustomMeleeWeaponBody($frontendHelper)
+        );
+        self::assertSame(<<<HTML
+<div class="">
+    <div class="row messages">
+      
+    </div>
+    <div class="row" id="chooseMeleeWeapon">
+        <div class="col">
+            <a title="Přidat vlastní zbraň na blízko" href="?action=add_new_melee_weapon" class="button add">+</a>
+            <label>
+                <select name="melee_weapon" title="Zbraň na blízko">
+                    <optgroup label="sekery">
+    <option value="light_axe"  >
+  lehká sekerka
+</option><option value="axe"  >
+  sekera
+</option><option value="war_axe"  >
+  válečná sekera
+</option><option value="two_handed_axe"  >
+  obouruční sekera
+</option>
+</optgroup><optgroup label="nože a dýky">
+    <option value="knife"  >
+  nůž
+</option><option value="dagger"  >
+  dýka
+</option><option value="stabbing_dagger"  >
+  bodná dýka
+</option><option value="long_knife"  >
+  dlouhý nůž
+</option><option value="long_dagger"  >
+  dlouhá dýka
+</option>
+</optgroup><optgroup label="palice a kyje">
+    <option value="cudgel"  >
+  obušek
+</option><option value="club"  >
+  kyj
+</option><option value="hobnailed_club"  >
+  okovaný kyj
+</option><option value="light_mace"  >
+  lehký palcát
+</option><option value="mace"  >
+  palcát
+</option><option value="heavy_club"  >
+  těžký kyj
+</option><option value="war_hammer"  >
+  válečné kladivo
+</option><option value="two_handed_club"  >
+  obouruční kyj
+</option><option value="heavy_sledgehammer"  >
+  těžký perlík
+</option>
+</optgroup><optgroup label="řemdihy a bijáky">
+    <option value="light_morgenstern"  >
+  lehký biják
+</option><option value="morgenstern"  >
+  biják
+</option><option value="heavy_morgenstern"  >
+  těžký biják
+</option><option value="flail"  >
+  cep
+</option><option value="morningstar"  >
+  řemdih
+</option><option value="hobnailed_flail"  >
+  okovaný cep
+</option><option value="heavy_morningstar"  >
+  těžký řemdih
+</option>
+</optgroup><optgroup label="šavle a tesáky">
+    <option value="machete"  >
+  mačeta
+</option><option value="light_saber"  >
+  lehká šavle
+</option><option value="bowie_knife"  >
+  tesák
+</option><option value="saber"  >
+  šavle
+</option><option value="heavy_saber"  >
+  těžká šavle
+</option>
+</optgroup><optgroup label="hole a kopí">
+    <option value="light_spear"  >
+  lehké kopí
+</option><option value="shortened_staff"  >
+  zkrácená hůl
+</option><option value="light_staff"  >
+  lehká hůl
+</option><option value="spear"  >
+  kopí
+</option><option value="hobnailed_staff"  >
+  okovaná hůl
+</option><option value="long_spear"  >
+  dlouhé kopí
+</option><option value="heavy_hobnailed_staff"  >
+  těžká okovaná hůl
+</option><option value="pike"  >
+  píka
+</option><option value="metal_staff"  >
+  kovová hůl
+</option>
+</optgroup><optgroup label="meče">
+    <option value="short_sword"  >
+  krátký meč
+</option><option value="hanger"  >
+  krátký široký meč
+</option><option value="glaive"  >
+  široký meč
+</option><option value="long_sword"  >
+  dlouhý meč
+</option><option value="one_and_half_handed_sword"  >
+  jedenapůlruční meč
+</option><option value="barbarian_sword"  >
+  barbarský meč
+</option><option value="two_handed_sword"  >
+  obouruční meč
+</option>
+</optgroup><optgroup label="sudlice a trojzubce">
+    <option value="pitchfork"  >
+  vidle
+</option><option value="light_voulge"  >
+  lehká sudlice
+</option><option value="light_trident"  >
+  lehký trojzubec
+</option><option value="halberd"  >
+  halapartna
+</option><option value="heavy_voulge"  >
+  těžká sudlice
+</option><option value="heavy_trident"  >
+  těžký trojzubec
+</option><option value="heavy_halberd"  >
+  těžká halapartna
+</option>
+</optgroup><optgroup label="beze zbraně">
+    <option value="hand" selected >
+  ruka
+</option><option value="hobnailed_glove"  >
+  okovaná rukavice
+</option><option value="leg"  >
+  noha
+</option><option value="hobnailed_boot"  >
+  okovaná bota
+</option>
+</optgroup>
+                </select>
+            </label>
+        </div>
+        <div class="col">
+            <label>
+                <input type="radio" value="main_hand" name="melee_weapon_holding" checked>
+                v dominantní ruce
+            </label>
+        </div>
+        <div class="col">
+            <label>
+                <input type="radio" value="offhand" name="melee_weapon_holding" >
+                v druhé ruce
+            </label>
+        </div>
+        <div class="col">
+            <label>
+                <input type="radio" value="two_hands"
+                       name="melee_weapon_holding" >
+                obouručně
+            </label>
+        </div>
+    </div>
+</div>
+HTML
+            , \trim($meleeWeaponBody->getValue())
+        );
     }
 
     /**
@@ -225,32 +445,98 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_ranged_weapons(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('isAddingNewRangedWeapon')
-            ->andReturn(false);
-        $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
-        $attack->shouldReceive('getCurrentRangedWeapon')
-            ->andReturn(RangedWeaponCode::getIt(RangedWeaponCode::SAND));
-        $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
-        $currentValues->shouldReceive('getCustomRangedWeaponsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_RANGED_WEAPON])
-            ->andReturn('');
-        $controller->shouldReceive('getRangedWeapons')
-            ->andReturn([]);
-        $attack->shouldReceive('getCurrentRangedWeaponHolding')
-            ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutRangedWeapons')
-            ->andReturn([]);
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/ranged_weapon.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        self::assertSame($content, $controller->getRangedWeaponContent());
+        $rangedWeaponBody = new RangedWeaponBody(
+            $this->createCustomArmamentsState(),
+            $this->createDefaultCurrentArmaments(),
+            $this->createEmptyCurrentArmamentValues(),
+            $this->createAllPossibleArmaments(),
+            $this->createEmptyArmamentsUsabilityMessages(),
+            $frontendHelper = new FrontendHelper(),
+            Armourer::getIt(),
+            new AddCustomRangedWeaponBody($frontendHelper)
+        );
+        self::assertSame(<<<HTML
+<div class="">
+    <div class="row messages">
+      
+    </div>
+    <div class="row" id="chooseRangedWeapon">
+      <div class="col">
+    <a title="Přidat vlastní zbraň na dálku" href="?action=add_new_ranged_weapon" class="button add">+</a>
+    <label>
+        <select name="ranged_weapon" title="Zbraň na dálku">
+            <optgroup label="vrhací zbraně">
+    <option value="sand" selected >
+  písek
+</option><option value="rock"  >
+  kámen
+</option><option value="throwing_dagger"  >
+  vrhací dýka
+</option><option value="light_throwing_axe"  >
+  lehká vrhací sekera
+</option><option value="war_throwing_axe"  >
+  válečná vrhací sekera
+</option><option value="throwing_hammer"  >
+  vrhací kladivo
+</option><option value="shuriken"  >
+  hvězdice
+</option><option value="spear"  >
+  kopí
+</option><option value="javelin"  >
+  oštěp
+</option><option value="sling"  >
+  prak
+</option>
+</optgroup><optgroup label="luky">
+    <option value="short_bow"  >
+  krátký luk
+</option><option value="long_bow"  >
+  dlouhý luk
+</option><option value="short_composite_bow"  >
+  krátký skládaný luk
+</option><option value="long_composite_bow"  >
+  dlouhý skládaný luk
+</option><option value="power_bow"  >
+  silový luk
+</option>
+</optgroup><optgroup label="kuše">
+    <option value="minicrossbow"  >
+  minikuše
+</option><option value="light_crossbow"  >
+  lehká kuše
+</option><option value="military_crossbow"  >
+  válečná kuše
+</option><option value="heavy_crossbow"  >
+  těžká kuše
+</option>
+</optgroup>
+        </select>
+    </label>
+</div>
+      <div class="col">
+    <label>
+        <input type="radio" value="main_hand" name="ranged_weapon_holding" checked>
+        v dominantní ruce
+    </label>
+</div>
+<div class="col">
+    <label>
+        <input type="radio" value="offhand" name="ranged_weapon_holding" >
+        v druhé ruce
+    </label>
+</div>
+<div class="col">
+    <label>
+        <input type="radio" value="two_hands"
+               name="ranged_weapon_holding" >
+        obouručně
+    </label>
+</div>
+    </div>
+</div>
+HTML
+            , \trim($rangedWeaponBody->getValue())
+        );
     }
 
     /**
@@ -258,31 +544,44 @@ class TemplatesTest extends TestWithMockery
      */
     public function I_can_use_template_with_shields(): void
     {
-        $controller = $this->createAttackController();
-        $controller->shouldReceive('isAddingNewShield')
-            ->andReturn(false);
-        $controller->shouldReceive('getAttack')
-            ->andReturn($attack = $this->mockery(PossibleArmaments::class));
-        $attack->shouldReceive('getCurrentShield')
-            ->andReturn(ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD));
-        $controller->shouldReceive('getCurrentValues')
-            ->andReturn($currentValues = $this->mockery(CurrentArmamentsValues::class));
-        $currentValues->shouldReceive('getCustomShieldsValues')
-            ->andReturn([]);
-        $controller->shouldReceive('getLocalUrlWithQuery')
-            ->zeroOrMoreTimes()
-            ->with([AttackController::ACTION => AttackController::ADD_NEW_SHIELD])
-            ->andReturn('');
-        $controller->shouldReceive('getShields')
-            ->andReturn([]);
-        $attack->shouldReceive('getCurrentShieldHolding')
-            ->andReturn(ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND));
-        $controller->shouldReceive('getMessagesAboutShields')
-            ->andReturn([]);
-        \ob_start();
-        include __DIR__ . '/../../../parts/attack-skeleton/shield.php';
-        $content = \ob_get_clean();
-        self::assertNotEmpty($content);
-        self::assertSame($content, $controller->getShieldContent());
+        $shieldBody = new ShieldBody(
+            $this->createCustomArmamentsState(),
+            $this->createDefaultCurrentArmaments(),
+            $this->createEmptyCurrentArmamentValues(),
+            $this->createAllPossibleArmaments(),
+            $this->createEmptyArmamentsUsabilityMessages(),
+            $frontendHelper = new FrontendHelper(),
+            Armourer::getIt(),
+            new AddCustomShieldBody($frontendHelper)
+        );
+        self::assertSame(<<<HTML
+<div class="row " id="chooseShield">
+  <div class="col">
+    <div class="messages">
+        
+    </div>
+    <a title="Přidat vlastní štít" href="?action=add_new_shield" class="button add">+</a>
+    <label>
+      <select name="shield" title="Štít">
+         <option value="without_shield" selected >
+  bez štítu +0
+</option><option value="buckler"  >
+  pěstní štítek +2
+</option><option value="small_shield"  >
+  malý štít +4
+</option><option value="medium_shield"  >
+  střední štít +5
+</option><option value="heavy_shield"  >
+  velký štít +6
+</option><option value="pavise"  >
+  pavéza +7
+</option> 
+      </select>
+    </label>
+  </div>
+</div>
+HTML
+            , \trim($shieldBody->getValue())
+        );
     }
 }

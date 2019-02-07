@@ -85,7 +85,7 @@ class CurrentArmaments extends StrictObject
      * @throws \DrdPlus\Tables\Armaments\Exceptions\CanNotHoldWeaponByTwoHands
      * @throws \DrdPlus\Codes\Exceptions\ThereIsNoOppositeForTwoHandsHolding
      */
-    protected function getCurrentShieldForMelee(): ShieldCode
+    public function getCurrentShieldForMelee(): ShieldCode
     {
         $currentShield = $this->getCurrentShield();
         if ($currentShield->isUnarmed()) {
@@ -101,7 +101,7 @@ class CurrentArmaments extends StrictObject
     }
 
     /**
-     * WITHOUT usability check
+     * WITHOUT usability check. It is simple the shield you have somewhere.
      *
      * @return ShieldCode
      */
@@ -199,17 +199,6 @@ class CurrentArmaments extends StrictObject
         );
     }
 
-    public function getCurrentShieldHolding(ShieldCode $currentShield = null): ItemHoldingCode
-    {
-        $shieldHoldingValue = $this->currentArmamentsValues->getShieldHoldingValue() ?? ItemHoldingCode::OFFHAND;
-
-        return $this->getWeaponlikeHolding(
-            $currentShield ?? $this->getCurrentShield(),
-            $shieldHoldingValue,
-            $this->armourer
-        );
-    }
-
     public function getCurrentHelm(): HelmCode
     {
         $helmValue = $this->currentArmamentsValues->getHelmValue();
@@ -224,22 +213,22 @@ class CurrentArmaments extends StrictObject
         return HelmCode::getIt($helmValue);
     }
 
-    public function getCoverOfCurrentShieldForMelee(): int
+    public function getCurrentShieldForMeleeCover(): int
     {
         return $this->armourer->getCoverOfShield($this->getCurrentShieldForMelee());
     }
 
-    public function getCoverOfCurrentShieldForRanged(): int
+    public function getCurrentShieldForRangedCover(): int
     {
         return $this->armourer->getCoverOfShield($this->getCurrentShieldForRanged());
     }
 
-    public function getProtectionOfCurrentHelm(): int
+    public function getCurrentHelmProtection(): int
     {
         return $this->armourer->getProtectionOfHelm($this->getCurrentHelm());
     }
 
-    public function getProtectionOfCurrentBodyArmor(): int
+    public function getCurrentBodyArmorProtection(): int
     {
         return $this->armourer->getProtectionOfBodyArmor($this->getCurrentBodyArmor());
     }

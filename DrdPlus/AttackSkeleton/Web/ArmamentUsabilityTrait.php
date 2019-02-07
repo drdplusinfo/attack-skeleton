@@ -5,10 +5,16 @@ namespace DrdPlus\AttackSkeleton\Web;
 
 trait ArmamentUsabilityTrait
 {
+    protected function getSelected(string $current, string $selected): string
+    {
+        return $current === $selected
+            ? 'selected'
+            : '';
+    }
 
     protected function getDisabled(bool $canUseIt): string
     {
-        return $canUseIt
+        return !$canUseIt
             ? 'disabled'
             : '';
     }

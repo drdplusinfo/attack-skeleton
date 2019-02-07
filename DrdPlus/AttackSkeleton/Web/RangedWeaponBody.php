@@ -8,6 +8,7 @@ use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
+use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\FrontendHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomRangedWeaponBody;
@@ -150,12 +151,12 @@ HTML;
 
     private function getUrlToAddNewRangedWeapon(): string
     {
-        return $this->frontendHelper->getLocalUrlToAction(FrontendHelper::ADD_NEW_RANGED_WEAPON);
+        return $this->frontendHelper->getLocalUrlToAction(AttackRequest::ADD_NEW_RANGED_WEAPON);
     }
 
     private function getRangedWeaponSelectName(): string
     {
-        return FrontendHelper::RANGED_WEAPON;
+        return AttackRequest::RANGED_WEAPON;
     }
 
     private function getTranslatedWeaponCategory(string $weaponCategory): string
@@ -171,7 +172,7 @@ HTML;
             /** @var RangedWeaponCode $rangedWeaponCode */
             $rangedWeaponCode = $rangedWeapon['code'];
             $possibleRangedWeaponsOfCategory .= <<<HTML
-<option value="{$rangedWeaponCode->getValue()}" {$this->getSelected($rangedWeaponCode)} {$this->getDisabled($rangedWeapon['canUseIt'])}>
+<option value="{$rangedWeaponCode->getValue()}" {$this->getRangedWeaponSelected($rangedWeaponCode)} {$this->getDisabled($rangedWeapon['canUseIt'])}>
   {$this->getUsabilityPictogram($rangedWeapon['canUseIt'])}{$rangedWeaponCode->translateTo('cs')}
 </option>
 HTML;
@@ -180,11 +181,9 @@ HTML;
         return $possibleRangedWeaponsOfCategory;
     }
 
-    private function getSelected(RangedWeaponCode $rangedWeaponCode): string
+    private function getRangedWeaponSelected(RangedWeaponCode $rangedWeaponCode): string
     {
-        return $this->currentArmaments->getCurrentRangedWeapon()->getValue() === $rangedWeaponCode->getValue()
-            ? 'selected'
-            : '';
+        return $this->getSelected($this->currentArmaments->getCurrentRangedWeapon()->getValue(), $rangedWeaponCode->getValue());
     }
 
     private function getPossibleRangedWeapons(): string
@@ -209,7 +208,7 @@ HTML;
 
     private function getRangedWeaponHoldingName(): string
     {
-        return FrontendHelper::RANGED_WEAPON_HOLDING;
+        return AttackRequest::RANGED_WEAPON_HOLDING;
     }
 
     private function getCheckedMainHandHolding(): string

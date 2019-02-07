@@ -42,6 +42,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $armamentsUsabilityMessages;
     /** @var FrontendHelper */
     private $frontendHelper;
+    /** @var AttackRequest */
+    private $attackRequest;
     /** @var CustomArmamentsState */
     private $customArmamentsState;
     /** @var BodyArmorBody */
@@ -293,10 +295,19 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getFrontendHelper(): FrontendHelper
     {
         if ($this->frontendHelper === null) {
-            $this->frontendHelper = new FrontendHelper($this->getCurrentValues());
+            $this->frontendHelper = new FrontendHelper();
         }
 
         return $this->frontendHelper;
+    }
+
+    public function getAttackRequest(): AttackRequest
+    {
+        if ($this->attackRequest === null) {
+            $this->attackRequest = new AttackRequest($this->getCurrentValues(), $this->getBotParser());
+        }
+
+        return $this->attackRequest;
     }
 
     public function getCustomArmamentAdder(): CustomArmamentAdder

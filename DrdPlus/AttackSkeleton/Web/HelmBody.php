@@ -5,6 +5,7 @@ namespace DrdPlus\AttackSkeleton\Web;
 
 use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
+use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
@@ -64,18 +65,18 @@ HTML;
 
     private function getPossibleHelms(): string
     {
-        $helms = '';
+        $helms = [];
         foreach ($this->possibleArmaments->getPossibleHelms() as $possibleHelm) {
             /** @var HelmCode $helmCode */
             $helmCode = $possibleHelm['code'];
-            $helms .= <<<HTML
-<option value="{$helmCode->getValue()}" {$this->getSelected($helmCode)} {$this->getDisabled($possibleHelm['canUseIt'])}>
+            $helms[] = <<<HTML
+<option value="{$helmCode->getValue()}" {$this->getHelmSelected($helmCode)} {$this->getDisabled($possibleHelm['canUseIt'])}>
   {$this->getUsabilityPictogram($possibleHelm['canUseIt'])}{$helmCode->translateTo('cs')} {$this->getHelmProtection($helmCode)}
 </option>
 HTML;
         }
 
-        return $helms;
+        return \implode("\n", $helms);
     }
 
     private function getHelmProtection(HelmCode $helmCode): string
@@ -83,21 +84,19 @@ HTML;
         return $this->frontendHelper->formatInteger($this->armourer->getProtectionOfHelm($helmCode));
     }
 
-    private function getSelected(HelmCode $helmCode): string
+    private function getHelmSelected(HelmCode $helmCode): string
     {
-        return $this->currentArmaments->getCurrentHelm()->getValue() === $helmCode->getValue()
-            ? 'selected'
-            : '';
+        return $this->getSelected($this->currentArmaments->getCurrentHelm()->getValue(), $helmCode->getValue());
     }
 
     private function getHelmSelectName(): string
     {
-        return FrontendHelper::HELM;
+        return AttackRequest::HELM;
     }
 
     private function getLinkToAddNewHelm(): string
     {
-        return $this->frontendHelper->getLocalUrlToAction(FrontendHelper::ADD_NEW_HELM);
+        return $this->frontendHelper->getLocalUrlToAction(AttackRequest::ADD_NEW_HELM);
     }
 
     private function getVisibilityClass(): string
@@ -109,14 +108,14 @@ HTML;
 
     private function getMessagesAboutHelms(): string
     {
-        $messagesAboutHelms = '';
+        $messagesAboutHelms = [];
         foreach ($this->armamentsUsabilityMessages->getMessagesAboutHelms() as $messageAboutHelm) {
-            $messagesAboutHelms .= <<<HTML
+            $messagesAboutHelms [] = <<<HTML
           <div class="info"><?= $messageAboutHelm ?></div>
 HTML;
         }
 
-        return $messagesAboutHelms;
+        return \implode("\n", $messagesAboutHelms);
     }
 
     private function getAddHelm(): string
@@ -134,16 +133,16 @@ HTML;
 
     private function getCurrentCustomHelms(): string
     {
-        $possibleCustomHelms = '';
+        $possibleCustomHelms = [];
         foreach ($this->currentArmamentsValues->getCurrentCustomHelmsValues() as $armorName => $armorValues) {
             /** @var array|string[] $armorValues */
             foreach ($armorValues as $typeName => $armorValue) {
-                $possibleCustomHelms .= <<<HTML
+                $possibleCustomHelms [] = <<<HTML
 <input type="hidden" name="{$typeName}[{$armorName}]" value="<{$armorValue}">
 HTML;
             }
         }
 
-        return $possibleCustomHelms;
+        return \implode("\n", $possibleCustomHelms);
     }
 }

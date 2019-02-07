@@ -7,7 +7,7 @@ use DrdPlus\AttackSkeleton\FrontendHelper;
 
 trait CancelActionButtonTrait
 {
-    private function getCancelActionButton(FrontendHelper $frontendHelper)
+    private function getCancelActionButton(FrontendHelper $frontendHelper): string
     {
         return <<<HTML
 <div class="col-sm-1">
