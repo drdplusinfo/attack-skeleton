@@ -18,8 +18,8 @@ class BodyArmorBodyTest extends AbstractAttackTest
     {
         $bodyArmorBody = new BodyArmorBody(
             $this->getEmptyCustomArmamentsState(),
-            $this->getDefaultCurrentArmaments(),
             $this->getEmptyCurrentArmamentValues(),
+            $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
             $this->getFrontendHelper(),

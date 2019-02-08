@@ -25,7 +25,7 @@ abstract class AbstractArmamentBodyTest extends AbstractAttackTest
     private function unifyHtml(string $content): string
     {
         $content = \trim($content);
-        return (new HtmlDocument(<<<HTML
+        $document = new HtmlDocument(<<<HTML
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -36,6 +36,8 @@ abstract class AbstractArmamentBodyTest extends AbstractAttackTest
 {$content}
 </body>
 HTML
-        ))->body->prop_get_innerHTML();
+        );
+        $document->normalize();
+        return $document->body->prop_get_innerHTML();
     }
 }

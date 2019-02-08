@@ -16,6 +16,7 @@ use DrdPlus\AttackSkeleton\FrontendHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\CalculatorSkeleton\Memory;
+use DrdPlus\Codes\Armaments\ArmamentCode;
 use DrdPlus\Codes\ItemHoldingCode;
 use DrdPlus\Properties\Base\Agility;
 use DrdPlus\Properties\Base\Charisma;
@@ -28,6 +29,7 @@ use DrdPlus\Properties\Body\Size;
 use DrdPlus\RulesSkeleton\Configuration;
 use DrdPlus\RulesSkeleton\HtmlHelper;
 use DrdPlus\RulesSkeleton\ServicesContainer;
+use DrdPlus\Tables\Tables;
 use DrdPlus\Tests\CalculatorSkeleton\Partials\AbstractCalculatorContentTest;
 use Mockery\MockInterface;
 
@@ -64,6 +66,39 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
     protected function createPossibleArmaments(): PossibleArmaments
     {
         return $this->mockery(PossibleArmaments::class);
+    }
+
+    /**
+     * @param array|string[] $unusableArmaments
+     * @return PossibleArmaments|MockInterface
+     */
+    protected function createPossibleArmamentsWithUnusable(array $unusableArmaments): PossibleArmaments
+    {
+
+        return new PossibleArmaments(
+            $this->createArmourerWithUnusableArmament($unusableArmaments),
+            $this->createMaximalCurrentProperties(),
+            ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS),
+            ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS)
+        );
+    }
+
+    /**
+     * @param array|string[] $unusableArmaments
+     * @return Armourer|MockInterface
+     */
+    private function createArmourerWithUnusableArmament(array $unusableArmaments): Armourer
+    {
+        /** @var Armourer|MockInterface $armourer */
+        $armourer = $this->mockery(Armourer::class);
+        $armourer->shouldReceive('canUseArmament')
+            ->with($this->type(ArmamentCode::class), $this->type(Strength::class), $this->type(Size::class))
+            ->andReturnUsing(function (ArmamentCode $armamentCode) use ($unusableArmaments) {
+                return !\in_array($armamentCode->getValue(), $unusableArmaments, true);
+            });
+        $armourer->makePartial();
+        $armourer->__construct(Tables::getIt());
+        return $armourer;
     }
 
     /**
@@ -162,7 +197,7 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         static $defaultCurrentArmaments;
         if ($defaultCurrentArmaments === null) {
             $defaultCurrentArmaments = new CurrentArmaments(
-                new CurrentProperties(new CurrentValues([], $this->createMemory())),
+                new CurrentProperties(new CurrentValues([], $this->createEmptyMemory())),
                 $currentArmamentValues = $this->getEmptyCurrentArmamentValues(),
                 Armourer::getIt(),
                 $this->createCustomArmamentsRegistrar($currentArmamentValues)
@@ -183,6 +218,19 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         return $emptyCurrentArmamentValues;
     }
 
+    protected function createCurrentArmamentsWithUnusable(
+        CurrentArmamentsValues $currentArmamentValues,
+        array $unusableArmaments
+    ): CurrentArmaments
+    {
+        return new CurrentArmaments(
+            $this->createMaximalCurrentProperties(),
+            $currentArmamentValues,
+            $this->createArmourerWithUnusableArmament($unusableArmaments),
+            $this->createCustomArmamentsRegistrar($currentArmamentValues)
+        );
+    }
+
     /**
      * @return CurrentValues|MockInterface
      */
@@ -201,7 +249,7 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
     /**
      * @return Memory|MockInterface
      */
-    protected function createMemory(): Memory
+    protected function createEmptyMemory(): Memory
     {
         $memory = $this->mockery(Memory::class);
         $memory->shouldReceive('getValue')

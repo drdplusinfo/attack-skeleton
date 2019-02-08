@@ -95,8 +95,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->bodyArmorBody === null) {
             $this->bodyArmorBody = new BodyArmorBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
                 $this->getFrontendHelper(),
@@ -122,8 +122,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->helmBody === null) {
             $this->helmBody = new HelmBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
                 $this->getFrontendHelper(),
@@ -149,12 +149,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->meleeWeaponBody === null) {
             $this->meleeWeaponBody = new MeleeWeaponBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
                 $this->getFrontendHelper(),
-                $this->getArmourer(),
                 $this->getAddCustomMeleeWeaponBody()
             );
         }
@@ -176,12 +175,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->rangedWeaponBody === null) {
             $this->rangedWeaponBody = new RangedWeaponBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
                 $this->getFrontendHelper(),
-                $this->getArmourer(),
                 $this->getAddCustomRangedWeaponBody()
             );
         }
@@ -203,8 +201,8 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->shieldBody === null) {
             $this->shieldBody = new ShieldBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
                 $this->getFrontendHelper(),

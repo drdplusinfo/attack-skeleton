@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton\Web;
 
-use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomRangedWeaponBody;
 use DrdPlus\AttackSkeleton\Web\RangedWeaponBody;
 use DrdPlus\Tests\AttackSkeleton\AbstractAttackTest;
@@ -18,12 +17,11 @@ class RangedWeaponBodyTest extends AbstractAttackTest
     {
         $rangedWeaponBody = new RangedWeaponBody(
             $this->getEmptyCustomArmamentsState(),
-            $this->getDefaultCurrentArmaments(),
             $this->getEmptyCurrentArmamentValues(),
+            $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
             $this->getFrontendHelper(),
-            Armourer::getIt(),
             new AddCustomRangedWeaponBody($this->getFrontendHelper())
         );
         self::assertSame(<<<HTML

@@ -101,15 +101,24 @@ class CurrentArmaments extends StrictObject
     }
 
     /**
-     * WITHOUT usability check. It is simply the shield you possess.
-     *
      * @return ShieldCode
      */
     public function getCurrentShield(): ShieldCode
     {
-        $shieldValue = $this->currentArmamentsValues->getShieldValue() ?: ShieldCode::WITHOUT_SHIELD;
-
-        return ShieldCode::getIt($shieldValue);
+        $currentShieldValue = $this->currentArmamentsValues->getShieldValue() ?: ShieldCode::WITHOUT_SHIELD;
+        $currentShield = ShieldCode::getIt($currentShieldValue);
+        if ($currentShield->isUnarmed()) {
+            return $currentShield;
+        }
+        if ($this->canUseShield(
+            $currentShield,
+            ItemHoldingCode::getIt(ItemHoldingCode::MAIN_HAND),
+            $this->armourer,
+            $this->currentProperties
+        )) {
+            return $currentShield;
+        }
+        return ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD);
     }
 
     /**

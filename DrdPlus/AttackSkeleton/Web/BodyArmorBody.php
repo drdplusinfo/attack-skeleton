@@ -16,13 +16,27 @@ use DrdPlus\Codes\Armaments\BodyArmorCode;
 
 class BodyArmorBody extends AbstractArmamentBody
 {
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var FrontendHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
+    /** @var Armourer */
+    private $armourer;
     /** @var AddCustomBodyArmorBody */
     private $addCustomBodyArmorBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
         FrontendHelper $frontendHelper,
@@ -30,15 +44,13 @@ class BodyArmorBody extends AbstractArmamentBody
         AddCustomBodyArmorBody $addCustomBodyArmorBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
+        $this->armourer = $armourer;
         $this->addCustomBodyArmorBody = $addCustomBodyArmorBody;
     }
 

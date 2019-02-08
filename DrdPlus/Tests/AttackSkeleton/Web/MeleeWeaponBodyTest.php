@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton\Web;
 
-use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody;
 use DrdPlus\AttackSkeleton\Web\MeleeWeaponBody;
 use DrdPlus\Tests\AttackSkeleton\AbstractAttackTest;
@@ -18,12 +17,11 @@ class MeleeWeaponBodyTest extends AbstractAttackTest
     {
         $meleeWeaponBody = new MeleeWeaponBody(
             $this->getEmptyCustomArmamentsState(),
-            $this->getDefaultCurrentArmaments(),
             $this->getEmptyCurrentArmamentValues(),
+            $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
             $this->getFrontendHelper(),
-            Armourer::getIt(),
             new AddCustomMeleeWeaponBody($this->getFrontendHelper())
         );
         self::assertSame(<<<HTML

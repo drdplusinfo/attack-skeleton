@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace DrdPlus\AttackSkeleton\Web;
 
-use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
@@ -18,29 +17,37 @@ use DrdPlus\Codes\ItemHoldingCode;
 
 class MeleeWeaponBody extends AbstractArmamentBody
 {
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var FrontendHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
     /** @var AddCustomMeleeWeaponBody */
     private $addCustomMeleeWeaponBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
         FrontendHelper $frontendHelper,
-        Armourer $armourer,
         AddCustomMeleeWeaponBody $addCustomMeleeWeaponBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
         $this->addCustomMeleeWeaponBody = $addCustomMeleeWeaponBody;
     }
 

@@ -22,7 +22,7 @@ class PossibleArmamentsTest extends AbstractAttackTest
         $armourer = Armourer::getIt();
         $possibleArmaments = new PossibleArmaments(
             $armourer,
-            new CurrentProperties(new CurrentValues([], $this->createMemory())),
+            new CurrentProperties(new CurrentValues([], $this->createEmptyMemory())),
             ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS),
             ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS)
         );

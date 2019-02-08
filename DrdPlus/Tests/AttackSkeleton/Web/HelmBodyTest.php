@@ -18,8 +18,8 @@ class HelmBodyTest extends AbstractAttackTest
     {
         $helmBody = new HelmBody(
             $this->getEmptyCustomArmamentsState(),
-            $this->getDefaultCurrentArmaments(),
             $this->getEmptyCurrentArmamentValues(),
+            $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
             $this->getFrontendHelper(),

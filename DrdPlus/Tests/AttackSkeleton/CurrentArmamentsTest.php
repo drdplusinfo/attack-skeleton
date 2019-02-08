@@ -23,7 +23,7 @@ class CurrentArmamentsTest extends AbstractAttackTest
     {
         $currentArmamentValues = $this->getEmptyCurrentArmamentValues();
         $currentArmaments = new CurrentArmaments(
-            new CurrentProperties(new CurrentValues([], $this->createMemory())),
+            new CurrentProperties(new CurrentValues([], $this->createEmptyMemory())),
             $currentArmamentValues,
             Armourer::getIt(),
             $this->createCustomArmamentsRegistrar($currentArmamentValues)
