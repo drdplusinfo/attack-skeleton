@@ -21,7 +21,7 @@ class CurrentArmamentsTest extends AbstractAttackTest
      */
     public function I_am_unarmed_by_default(): void
     {
-        $currentArmamentValues = $this->createEmptyCurrentArmamentValues();
+        $currentArmamentValues = $this->getEmptyCurrentArmamentValues();
         $currentArmaments = new CurrentArmaments(
             new CurrentProperties(new CurrentValues([], $this->createMemory())),
             $currentArmamentValues,

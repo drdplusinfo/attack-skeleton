@@ -11,6 +11,8 @@ use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CurrentProperties;
 use DrdPlus\AttackSkeleton\CustomArmamentsRegistrar;
+use DrdPlus\AttackSkeleton\CustomArmamentsState;
+use DrdPlus\AttackSkeleton\FrontendHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\CalculatorSkeleton\Memory;
@@ -75,45 +77,52 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
     /**
      * @return ArmamentsUsabilityMessages|MockInterface
      */
-    protected function createEmptyArmamentsUsabilityMessages(): ArmamentsUsabilityMessages
+    protected function getEmptyArmamentsUsabilityMessages(): ArmamentsUsabilityMessages
     {
-        $armamentsUsabilityMessages = new ArmamentsUsabilityMessages($this->createAllPossibleArmaments());
-        self::assertCount(
-            0,
-            $armamentsUsabilityMessages->getMessagesAboutHelms(),
-            'No messages about usability of helms expected'
-        );
-        self::assertCount(
-            0,
-            $armamentsUsabilityMessages->getMessagesAboutMeleeWeapons(),
-            'No messages about usability of melee weapons expected'
-        );
-        self::assertCount(
-            0,
-            $armamentsUsabilityMessages->getMessagesAboutRangedWeapons(),
-            'No messages about usability of ranged weapons expected'
-        );
-        self::assertCount(
-            0,
-            $armamentsUsabilityMessages->getMessagesAboutShields(),
-            'No messages about usability of shields expected'
-        );
-        self::assertCount(
-            0,
-            $armamentsUsabilityMessages->getMessagesAboutBodyArmors(),
-            'No messages about usability of body armors expected'
-        );
-        return $armamentsUsabilityMessages;
+        static $emptyArmamentsUsabilityMessages;
+        if ($emptyArmamentsUsabilityMessages === null) {
+            $emptyArmamentsUsabilityMessages = new ArmamentsUsabilityMessages($this->getAllPossibleArmaments());
+            self::assertCount(
+                0,
+                $emptyArmamentsUsabilityMessages->getMessagesAboutHelms(),
+                'No messages about usability of helms expected'
+            );
+            self::assertCount(
+                0,
+                $emptyArmamentsUsabilityMessages->getMessagesAboutMeleeWeapons(),
+                'No messages about usability of melee weapons expected'
+            );
+            self::assertCount(
+                0,
+                $emptyArmamentsUsabilityMessages->getMessagesAboutRangedWeapons(),
+                'No messages about usability of ranged weapons expected'
+            );
+            self::assertCount(
+                0,
+                $emptyArmamentsUsabilityMessages->getMessagesAboutShields(),
+                'No messages about usability of shields expected'
+            );
+            self::assertCount(
+                0,
+                $emptyArmamentsUsabilityMessages->getMessagesAboutBodyArmors(),
+                'No messages about usability of body armors expected'
+            );
+        }
+        return $emptyArmamentsUsabilityMessages;
     }
 
-    protected function createAllPossibleArmaments(): PossibleArmaments
+    protected function getAllPossibleArmaments(): PossibleArmaments
     {
-        return new PossibleArmaments(
-            Armourer::getIt(),
-            $this->createMaximalCurrentProperties(),
-            ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS),
-            ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS)
-        );
+        static $allPossibleArmaments;
+        if ($allPossibleArmaments === null) {
+            $allPossibleArmaments = new PossibleArmaments(
+                Armourer::getIt(),
+                $this->createMaximalCurrentProperties(),
+                ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS),
+                ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS)
+            );
+        }
+        return $allPossibleArmaments;
     }
 
     /**
@@ -148,22 +157,30 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         return $currentProperties;
     }
 
-    protected function createDefaultCurrentArmaments(): CurrentArmaments
+    protected function getDefaultCurrentArmaments(): CurrentArmaments
     {
-        return new CurrentArmaments(
-            new CurrentProperties(new CurrentValues([], $this->createMemory())),
-            $currentArmamentValues = $this->createEmptyCurrentArmamentValues(),
-            Armourer::getIt(),
-            $this->createCustomArmamentsRegistrar($currentArmamentValues)
-        );
+        static $defaultCurrentArmaments;
+        if ($defaultCurrentArmaments === null) {
+            $defaultCurrentArmaments = new CurrentArmaments(
+                new CurrentProperties(new CurrentValues([], $this->createMemory())),
+                $currentArmamentValues = $this->getEmptyCurrentArmamentValues(),
+                Armourer::getIt(),
+                $this->createCustomArmamentsRegistrar($currentArmamentValues)
+            );
+        }
+        return $defaultCurrentArmaments;
     }
 
     /**
      * @return CurrentArmamentsValues|MockInterface
      */
-    protected function createEmptyCurrentArmamentValues(): CurrentArmamentsValues
+    protected function getEmptyCurrentArmamentValues(): CurrentArmamentsValues
     {
-        return new CurrentArmamentsValues($this->createEmptyCurrentValues());
+        static $emptyCurrentArmamentValues;
+        if ($emptyCurrentArmamentValues === null) {
+            $emptyCurrentArmamentValues = new CurrentArmamentsValues($this->createEmptyCurrentValues());
+        }
+        return $emptyCurrentArmamentValues;
     }
 
     /**
@@ -193,20 +210,6 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         return $memory;
     }
 
-    protected function getAttackServicesContainer(): AttackServicesContainer
-    {
-        static $attackServicesContainer;
-        if ($attackServicesContainer === null) {
-            $attackServicesContainer = $this->createAttackServicesContainer();
-        }
-        return $attackServicesContainer;
-    }
-
-    protected function createAttackServicesContainer(): AttackServicesContainer
-    {
-        return new AttackServicesContainer($this->getConfiguration(), $this->getHtmlHelper());
-    }
-
     /**
      * @param Configuration|AttackServicesContainer|null $configuration
      * @param HtmlHelper|null $htmlHelper
@@ -230,5 +233,19 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
             $bot = new Bot();
         }
         return $bot;
+    }
+
+    protected function getEmptyCustomArmamentsState(): CustomArmamentsState
+    {
+        static $emptyCustomArmamentsState;
+        if ($emptyCustomArmamentsState === null) {
+            $emptyCustomArmamentsState = new CustomArmamentsState($this->createEmptyCurrentValues());
+        }
+        return $emptyCustomArmamentsState;
+    }
+
+    protected function getFrontendHelper(): FrontendHelper
+    {
+        return $this->getServicesContainer()->getFrontendHelper();
     }
 }
