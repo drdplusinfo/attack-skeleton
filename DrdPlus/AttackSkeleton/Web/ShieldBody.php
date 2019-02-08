@@ -86,7 +86,7 @@ HTML;
 
     private function getShieldSelected(ShieldCode $shieldCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentShield()->getValue(), $shieldCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentShield(), $shieldCode);
     }
 
     private function getShieldSelectName(): string

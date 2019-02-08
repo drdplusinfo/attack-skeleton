@@ -125,7 +125,7 @@ HTML;
 
     private function getMeleeWeaponSelected(MeleeWeaponCode $meleeWeaponCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentMeleeWeapon()->getValue(), $meleeWeaponCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentMeleeWeapon(), $meleeWeaponCode);
     }
 
     private function getPossibleMeleeWeapons(): string

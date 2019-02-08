@@ -101,7 +101,7 @@ class CurrentArmaments extends StrictObject
     }
 
     /**
-     * WITHOUT usability check. It is simple the shield you have somewhere.
+     * WITHOUT usability check. It is simply the shield you possess.
      *
      * @return ShieldCode
      */

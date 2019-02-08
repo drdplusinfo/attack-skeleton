@@ -3,11 +3,13 @@ declare(strict_types=1);
 
 namespace DrdPlus\AttackSkeleton\Web;
 
+use Granam\String\StringInterface;
+
 trait ArmamentUsabilityTrait
 {
-    protected function getSelected(string $current, string $selected): string
+    protected function getSelected(StringInterface $current, StringInterface $selected): string
     {
-        return $current === $selected
+        return $current->getValue() === $selected->getValue()
             ? 'selected'
             : '';
     }

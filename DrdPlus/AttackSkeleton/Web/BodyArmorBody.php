@@ -139,7 +139,7 @@ HTML;
 
     private function getBodyArmorSelected(BodyArmorCode $bodyArmorCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentBodyArmor()->getValue(), $bodyArmorCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentBodyArmor(), $bodyArmorCode);
     }
 
     private function getBodyArmorProtection(BodyArmorCode $bodyArmorCode): string

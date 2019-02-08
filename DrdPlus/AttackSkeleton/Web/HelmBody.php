@@ -86,7 +86,7 @@ HTML;
 
     private function getHelmSelected(HelmCode $helmCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentHelm()->getValue(), $helmCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentHelm(), $helmCode);
     }
 
     private function getHelmSelectName(): string

@@ -183,7 +183,7 @@ HTML;
 
     private function getRangedWeaponSelected(RangedWeaponCode $rangedWeaponCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentRangedWeapon()->getValue(), $rangedWeaponCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentRangedWeapon(), $rangedWeaponCode);
     }
 
     private function getPossibleRangedWeapons(): string
