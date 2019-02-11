@@ -21,8 +21,8 @@ class MeleeWeaponBodyTest extends AbstractAttackTest
             $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
-            $this->getFrontendHelper(),
-            new AddCustomMeleeWeaponBody($this->getFrontendHelper())
+            $this->getHtmlHelper(),
+            new AddCustomMeleeWeaponBody($this->getHtmlHelper())
         );
         self::assertSame(<<<HTML
 <div class="">

@@ -22,9 +22,9 @@ class HelmBodyTest extends AbstractAttackTest
             $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
-            $this->getFrontendHelper(),
+            $this->getHtmlHelper(),
             Armourer::getIt(),
-            new AddCustomHelmBody($this->getFrontendHelper())
+            new AddCustomHelmBody($this->getHtmlHelper())
         );
         self::assertSame(
             <<<HTML

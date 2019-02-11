@@ -5,4 +5,5 @@ namespace DrdPlus\Tests\AttackSkeleton;
 
 class TracyTest extends \DrdPlus\Tests\CalculatorSkeleton\TracyTest
 {
+    use Partials\AttackCalculatorTestTrait;
 }

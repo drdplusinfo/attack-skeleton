@@ -10,7 +10,6 @@ use DrdPlus\Tests\AttackSkeleton\AbstractAttackTest;
 
 class BodyArmorBodyTest extends AbstractAttackTest
 {
-
     /**
      * @test
      */
@@ -22,9 +21,9 @@ class BodyArmorBodyTest extends AbstractAttackTest
             $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
-            $this->getFrontendHelper(),
+            $this->getHtmlHelper(),
             Armourer::getIt(),
-            new AddCustomBodyArmorBody($this->getFrontendHelper())
+            new AddCustomBodyArmorBody($this->getHtmlHelper())
         );
         self::assertSame(
             <<<HTML

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DrdPlus\AttackSkeleton\Web\AddCustomArmament;
 
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use Granam\Strict\Object\StrictObject;
 use Granam\WebContentBuilder\Web\BodyInterface;
 
@@ -12,10 +12,10 @@ class AddCustomBodyArmorBody extends StrictObject implements BodyInterface
 {
     use CancelActionButtonTrait;
 
-    /** @var FrontendHelper */
+    /** @var HtmlHelper */
     private $frontendHelper;
 
-    public function __construct(FrontendHelper $frontendHelper)
+    public function __construct(HtmlHelper $frontendHelper)
     {
         $this->frontendHelper = $frontendHelper;
     }

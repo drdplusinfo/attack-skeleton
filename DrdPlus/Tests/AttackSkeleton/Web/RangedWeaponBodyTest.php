@@ -21,8 +21,8 @@ class RangedWeaponBodyTest extends AbstractAttackTest
             $this->getDefaultCurrentArmaments(),
             $this->getAllPossibleArmaments(),
             $this->getEmptyArmamentsUsabilityMessages(),
-            $this->getFrontendHelper(),
-            new AddCustomRangedWeaponBody($this->getFrontendHelper())
+            $this->getHtmlHelper(),
+            new AddCustomRangedWeaponBody($this->getHtmlHelper())
         );
         self::assertSame(<<<HTML
 <div class="">

@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace DrdPlus\AttackSkeleton\Web\AddCustomArmament;
 
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 
 trait CancelActionButtonTrait
 {
-    private function getCancelActionButton(FrontendHelper $frontendHelper): string
+    private function getCancelActionButton(HtmlHelper $frontendHelper): string
     {
         return <<<HTML
 <div class="col-sm-1">

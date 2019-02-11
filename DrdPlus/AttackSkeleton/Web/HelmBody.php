@@ -9,7 +9,7 @@ use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomHelmBody;
 use DrdPlus\Codes\Armaments\HelmCode;
@@ -24,7 +24,7 @@ class HelmBody extends AbstractArmamentBody
     private $currentArmaments;
     /** @var ArmamentsUsabilityMessages */
     private $armamentsUsabilityMessages;
-    /** @var FrontendHelper */
+    /** @var HtmlHelper */
     private $frontendHelper;
     /** @var PossibleArmaments */
     private $possibleArmaments;
@@ -39,7 +39,7 @@ class HelmBody extends AbstractArmamentBody
         CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
-        FrontendHelper $frontendHelper,
+        HtmlHelper $frontendHelper,
         Armourer $armourer,
         AddCustomHelmBody $addCustomHelmBody
     )

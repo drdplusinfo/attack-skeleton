@@ -41,7 +41,7 @@
   },
   "scripts": {
     "pre-autoload-dump": [
-      "find ./vendor/drdplus/calculator-skeleton/web/*.html -exec cp {} ./web/web/ \\;"
+      "find ./vendor/drdplus/calculator-skeleton/web/*.html -exec cp {} ./web/ \\;"
     ]
   }
 }

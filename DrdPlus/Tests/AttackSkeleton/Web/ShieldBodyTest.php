@@ -28,9 +28,9 @@ class ShieldBodyTest extends AbstractArmamentBodyTest
                     $this->createCurrentArmamentsWithUnusable($currentArmamentValues, [$unusableShield]),
                     $this->createPossibleArmamentsWithUnusable([$unusableShield]),
                     $this->getEmptyArmamentsUsabilityMessages(),
-                    $this->getFrontendHelper(),
+                    $this->getHtmlHelper(),
                     Armourer::getIt(),
-                    new AddCustomShieldBody($this->getFrontendHelper())
+                    new AddCustomShieldBody($this->getHtmlHelper())
                 ),
                 <<<HTML
 <div class="row " id="chooseShield">
@@ -68,9 +68,9 @@ HTML
                     $this->getDefaultCurrentArmaments(),
                     $this->getAllPossibleArmaments(),
                     $this->getEmptyArmamentsUsabilityMessages(),
-                    $this->getFrontendHelper(),
+                    $this->getHtmlHelper(),
                     Armourer::getIt(),
-                    new AddCustomShieldBody($this->getFrontendHelper())
+                    new AddCustomShieldBody($this->getHtmlHelper())
                 ),
                 <<<HTML
 <div class="row " id="chooseShield">

@@ -4,7 +4,6 @@ namespace DrdPlus\AttackSkeleton;
 use DrdPlus\CalculatorSkeleton\CalculatorApplication;
 use DrdPlus\CalculatorSkeleton\CalculatorConfiguration;
 use DrdPlus\RulesSkeleton\Dirs;
-use DrdPlus\RulesSkeleton\HtmlHelper;
 
 \error_reporting(-1);
 if ((!empty($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] === '127.0.0.1') || PHP_SAPI === 'cli') {

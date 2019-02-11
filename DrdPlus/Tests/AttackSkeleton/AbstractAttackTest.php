@@ -12,7 +12,7 @@ use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CurrentProperties;
 use DrdPlus\AttackSkeleton\CustomArmamentsRegistrar;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\CalculatorSkeleton\Memory;
@@ -27,7 +27,6 @@ use DrdPlus\Properties\Base\Will;
 use DrdPlus\Properties\Body\HeightInCm;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\RulesSkeleton\Configuration;
-use DrdPlus\RulesSkeleton\HtmlHelper;
 use DrdPlus\RulesSkeleton\ServicesContainer;
 use DrdPlus\Tables\Tables;
 use DrdPlus\Tests\CalculatorSkeleton\Partials\AbstractCalculatorContentTest;
@@ -38,6 +37,7 @@ use Mockery\MockInterface;
  */
 abstract class AbstractAttackTest extends AbstractCalculatorContentTest
 {
+    use Partials\AttackCalculatorTestTrait;
 
     /**
      * @param CurrentArmamentsValues $currentArmamentsValues
@@ -260,12 +260,12 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
 
     /**
      * @param Configuration|AttackServicesContainer|null $configuration
-     * @param HtmlHelper|null $htmlHelper
+     * @param \DrdPlus\RulesSkeleton\HtmlHelper|HtmlHelper|null $htmlHelper
      * @return ServicesContainer|AttackServicesContainer
      */
     protected function createServicesContainer(
         Configuration $configuration = null,
-        HtmlHelper $htmlHelper = null
+        \DrdPlus\RulesSkeleton\HtmlHelper $htmlHelper = null
     ): ServicesContainer
     {
         return new AttackServicesContainer(
@@ -290,10 +290,5 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
             $emptyCustomArmamentsState = new CustomArmamentsState($this->createEmptyCurrentValues());
         }
         return $emptyCustomArmamentsState;
-    }
-
-    protected function getFrontendHelper(): FrontendHelper
-    {
-        return $this->getServicesContainer()->getFrontendHelper();
     }
 }

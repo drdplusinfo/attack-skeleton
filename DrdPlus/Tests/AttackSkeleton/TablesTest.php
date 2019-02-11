@@ -5,4 +5,5 @@ namespace DrdPlus\Tests\AttackSkeleton;
 
 class TablesTest extends \DrdPlus\Tests\CalculatorSkeleton\TablesTest
 {
+    use Partials\AttackCalculatorTestTrait;
 }
