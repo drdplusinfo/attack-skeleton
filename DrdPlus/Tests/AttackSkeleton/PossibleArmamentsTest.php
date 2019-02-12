@@ -9,7 +9,7 @@ use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Properties\Base\Strength;
+use DrdPlus\BaseProperties\Strength;
 use DrdPlus\Properties\Body\Size;
 
 class PossibleArmamentsTest extends AbstractAttackTest

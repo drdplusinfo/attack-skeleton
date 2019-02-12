@@ -30,7 +30,7 @@
     "php": ">=7.1",
     "drdplus/calculator-skeleton": "^1.0",
     "drdplus/properties": "^1.0",
-    "drdplus/armourer": "^1.0"
+    "drdplus/armourer": "^1.1"
   },
   "require-dev": {
     "phpunit/phpunit": "~7.0",
