@@ -5,6 +5,7 @@ namespace DrdPlus\AttackSkeleton;
 
 use Granam\Integer\IntegerInterface;
 use Granam\Integer\Tools\ToInteger;
+use Granam\String\StringInterface;
 
 /**
  * @method static HtmlHelper createFromGlobals(\DrdPlus\RulesSkeleton\Dirs $dirs)
@@ -29,6 +30,27 @@ class HtmlHelper extends \DrdPlus\RulesSkeleton\HtmlHelper
         }
 
         return '';
+    }
+
+    public function getChecked(StringInterface $current, StringInterface $expected): string
+    {
+        return $current->getValue() === $expected->getValue()
+            ? 'checked'
+            : '';
+    }
+
+    public function getSelected(StringInterface $current, StringInterface $expected): string
+    {
+        return $current->getValue() === $expected->getValue()
+            ? 'selected'
+            : '';
+    }
+
+    public function getDisabled(bool $canUseIt): string
+    {
+        return !$canUseIt
+            ? 'disabled'
+            : '';
     }
 
     /**
