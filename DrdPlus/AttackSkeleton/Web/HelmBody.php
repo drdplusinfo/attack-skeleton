@@ -9,36 +9,48 @@ use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomHelmBody;
 use DrdPlus\Codes\Armaments\HelmCode;
 
 class HelmBody extends AbstractArmamentBody
 {
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var HtmlHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
+    /** @var Armourer */
+    private $armourer;
     /** @var AddCustomHelmBody */
     private $addCustomHelmBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
-        FrontendHelper $frontendHelper,
+        HtmlHelper $frontendHelper,
         Armourer $armourer,
         AddCustomHelmBody $addCustomHelmBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
+        $this->armourer = $armourer;
         $this->addCustomHelmBody = $addCustomHelmBody;
     }
 
@@ -86,7 +98,7 @@ HTML;
 
     private function getHelmSelected(HelmCode $helmCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentHelm()->getValue(), $helmCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentHelm(), $helmCode);
     }
 
     private function getHelmSelectName(): string

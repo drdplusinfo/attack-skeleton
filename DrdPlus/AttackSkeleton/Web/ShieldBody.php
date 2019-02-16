@@ -9,7 +9,7 @@ use DrdPlus\AttackSkeleton\AttackRequest;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomShieldBody;
 use DrdPlus\Codes\Armaments\ShieldCode;
@@ -18,27 +18,39 @@ class ShieldBody extends AbstractArmamentBody
 {
     /** @var AddCustomShieldBody */
     private $addCustomShieldBody;
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var HtmlHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
+    /** @var Armourer */
+    private $armourer;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
-        FrontendHelper $frontendHelper,
+        HtmlHelper $frontendHelper,
         Armourer $armourer,
         AddCustomShieldBody $addCustomShieldBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
+        $this->armourer = $armourer;
         $this->addCustomShieldBody = $addCustomShieldBody;
     }
 
@@ -65,18 +77,18 @@ HTML;
 
     private function getPossibleShields(): string
     {
-        $shields = '';
+        $shields = [];
         foreach ($this->possibleArmaments->getPossibleShields() as $possibleShield) {
             /** @var ShieldCode $shieldCode */
             $shieldCode = $possibleShield['code'];
-            $shields .= <<<HTML
+            $shields[] = <<<HTML
 <option value="{$shieldCode->getValue()}" {$this->getShieldSelected($shieldCode)} {$this->getDisabled($possibleShield['canUseIt'])}>
   {$this->getUsabilityPictogram($possibleShield['canUseIt'])}{$shieldCode->translateTo('cs')} {$this->getShieldProtection($shieldCode)}
 </option>
 HTML;
         }
 
-        return $shields;
+        return \implode("\n", $shields);
     }
 
     private function getShieldProtection(ShieldCode $shieldCode): string
@@ -86,7 +98,7 @@ HTML;
 
     private function getShieldSelected(ShieldCode $shieldCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentShield()->getValue(), $shieldCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentShield(), $shieldCode);
     }
 
     private function getShieldSelectName(): string

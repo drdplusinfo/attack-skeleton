@@ -15,9 +15,13 @@ use DrdPlus\AttackSkeleton\Web\HelmBody;
 use DrdPlus\AttackSkeleton\Web\MeleeWeaponBody;
 use DrdPlus\AttackSkeleton\Web\RangedWeaponBody;
 use DrdPlus\AttackSkeleton\Web\ShieldBody;
+use DrdPlus\CalculatorSkeleton\CalculatorConfiguration;
 use DrdPlus\CalculatorSkeleton\CalculatorServicesContainer;
 use DrdPlus\Tables\Tables;
 
+/**
+ * @method HtmlHelper getHtmlHelper
+ */
 class AttackServicesContainer extends CalculatorServicesContainer
 {
     /** @var BodyPropertiesBody */
@@ -40,8 +44,6 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $currentArmamentsValues;
     /** @var ArmamentsUsabilityMessages */
     private $armamentsUsabilityMessages;
-    /** @var FrontendHelper */
-    private $frontendHelper;
     /** @var AttackRequest */
     private $attackRequest;
     /** @var CustomArmamentsState */
@@ -66,6 +68,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
     private $shieldBody;
     /** @var AddCustomShieldBody */
     private $addCustomShieldBody;
+
+    public function __construct(CalculatorConfiguration $calculatorConfiguration, HtmlHelper $htmlHelper)
+    {
+        parent::__construct($calculatorConfiguration, $htmlHelper);
+    }
 
     public function getRulesMainBodyParameters(): array
     {
@@ -95,11 +102,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->bodyArmorBody === null) {
             $this->bodyArmorBody = new BodyArmorBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
-                $this->getFrontendHelper(),
+                $this->getHtmlHelper(),
                 $this->getArmourer(),
                 $this->getAddCustomBodyArmorBody()
             );
@@ -111,7 +118,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getAddCustomBodyArmorBody(): AddCustomBodyArmorBody
     {
         if ($this->addCustomBodyArmorBody === null) {
-            $this->addCustomBodyArmorBody = new AddCustomBodyArmorBody($this->getFrontendHelper());
+            $this->addCustomBodyArmorBody = new AddCustomBodyArmorBody($this->getHtmlHelper());
         }
 
         return $this->addCustomBodyArmorBody;
@@ -122,11 +129,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->helmBody === null) {
             $this->helmBody = new HelmBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
-                $this->getFrontendHelper(),
+                $this->getHtmlHelper(),
                 $this->getArmourer(),
                 $this->getAddCustomHelmBody()
             );
@@ -138,7 +145,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getAddCustomHelmBody(): AddCustomHelmBody
     {
         if ($this->addCustomHelmBody === null) {
-            $this->addCustomHelmBody = new AddCustomHelmBody($this->getFrontendHelper());
+            $this->addCustomHelmBody = new AddCustomHelmBody($this->getHtmlHelper());
         }
 
         return $this->addCustomHelmBody;
@@ -149,12 +156,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->meleeWeaponBody === null) {
             $this->meleeWeaponBody = new MeleeWeaponBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
-                $this->getFrontendHelper(),
-                $this->getArmourer(),
+                $this->getHtmlHelper(),
                 $this->getAddCustomMeleeWeaponBody()
             );
         }
@@ -165,7 +171,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getAddCustomMeleeWeaponBody(): AddCustomMeleeWeaponBody
     {
         if ($this->addCustomMeleeWeaponBody === null) {
-            $this->addCustomMeleeWeaponBody = new AddCustomMeleeWeaponBody($this->getFrontendHelper());
+            $this->addCustomMeleeWeaponBody = new AddCustomMeleeWeaponBody($this->getHtmlHelper());
         }
 
         return $this->addCustomMeleeWeaponBody;
@@ -176,12 +182,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->rangedWeaponBody === null) {
             $this->rangedWeaponBody = new RangedWeaponBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
-                $this->getFrontendHelper(),
-                $this->getArmourer(),
+                $this->getHtmlHelper(),
                 $this->getAddCustomRangedWeaponBody()
             );
         }
@@ -192,7 +197,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getAddCustomRangedWeaponBody(): AddCustomRangedWeaponBody
     {
         if ($this->addCustomRangedWeaponBody === null) {
-            $this->addCustomRangedWeaponBody = new AddCustomRangedWeaponBody($this->getFrontendHelper());
+            $this->addCustomRangedWeaponBody = new AddCustomRangedWeaponBody($this->getHtmlHelper());
         }
 
         return $this->addCustomRangedWeaponBody;
@@ -203,11 +208,11 @@ class AttackServicesContainer extends CalculatorServicesContainer
         if ($this->shieldBody === null) {
             $this->shieldBody = new ShieldBody(
                 $this->getCustomArmamentsState(),
-                $this->getCurrentArmaments(),
                 $this->getCurrentArmamentsValues(),
+                $this->getCurrentArmaments(),
                 $this->getPossibleArmaments(),
                 $this->getArmamentsUsabilityMessages(),
-                $this->getFrontendHelper(),
+                $this->getHtmlHelper(),
                 $this->getArmourer(),
                 $this->getAddCustomShieldBody()
             );
@@ -219,7 +224,7 @@ class AttackServicesContainer extends CalculatorServicesContainer
     public function getAddCustomShieldBody(): AddCustomShieldBody
     {
         if ($this->addCustomShieldBody === null) {
-            $this->addCustomShieldBody = new AddCustomShieldBody($this->getFrontendHelper());
+            $this->addCustomShieldBody = new AddCustomShieldBody($this->getHtmlHelper());
         }
 
         return $this->addCustomShieldBody;
@@ -290,15 +295,6 @@ class AttackServicesContainer extends CalculatorServicesContainer
         }
 
         return $this->tables;
-    }
-
-    public function getFrontendHelper(): FrontendHelper
-    {
-        if ($this->frontendHelper === null) {
-            $this->frontendHelper = new FrontendHelper();
-        }
-
-        return $this->frontendHelper;
     }
 
     public function getAttackRequest(): AttackRequest

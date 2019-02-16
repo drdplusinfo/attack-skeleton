@@ -8,7 +8,7 @@ use DrdPlus\Codes\Armaments\ArmamentCode;
 use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Codes\Armaments\WeaponlikeCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Properties\Base\Strength;
+use DrdPlus\BaseProperties\Strength;
 
 trait UsingArmaments
 {

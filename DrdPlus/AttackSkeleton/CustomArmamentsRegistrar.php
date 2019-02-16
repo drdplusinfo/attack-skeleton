@@ -5,7 +5,7 @@ namespace DrdPlus\AttackSkeleton;
 
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use DrdPlus\Codes\Body\PhysicalWoundTypeCode;
-use DrdPlus\Properties\Base\Strength;
+use DrdPlus\BaseProperties\Strength;
 use DrdPlus\Tables\Measurements\Distance\Distance;
 use DrdPlus\Tables\Measurements\Weight\Weight;
 use DrdPlus\Tables\Tables;

@@ -9,36 +9,48 @@ use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
 use DrdPlus\AttackSkeleton\AttackRequest;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomBodyArmorBody;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 
 class BodyArmorBody extends AbstractArmamentBody
 {
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var HtmlHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
+    /** @var Armourer */
+    private $armourer;
     /** @var AddCustomBodyArmorBody */
     private $addCustomBodyArmorBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
-        FrontendHelper $frontendHelper,
+        HtmlHelper $frontendHelper,
         Armourer $armourer,
         AddCustomBodyArmorBody $addCustomBodyArmorBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
+        $this->armourer = $armourer;
         $this->addCustomBodyArmorBody = $addCustomBodyArmorBody;
     }
 
@@ -139,7 +151,7 @@ HTML;
 
     private function getBodyArmorSelected(BodyArmorCode $bodyArmorCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentBodyArmor()->getValue(), $bodyArmorCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentBodyArmor(), $bodyArmorCode);
     }
 
     private function getBodyArmorProtection(BodyArmorCode $bodyArmorCode): string

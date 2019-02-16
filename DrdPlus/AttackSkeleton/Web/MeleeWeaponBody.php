@@ -3,13 +3,12 @@ declare(strict_types=1);
 
 namespace DrdPlus\AttackSkeleton\Web;
 
-use DrdPlus\Armourer\Armourer;
 use DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages;
 use DrdPlus\AttackSkeleton\CurrentArmaments;
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
 use DrdPlus\AttackSkeleton\CustomArmamentsState;
 use DrdPlus\AttackSkeleton\AttackRequest;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
@@ -18,29 +17,37 @@ use DrdPlus\Codes\ItemHoldingCode;
 
 class MeleeWeaponBody extends AbstractArmamentBody
 {
+    /** @var CustomArmamentsState */
+    private $customArmamentsState;
+    /** @var CurrentArmamentsValues */
+    private $currentArmamentsValues;
+    /** @var CurrentArmaments */
+    private $currentArmaments;
+    /** @var ArmamentsUsabilityMessages */
+    private $armamentsUsabilityMessages;
+    /** @var HtmlHelper */
+    private $frontendHelper;
+    /** @var PossibleArmaments */
+    private $possibleArmaments;
     /** @var AddCustomMeleeWeaponBody */
     private $addCustomMeleeWeaponBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,
-        CurrentArmaments $currentArmaments,
         CurrentArmamentsValues $currentArmamentsValues,
+        CurrentArmaments $currentArmaments,
         PossibleArmaments $possibleArmaments,
         ArmamentsUsabilityMessages $armamentsUsabilityMessages,
-        FrontendHelper $frontendHelper,
-        Armourer $armourer,
+        HtmlHelper $frontendHelper,
         AddCustomMeleeWeaponBody $addCustomMeleeWeaponBody
     )
     {
-        parent::__construct(
-            $customArmamentsState,
-            $currentArmaments,
-            $currentArmamentsValues,
-            $possibleArmaments,
-            $armamentsUsabilityMessages,
-            $frontendHelper,
-            $armourer
-        );
+        $this->customArmamentsState = $customArmamentsState;
+        $this->currentArmamentsValues = $currentArmamentsValues;
+        $this->currentArmaments = $currentArmaments;
+        $this->armamentsUsabilityMessages = $armamentsUsabilityMessages;
+        $this->frontendHelper = $frontendHelper;
+        $this->possibleArmaments = $possibleArmaments;
         $this->addCustomMeleeWeaponBody = $addCustomMeleeWeaponBody;
     }
 
@@ -125,7 +132,7 @@ HTML;
 
     private function getMeleeWeaponSelected(MeleeWeaponCode $meleeWeaponCode): string
     {
-        return $this->getSelected($this->currentArmaments->getCurrentMeleeWeapon()->getValue(), $meleeWeaponCode->getValue());
+        return $this->getSelected($this->currentArmaments->getCurrentMeleeWeapon(), $meleeWeaponCode);
     }
 
     private function getPossibleMeleeWeapons(): string

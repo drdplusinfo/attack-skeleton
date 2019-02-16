@@ -9,7 +9,7 @@ use DrdPlus\AttackSkeleton\PossibleArmaments;
 use DrdPlus\CalculatorSkeleton\CurrentValues;
 use DrdPlus\Codes\Armaments\BodyArmorCode;
 use DrdPlus\Codes\ItemHoldingCode;
-use DrdPlus\Properties\Base\Strength;
+use DrdPlus\BaseProperties\Strength;
 use DrdPlus\Properties\Body\Size;
 
 class PossibleArmamentsTest extends AbstractAttackTest
@@ -22,7 +22,7 @@ class PossibleArmamentsTest extends AbstractAttackTest
         $armourer = Armourer::getIt();
         $possibleArmaments = new PossibleArmaments(
             $armourer,
-            new CurrentProperties(new CurrentValues([], $this->createMemory())),
+            new CurrentProperties(new CurrentValues([], $this->createEmptyMemory())),
             ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS),
             ItemHoldingCode::getIt(ItemHoldingCode::TWO_HANDS)
         );

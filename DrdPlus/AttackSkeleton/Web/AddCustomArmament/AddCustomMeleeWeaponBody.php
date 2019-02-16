@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace DrdPlus\AttackSkeleton\Web\AddCustomArmament;
 
 use DrdPlus\AttackSkeleton\CurrentArmamentsValues;
-use DrdPlus\AttackSkeleton\FrontendHelper;
+use DrdPlus\AttackSkeleton\HtmlHelper;
 use DrdPlus\Codes\Armaments\WeaponCategoryCode;
 use Granam\Strict\Object\StrictObject;
 use Granam\WebContentBuilder\Web\BodyInterface;
@@ -14,10 +14,10 @@ class AddCustomMeleeWeaponBody extends StrictObject implements BodyInterface
     use WeaponWoundTypesTrait;
     use CancelActionButtonTrait;
 
-    /** @var FrontendHelper */
+    /** @var HtmlHelper */
     private $frontendHelper;
 
-    public function __construct(FrontendHelper $frontendHelper)
+    public function __construct(HtmlHelper $frontendHelper)
     {
         $this->frontendHelper = $frontendHelper;
     }
