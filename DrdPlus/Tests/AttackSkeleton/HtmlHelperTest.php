@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace DrdPlus\Tests\AttackSkeleton;
 
 use DrdPlus\Tests\AttackSkeleton\Partials\AttackCalculatorTestTrait;
+use Granam\Integer\IntegerObject;
 use Granam\String\StringObject;
 
 class HtmlHelperTest extends \DrdPlus\Tests\CalculatorSkeleton\HtmlHelperTest
@@ -40,6 +41,7 @@ class HtmlHelperTest extends \DrdPlus\Tests\CalculatorSkeleton\HtmlHelperTest
     {
         $htmlHelper = $this->getHtmlHelper();
         self::assertSame('checked', $htmlHelper->getChecked(new StringObject('foo'), new StringObject('foo')));
+        self::assertSame('checked', $htmlHelper->getChecked(123, '123'));
         self::assertSame('', $htmlHelper->getChecked(new StringObject('foo'), new StringObject('bar')));
     }
 
@@ -50,6 +52,7 @@ class HtmlHelperTest extends \DrdPlus\Tests\CalculatorSkeleton\HtmlHelperTest
     {
         $htmlHelper = $this->getHtmlHelper();
         self::assertSame('selected', $htmlHelper->getSelected(new StringObject('foo'), new StringObject('foo')));
+        self::assertSame('selected', $htmlHelper->getSelected(new IntegerObject(555), new StringObject('555')));
         self::assertSame('', $htmlHelper->getSelected(new StringObject('foo'), new StringObject('bar')));
     }
 
