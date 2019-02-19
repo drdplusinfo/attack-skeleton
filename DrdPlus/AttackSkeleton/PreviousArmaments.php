@@ -132,7 +132,7 @@ class PreviousArmaments extends StrictObject
         $rangedWeapon = RangedWeaponCode::getIt($this->getPreviousRangedWeaponValue());
         $weaponHolding = $this->getWeaponlikeHolding(
             $rangedWeapon,
-            $this->history->getValue(AttackRequest::RANGED_WEAPON_HOLDING),
+            $this->getPreviousRangedWeaponHoldingValue(),
             $this->getArmourer()
         );
         if (!$this->couldUseWeaponlike($rangedWeapon, $weaponHolding, $this->previousProperties, $this->getArmourer())) {
