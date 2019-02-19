@@ -8,6 +8,7 @@ use DrdPlus\AttackSkeleton\PreviousProperties;
 use DrdPlus\BaseProperties\Strength;
 use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
+use DrdPlus\Codes\Armaments\RangedWeaponCode;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\Tables\Tables;
 use DrdPlus\Tests\CalculatorSkeleton\Partials\AbstractCalculatorContentTest;
@@ -106,4 +107,20 @@ class PreviousArmamentsTest extends AbstractCalculatorContentTest
         self::assertSame(MeleeWeaponCode::getIt(MeleeWeaponCode::HAND), $previousArmaments->getPreviousMeleeWeapon());
     }
 
+    /**
+     * @test
+     */
+    public function I_can_get_previous_ranged_weapon(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::RANGED_WEAPON => RangedWeaponCode::MINICROSSBOW,
+                AttackRequest::RANGED_WEAPON_HOLDING => null,
+            ]),
+            $this->createPreviousProperties(),
+            $this->createArmourer(true),
+            Tables::getIt()
+        );
+        self::assertSame(RangedWeaponCode::getIt(RangedWeaponCode::MINICROSSBOW), $previousArmaments->getPreviousRangedWeapon());
+    }
 }
