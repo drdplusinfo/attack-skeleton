@@ -324,7 +324,7 @@ class PreviousArmaments extends StrictObject
         return $this->getShieldHolding(
             $this->getPreviousMeleeWeaponHolding(),
             $this->getPreviousMeleeWeapon(),
-            $shieldCode ?? $this->getPreviousShield(),
+            $shieldCode ?? $this->getPreviousShieldForMelee(),
             $this->getArmourer()
         );
     }
@@ -343,7 +343,7 @@ class PreviousArmaments extends StrictObject
         return $this->getShieldHolding(
             $this->getPreviousRangedWeaponHolding(),
             $this->getPreviousRangedWeapon(),
-            $shieldCode ?? $this->getPreviousShield(),
+            $shieldCode ?? $this->getPreviousShieldForRanged(),
             $this->getArmourer()
         );
     }
