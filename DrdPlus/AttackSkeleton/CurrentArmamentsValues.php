@@ -30,6 +30,7 @@ class CurrentArmamentsValues extends StrictObject
     public const CUSTOM_RANGED_WEAPON_COVER = 'custom_ranged_weapon_cover';
     public const CUSTOM_RANGED_WEAPON_WEIGHT = 'custom_ranged_weapon_weight';
     public const CUSTOM_RANGED_WEAPON_TWO_HANDED_ONLY = 'custom_ranged_weapon_two_handed_only';
+    public const CUSTOM_RANGED_WEAPON_MAXIMAL_APPLICABLE_STRENGTH = 'custom_ranged_weapon_maximal_applicable_strength';
     // body armor
     public const CUSTOM_BODY_ARMOR_NAME = 'custom_body_armor_name';
     public const CUSTOM_BODY_ARMOR_REQUIRED_STRENGTH = 'custom_body_armor_required_strength';
