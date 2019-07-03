@@ -65,7 +65,7 @@ class AddCustomBodyArmorBody extends StrictObject implements BodyInterface
     <label for="customBodyArmorWeight">Váha v kg</label>
   </div>
   <div>
-    <input id="customBodyArmorWeight" type="number" min="0" max="99.99" value="10" name="{$this->getCustomBodyArmorWeightName()}[0]" required>
+    <input id="customBodyArmorWeight" type="number" min="0" max="99.99" step="0.1" value="10" name="{$this->getCustomBodyArmorWeightName()}[0]" required>
   </div>
 </div>
 <div class="col">
