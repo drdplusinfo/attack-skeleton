@@ -4,7 +4,9 @@ namespace DrdPlus\Tests\AttackSkeleton\Partials;
 
 use DrdPlus\AttackSkeleton\AttackServicesContainer;
 use DrdPlus\AttackSkeleton\HtmlHelper;
+use DrdPlus\CalculatorSkeleton\CalculatorApplication;
 use DrdPlus\CalculatorSkeleton\CalculatorConfiguration;
+use DrdPlus\CalculatorSkeleton\CalculatorServicesContainer;
 use DrdPlus\RulesSkeleton\Dirs;
 use DrdPlus\Tests\CalculatorSkeleton\Partials\CalculatorContentTestTrait;
 
@@ -67,7 +69,28 @@ trait AttackCalculatorTestTrait
 
     protected function getServicesContainerClass(): string
     {
-        return AttackServicesContainer::class;
+        return defined('DRD_PLUS_SERVICES_CONTAINER_CLASS')
+            ? DRD_PLUS_SERVICES_CONTAINER_CLASS
+            : AttackServicesContainer::class;
     }
 
+    /**
+     * @return string|CalculatorConfiguration
+     */
+    protected function getConfigurationClass(): string
+    {
+        return defined('DRD_PLUS_CONFIGURATION_CLASS')
+            ? DRD_PLUS_CONFIGURATION_CLASS
+            : CalculatorConfiguration::class;
+    }
+
+    /**
+     * @return string|CalculatorApplication
+     */
+    protected function getRulesApplicationClass(): string
+    {
+        return defined('DRD_PLUS_APPLICATION_CLASS')
+            ? DRD_PLUS_APPLICATION_CLASS
+            : CalculatorApplication::class;
+    }
 }

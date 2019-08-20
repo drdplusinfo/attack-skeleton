@@ -2,7 +2,6 @@
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\CalculatorSkeleton\CalculatorApplication;
 use DrdPlus\CalculatorSkeleton\Memory;
 use Mockery\MockInterface;
 
@@ -12,13 +11,6 @@ use Mockery\MockInterface;
 class CalculatorApplicationTest extends \DrdPlus\Tests\CalculatorSkeleton\CalculatorApplicationTest
 {
     use Partials\AttackCalculatorTestTrait;
-
-    protected static function getSutClass(string $sutTestClass = null, string $regexp = '~\\\Tests(.+)Test$~'): string
-    {
-        return defined('DRD_PLUS_APPLICATION_CLASS')
-            ? DRD_PLUS_APPLICATION_CLASS
-            : CalculatorApplication::class;
-    }
 
     /**
      * @return Memory|MockInterface
