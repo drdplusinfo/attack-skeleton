@@ -2,6 +2,7 @@
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
+use DrdPlus\CalculatorSkeleton\History;
 use DrdPlus\CalculatorSkeleton\Memory;
 use Mockery\MockInterface;
 
@@ -21,6 +22,17 @@ class CalculatorApplicationTest extends \DrdPlus\Tests\CalculatorSkeleton\Calcul
         $memory->shouldReceive('getValue')
             ->andReturnNull();
         return $memory;
+    }
+
+    /**
+     * @return History|MockInterface
+     */
+    protected function createHistoryForHistoryDeletion(): History
+    {
+        $history = parent::createHistoryForHistoryDeletion();
+        $history->shouldReceive('getValue')
+            ->andReturnNull();
+        return $history;
     }
 
 }
