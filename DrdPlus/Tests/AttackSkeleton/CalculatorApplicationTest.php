@@ -15,7 +15,9 @@ class CalculatorApplicationTest extends \DrdPlus\Tests\CalculatorSkeleton\Calcul
 
     protected static function getSutClass(string $sutTestClass = null, string $regexp = '~\\\Tests(.+)Test$~'): string
     {
-        return CalculatorApplication::class;
+        return defined('DRD_PLUS_APPLICATION_CLASS')
+            ? DRD_PLUS_APPLICATION_CLASS
+            : CalculatorApplication::class;
     }
 
     /**
