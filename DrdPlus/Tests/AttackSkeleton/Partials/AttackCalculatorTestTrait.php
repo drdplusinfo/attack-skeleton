@@ -1,14 +1,22 @@
-<?php
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace DrdPlus\Tests\AttackSkeleton\Partials;
 
+use DrdPlus\AttackSkeleton\AttackServicesContainer;
 use DrdPlus\AttackSkeleton\HtmlHelper;
+use DrdPlus\CalculatorSkeleton\CalculatorConfiguration;
 use DrdPlus\RulesSkeleton\Dirs;
 use DrdPlus\Tests\CalculatorSkeleton\Partials\CalculatorContentTestTrait;
 
 /**
  * @method HtmlHelper getHtmlHelper()
+ * @method CalculatorConfiguration getConfiguration(Dirs $dirs = null)
+ * @method static assertTrue($value, $message = '')
+ * @method static assertFalse($value, $message = '')
+ * @method static assertSame($expected, $actual, $message = '')
+ * @method static assertNotSame($expected, $actual, $message = '')
+ * @method static assertNotEmpty($value, $message = '')
+ * @method static fail($message)
  */
 trait AttackCalculatorTestTrait
 {
@@ -46,4 +54,20 @@ trait AttackCalculatorTestTrait
     {
         return __DIR__ . '/../../../..';
     }
+
+    protected function isSkeletonChecked(string $skeletonDocumentRoot = null): bool
+    {
+        $documentRootRealPath = \realpath($this->getProjectRoot());
+        self::assertNotEmpty($documentRootRealPath, 'Can not find out real path of document root ' . \var_export($this->getProjectRoot(), true));
+        $skeletonRootRealPath = \realpath($skeletonDocumentRoot ?? $this->getAttackSkeletonProjectRoot());
+        self::assertNotEmpty($skeletonRootRealPath, 'Can not find out real path of skeleton root ' . \var_export($skeletonRootRealPath, true));
+
+        return $documentRootRealPath === $skeletonRootRealPath;
+    }
+
+    protected function getServicesContainerClass(): string
+    {
+        return AttackServicesContainer::class;
+    }
+
 }
