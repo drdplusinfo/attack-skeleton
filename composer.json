@@ -19,9 +19,7 @@
   "require": {
     "php": ">=7.1",
     "drdplus/calculator-skeleton": "^1.1",
-    "drdplus/properties": "^2.1",
-    "drdplus/armourer": "^2.0",
-    "composer-plugin-api": "^1.1"
+    "drdplus/armourer": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.3",
