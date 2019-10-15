@@ -2,7 +2,7 @@
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-class RouterTest extends \DrdPlus\Tests\CalculatorSkeleton\RouterTest
+class RouterCacheDirProviderTest extends \DrdPlus\Tests\CalculatorSkeleton\RouterCacheDirProviderTest
 {
     use Partials\AttackCalculatorTestTrait;
 }

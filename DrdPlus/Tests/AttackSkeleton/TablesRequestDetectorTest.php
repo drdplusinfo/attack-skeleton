@@ -2,9 +2,7 @@
 
 namespace DrdPlus\Tests\AttackSkeleton;
 
-use DrdPlus\RulesSkeleton\Cache;
-
-class CacheTest extends \DrdPlus\Tests\CalculatorSkeleton\CacheTest
+class TablesRequestDetectorTest extends \DrdPlus\Tests\CalculatorSkeleton\TablesRequestDetectorTest
 {
     use Partials\AttackCalculatorTestTrait;
 }
