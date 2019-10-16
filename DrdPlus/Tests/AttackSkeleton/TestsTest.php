@@ -45,4 +45,34 @@ class TestsTest extends \DrdPlus\Tests\CalculatorSkeleton\TestsTest
             );
         }
     }
+
+    protected function getTestingClassesWithoutSut(): array
+    {
+        $parentTestingClassesWithoutSut = parent::getTestingClassesWithoutSut();
+        $testingClassesWithoutSut = $parentTestingClassesWithoutSut;
+        foreach ($parentTestingClassesWithoutSut as $testClassWithoutSut) {
+            $adoptedTestClassWithoutSut = str_replace('RulesSkeleton', 'AttackSkeleton', $testClassWithoutSut);
+            if (class_exists($adoptedTestClassWithoutSut)) {
+                $testingClassesWithoutSut[] = $adoptedTestClassWithoutSut;
+            }
+            $adoptedTestClassWithoutSut = str_replace('\RulesSkeleton\\', '\AttackSkeleton\\', $testClassWithoutSut);
+            if (class_exists($adoptedTestClassWithoutSut)) {
+                $testingClassesWithoutSut[] = $adoptedTestClassWithoutSut;
+            }
+        }
+        return $testingClassesWithoutSut;
+    }
+
+    protected static function getSutClass(string $sutTestClass = null, string $regexp = '~\\\Tests(.+)Test$~'): string
+    {
+        $sutClass = parent::getSutClass($sutTestClass, $regexp);
+        if (class_exists($sutClass)) {
+            return $sutClass;
+        }
+        $sutClass = str_replace('\AttackSkeleton\\', '\CalculatorSkeleton\\', $sutClass);
+        if (class_exists($sutClass)) {
+            return $sutClass;
+        }
+        return str_replace('\CalculatorSkeleton\\', '\RulesSkeleton\\', $sutClass);
+    }
 }
