@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace DrdPlus\AttackSkeleton;
+namespace DrdPlus\AttackSkeleton\InjectorComposerPlugin;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\InstallOperation;

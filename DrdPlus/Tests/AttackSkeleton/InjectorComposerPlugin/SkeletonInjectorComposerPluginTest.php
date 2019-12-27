@@ -1,8 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace DrdPlus\Tests\AttackSkeleton;
+namespace DrdPlus\Tests\AttackSkeleton\InjectorComposerPlugin;
 
-class SkeletonInjectorComposerPluginTest extends \DrdPlus\Tests\CalculatorSkeleton\SkeletonInjectorComposerPluginTest
+use DrdPlus\Tests\AttackSkeleton\Partials\AttackCalculatorTestTrait;
+
+class SkeletonInjectorComposerPluginTest extends \DrdPlus\Tests\CalculatorSkeleton\InjectorComposerPlugin\SkeletonInjectorComposerPluginTest
 {
-    use Partials\AttackCalculatorTestTrait;
+    use AttackCalculatorTestTrait;
 }
