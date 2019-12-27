@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);namespace DrdPlus\AttackSkeleton;
+<?php declare(strict_types=1);
+
+namespace DrdPlus\AttackSkeleton;
 
 use Composer\Composer;
 use Composer\DependencyResolver\Operation\InstallOperation;
@@ -24,6 +26,7 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
     /** @var string */
     private $skeletonPackageName;
 
+    /** @noinspection PhpUnused */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -37,18 +40,20 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
         $this->skeletonPackageName = static::ATTACK_SKELETON_PACKAGE_NAME;
     }
 
+    /** @noinspection PhpUnused */
     public function activate(Composer $composer, IOInterface $io): void
     {
         $this->composer = $composer;
         $this->io = $io;
     }
 
+    /** @noinspection PhpUnused */
     public function plugInSkeleton(PackageEvent $event)
     {
         if ($this->alreadyInjected || !$this->isThisPackageChanged($event)) {
             return;
         }
-        $documentRoot = $GLOBALS['documentRoot'] ?? \getcwd();
+        $documentRoot = $GLOBALS['documentRoot'] ?? getcwd();
         $this->io->write("Injecting {$this->skeletonPackageName} using document root $documentRoot");
         $this->publishSkeletonCss($documentRoot);
         $this->addVersionsToAssets($documentRoot);
@@ -80,25 +85,25 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
     private function passThrough(array $commands, string $workingDir = null): void
     {
         if ($workingDir !== null) {
-            $escapedWorkingDir = \escapeshellarg($workingDir);
-            \array_unshift($commands, 'cd ' . $escapedWorkingDir);
+            $escapedWorkingDir = escapeshellarg($workingDir);
+            array_unshift($commands, 'cd ' . $escapedWorkingDir);
         }
         foreach ($commands as &$command) {
             $command .= ' 2>&1';
         }
         unset($command);
-        $chain = \implode(' && ', $commands);
-        \exec($chain, $output, $returnCode);
+        $chain = implode(' && ', $commands);
+        exec($chain, $output, $returnCode);
         if ($returnCode !== 0) {
             $this->io->writeError(
-                "Failed injecting skeleton by command $chain\nGot return code $returnCode and output " . \implode("\n", $output)
+                "Failed injecting skeleton by command $chain\nGot return code $returnCode and output " . implode("\n", $output)
             );
 
             return;
         }
         $this->io->write($chain);
         if ($output) {
-            $this->io->write(' ' . \implode("\n", $output));
+            $this->io->write(' ' . implode("\n", $output));
         }
     }
 
@@ -119,7 +124,7 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
         $assetsVersion = new AssetsVersion(true, false);
         $changedFiles = $assetsVersion->addVersionsToAssetLinks($documentRoot, ['css/generic/attack'], [], [], false);
         if ($changedFiles) {
-            $this->io->write('Those assets got versions to asset links: ' . \implode(', ', $changedFiles));
+            $this->io->write('Those assets got versions to asset links: ' . implode(', ', $changedFiles));
         }
     }
 
