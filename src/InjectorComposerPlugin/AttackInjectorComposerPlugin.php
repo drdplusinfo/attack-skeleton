@@ -17,12 +17,9 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
 {
     public const ATTACK_SKELETON_PACKAGE_NAME = 'drdplus/attack-skeleton';
 
-    /** @var Composer */
-    private $composer;
-    /** @var IOInterface */
-    private $io;
-    /** @var bool */
-    private $alreadyInjected = false;
+    private ?\Composer\Composer $composer = null;
+    private ?\Composer\IO\IOInterface $io = null;
+    private bool $alreadyInjected = false;
     /** @var string */
     private $skeletonPackageName;
 
@@ -38,6 +35,14 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
     public function __construct()
     {
         $this->skeletonPackageName = static::ATTACK_SKELETON_PACKAGE_NAME;
+    }
+
+    public function deactivate(Composer $composer, IOInterface $io)
+    {
+    }
+
+    public function uninstall(Composer $composer, IOInterface $io)
+    {
     }
 
     /** @noinspection PhpUnused */
@@ -123,7 +128,7 @@ class AttackInjectorComposerPlugin extends StrictObject implements PluginInterfa
     {
         $assetsVersion = new AssetsVersion(true, false);
         $changedFiles = $assetsVersion->addVersionsToAssetLinks($documentRoot, ['css/generic/attack'], [], [], false);
-        if ($changedFiles) {
+        if ($changedFiles !== []) {
             $this->io->write('Those assets got versions to asset links: ' . implode(', ', $changedFiles));
         }
     }

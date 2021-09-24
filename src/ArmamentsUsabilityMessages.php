@@ -6,10 +6,8 @@ use Granam\Strict\Object\StrictObject;
 
 class ArmamentsUsabilityMessages extends StrictObject
 {
-    /** @var array|string[][] */
-    private $messagesAbout = [];
-    /** @var PossibleArmaments */
-    private $possibleArmaments;
+    private array $messagesAbout = [];
+    private \DrdPlus\AttackSkeleton\PossibleArmaments $possibleArmaments;
 
     public function __construct(PossibleArmaments $possibleArmaments)
     {
@@ -47,7 +45,7 @@ class ArmamentsUsabilityMessages extends StrictObject
 
     private function addUnusableMessage(int $countOfUnusable, string $key, string $single, string $few, string $many): void
     {
-        $this->messagesAbout[$key] = $this->messagesAbout[$key] ?? [];
+        $this->messagesAbout[$key] ??= [];
         if ($countOfUnusable > 0) {
             $word = $single;
             if ($countOfUnusable >= 5) {

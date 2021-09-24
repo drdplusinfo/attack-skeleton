@@ -37,9 +37,7 @@ class CurrentArmamentsValuesTest extends TestWithMockery
     {
         $currentValues = $this->mockery(CurrentValues::class);
         $currentValues->shouldReceive('getCurrentValue')
-            ->andReturnUsing(function (string $valueName) use ($plainValues) {
-                return $plainValues[$valueName] ?? null;
-            });
+            ->andReturnUsing(fn(string $valueName) => $plainValues[$valueName] ?? null);
         return $currentValues;
     }
 

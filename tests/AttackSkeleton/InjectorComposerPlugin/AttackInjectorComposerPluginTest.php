@@ -13,6 +13,14 @@ class AttackInjectorComposerPluginTest extends AbstractCalculatorContentTest
     /**
      * @test
      */
+    public function I_can_create_it()
+    {
+        self::assertNotNull(new AttackInjectorComposerPlugin());
+    }
+
+    /**
+     * @test
+     */
     public function Name_of_package_matches(): void
     {
         if (!$this->isAttackSkeletonChecked()) {

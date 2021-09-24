@@ -15,22 +15,14 @@ use DrdPlus\Codes\Armaments\BodyArmorCode;
 
 class BodyArmorBody extends AbstractArmamentBody
 {
-    /** @var CustomArmamentsState */
-    private $customArmamentsState;
-    /** @var CurrentArmamentsValues */
-    private $currentArmamentsValues;
-    /** @var CurrentArmaments */
-    private $currentArmaments;
-    /** @var ArmamentsUsabilityMessages */
-    private $armamentsUsabilityMessages;
-    /** @var HtmlHelper */
-    private $htmlHelper;
-    /** @var PossibleArmaments */
-    private $possibleArmaments;
-    /** @var Armourer */
-    private $armourer;
-    /** @var AddCustomBodyArmorBody */
-    private $addCustomBodyArmorBody;
+    private \DrdPlus\AttackSkeleton\CustomArmamentsState $customArmamentsState;
+    private \DrdPlus\AttackSkeleton\CurrentArmamentsValues $currentArmamentsValues;
+    private \DrdPlus\AttackSkeleton\CurrentArmaments $currentArmaments;
+    private \DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages $armamentsUsabilityMessages;
+    private \DrdPlus\AttackSkeleton\HtmlHelper $htmlHelper;
+    private \DrdPlus\AttackSkeleton\PossibleArmaments $possibleArmaments;
+    private \DrdPlus\Armourer\Armourer $armourer;
+    private \DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomBodyArmorBody $addCustomBodyArmorBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,

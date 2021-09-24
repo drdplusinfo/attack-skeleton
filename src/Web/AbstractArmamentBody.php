@@ -14,8 +14,8 @@ abstract class AbstractArmamentBody extends StrictObject implements BodyInterfac
 
     protected function getUsabilityPictogram(bool $canUseIt): string
     {
-        return !$canUseIt
-            ? '💪 '
-            : '';
+        return $canUseIt
+            ? ''
+            : '💪 ';
     }
 }

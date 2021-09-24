@@ -15,10 +15,8 @@ use Granam\Strict\Object\StrictObject;
 
 class CustomArmamentsRegistrar extends StrictObject
 {
-    /** @var CustomArmamentAdder */
-    private $customArmamentAdder;
-    /** @var Tables */
-    private $tables;
+    private \DrdPlus\AttackSkeleton\CustomArmamentAdder $customArmamentAdder;
+    private \DrdPlus\Tables\Tables $tables;
 
     public function __construct(CustomArmamentAdder $customArmamentAdder, Tables $tables)
     {

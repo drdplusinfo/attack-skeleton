@@ -17,14 +17,10 @@ class PossibleArmaments extends StrictObject
 {
     use UsingArmaments;
 
-    /** @var Armourer */
-    private $armourer;
-    /** @var CurrentProperties */
-    private $currentProperties;
-    /** @var ItemHoldingCode */
-    private $currentMeleeWeaponHolding;
-    /** @var ItemHoldingCode */
-    private $currentRangedWeaponHolding;
+    private \DrdPlus\Armourer\Armourer $armourer;
+    private \DrdPlus\AttackSkeleton\CurrentProperties $currentProperties;
+    private \DrdPlus\Codes\ItemHoldingCode $currentMeleeWeaponHolding;
+    private \DrdPlus\Codes\ItemHoldingCode $currentRangedWeaponHolding;
 
     public function __construct(
         Armourer $armourer,
@@ -124,9 +120,7 @@ class PossibleArmaments extends StrictObject
      */
     public function getPossibleBodyArmors(): array
     {
-        $bodyArmors = \array_map(static function (string $armorValue) {
-            return BodyArmorCode::getIt($armorValue);
-        }, BodyArmorCode::getPossibleValues());
+        $bodyArmors = \array_map(static fn(string $armorValue) => BodyArmorCode::getIt($armorValue), BodyArmorCode::getPossibleValues());
 
         return $this->addUsabilityToNonWeaponArmament($bodyArmors);
     }
@@ -136,9 +130,7 @@ class PossibleArmaments extends StrictObject
      */
     public function getPossibleHelms(): array
     {
-        $helmCodes = \array_map(static function (string $helmValue) {
-            return HelmCode::getIt($helmValue);
-        }, HelmCode::getPossibleValues());
+        $helmCodes = \array_map(static fn(string $helmValue) => HelmCode::getIt($helmValue), HelmCode::getPossibleValues());
 
         return $this->addUsabilityToNonWeaponArmament($helmCodes);
     }
@@ -148,9 +140,7 @@ class PossibleArmaments extends StrictObject
      */
     public function getPossibleShields(): array
     {
-        $shieldCodes = \array_map(static function (string $shieldValue) {
-            return ShieldCode::getIt($shieldValue);
-        }, ShieldCode::getPossibleValues());
+        $shieldCodes = \array_map(static fn(string $shieldValue) => ShieldCode::getIt($shieldValue), ShieldCode::getPossibleValues());
 
         return $this->addUsabilityToNonWeaponArmament($shieldCodes);
     }

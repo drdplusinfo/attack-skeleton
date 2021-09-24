@@ -16,20 +16,13 @@ use DrdPlus\Codes\ItemHoldingCode;
 
 class MeleeWeaponBody extends AbstractArmamentBody
 {
-    /** @var CustomArmamentsState */
-    private $customArmamentsState;
-    /** @var CurrentArmamentsValues */
-    private $currentArmamentsValues;
-    /** @var CurrentArmaments */
-    private $currentArmaments;
-    /** @var ArmamentsUsabilityMessages */
-    private $armamentsUsabilityMessages;
-    /** @var HtmlHelper */
-    private $htmlHelper;
-    /** @var PossibleArmaments */
-    private $possibleArmaments;
-    /** @var AddCustomMeleeWeaponBody */
-    private $addCustomMeleeWeaponBody;
+    private \DrdPlus\AttackSkeleton\CustomArmamentsState $customArmamentsState;
+    private \DrdPlus\AttackSkeleton\CurrentArmamentsValues $currentArmamentsValues;
+    private \DrdPlus\AttackSkeleton\CurrentArmaments $currentArmaments;
+    private \DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages $armamentsUsabilityMessages;
+    private \DrdPlus\AttackSkeleton\HtmlHelper $htmlHelper;
+    private \DrdPlus\AttackSkeleton\PossibleArmaments $possibleArmaments;
+    private \DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody $addCustomMeleeWeaponBody;
 
     public function __construct(
         CustomArmamentsState $customArmamentsState,

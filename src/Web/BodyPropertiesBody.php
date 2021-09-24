@@ -8,8 +8,7 @@ use Granam\WebContentBuilder\Web\BodyInterface;
 
 class BodyPropertiesBody extends StrictObject implements BodyInterface
 {
-    /** @var CurrentProperties */
-    private $currentProperties;
+    private \DrdPlus\AttackSkeleton\CurrentProperties $currentProperties;
 
     public function __construct(CurrentProperties $currentProperties)
     {

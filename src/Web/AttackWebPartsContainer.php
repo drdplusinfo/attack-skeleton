@@ -24,44 +24,26 @@ use DrdPlus\RulesSkeleton\Web\Tools\WebFiles;
 
 class AttackWebPartsContainer extends CalculatorWebPartsContainer
 {
-    /** @var BodyPropertiesBody */
-    private $bodyPropertiesBody;
-    /** @var BodyArmorBody */
-    private $bodyArmorBody;
-    /** @var AddCustomBodyArmorBody */
-    private $addCustomBodyArmorBody;
-    /** @var HelmBody */
-    private $helmBody;
-    /** @var AddCustomHelmBody */
-    private $addCustomHelmBody;
-    /** @var MeleeWeaponBody */
-    private $meleeWeaponBody;
-    /** @var AddCustomMeleeWeaponBody */
-    private $addCustomMeleeWeaponBody;
-    /** @var RangedWeaponBody */
-    private $rangedWeaponBody;
-    /** @var AddCustomRangedWeaponBody */
-    private $addCustomRangedWeaponBody;
-    /** @var ShieldBody */
-    private $shieldBody;
-    /** @var AddCustomShieldBody */
-    private $addCustomShieldBody;
-    /** @var CurrentProperties */
-    private $currentProperties;
+    private ?\DrdPlus\AttackSkeleton\Web\BodyPropertiesBody $bodyPropertiesBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\BodyArmorBody $bodyArmorBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomBodyArmorBody $addCustomBodyArmorBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\HelmBody $helmBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomHelmBody $addCustomHelmBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\MeleeWeaponBody $meleeWeaponBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomMeleeWeaponBody $addCustomMeleeWeaponBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\RangedWeaponBody $rangedWeaponBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomRangedWeaponBody $addCustomRangedWeaponBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\ShieldBody $shieldBody = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AddCustomArmament\AddCustomShieldBody $addCustomShieldBody = null;
+    private \DrdPlus\AttackSkeleton\CurrentProperties $currentProperties;
     /** @var HtmlHelper */
     private $htmlHelper;
-    /** @var CustomArmamentsState */
-    private $customArmamentsState;
-    /** @var CurrentArmamentsValues */
-    private $currentArmamentsValues;
-    /** @var CurrentArmaments */
-    private $currentArmaments;
-    /** @var PossibleArmaments */
-    private $possibleArmaments;
-    /** @var ArmamentsUsabilityMessages */
-    private $armamentsUsabilityMessages;
-    /** @var Armourer */
-    private $armourer;
+    private \DrdPlus\AttackSkeleton\CustomArmamentsState $customArmamentsState;
+    private \DrdPlus\AttackSkeleton\CurrentArmamentsValues $currentArmamentsValues;
+    private \DrdPlus\AttackSkeleton\CurrentArmaments $currentArmaments;
+    private \DrdPlus\AttackSkeleton\PossibleArmaments $possibleArmaments;
+    private \DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages $armamentsUsabilityMessages;
+    private \DrdPlus\Armourer\Armourer $armourer;
 
     public function __construct(
         Configuration $configuration,

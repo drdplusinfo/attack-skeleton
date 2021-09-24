@@ -17,14 +17,10 @@ class PreviousArmaments extends StrictObject
 {
     use UsingArmaments;
 
-    /** @var History */
-    private $history;
-    /** @var PreviousProperties */
-    private $previousProperties;
-    /** @var Armourer */
-    private $armourer;
-    /** @var Tables */
-    private $tables;
+    private \DrdPlus\CalculatorSkeleton\History $history;
+    private \DrdPlus\AttackSkeleton\PreviousProperties $previousProperties;
+    private \DrdPlus\Armourer\Armourer $armourer;
+    private \DrdPlus\Tables\Tables $tables;
 
     public function __construct(History $history, PreviousProperties $previousProperties, Armourer $armourer, Tables $tables)
     {

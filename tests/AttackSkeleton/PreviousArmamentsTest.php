@@ -39,9 +39,7 @@ class PreviousArmamentsTest extends AbstractCalculatorContentTest
     {
         $history = $this->mockery(History::class);
         $history->shouldReceive('getValue')
-            ->andReturnUsing(function (string $name) use ($namesToValues) {
-                return $namesToValues[$name];
-            });
+            ->andReturnUsing(fn(string $name) => $namesToValues[$name]);
         return $history;
     }
 

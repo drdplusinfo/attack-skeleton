@@ -17,32 +17,19 @@ use DrdPlus\Tables\Tables;
  */
 class AttackServicesContainer extends CalculatorServicesContainer
 {
-    /** @var CurrentProperties */
-    private $currentProperties;
-    /** @var PossibleArmaments */
-    private $possibleArmaments;
-    /** @var Armourer */
-    private $armourer;
-    /** @var Tables */
-    private $tables;
-    /** @var CurrentArmaments */
-    private $currentArmaments;
-    /** @var CustomArmamentsRegistrar */
-    private $customArmamentsRegistrar;
-    /** @var CustomArmamentAdder */
-    private $customArmamentAdder;
-    /** @var CurrentArmamentsValues */
-    private $currentArmamentsValues;
-    /** @var ArmamentsUsabilityMessages */
-    private $armamentsUsabilityMessages;
-    /** @var AttackRequest */
-    private $attackRequest;
-    /** @var CustomArmamentsState */
-    private $customArmamentsState;
-    /** @var AttackWebPartsContainer */
-    private $routedAttackWebPartsContainer;
-    /** @var AttackWebPartsContainer */
-    private $rootAttackWebPartsContainer;
+    private ?\DrdPlus\AttackSkeleton\CurrentProperties $currentProperties = null;
+    private ?\DrdPlus\AttackSkeleton\PossibleArmaments $possibleArmaments = null;
+    private ?\DrdPlus\Armourer\Armourer $armourer = null;
+    private ?\DrdPlus\Tables\Tables $tables = null;
+    private ?\DrdPlus\AttackSkeleton\CurrentArmaments $currentArmaments = null;
+    private ?\DrdPlus\AttackSkeleton\CustomArmamentsRegistrar $customArmamentsRegistrar = null;
+    private ?\DrdPlus\AttackSkeleton\CustomArmamentAdder $customArmamentAdder = null;
+    private ?\DrdPlus\AttackSkeleton\CurrentArmamentsValues $currentArmamentsValues = null;
+    private ?\DrdPlus\AttackSkeleton\ArmamentsUsabilityMessages $armamentsUsabilityMessages = null;
+    private ?\DrdPlus\AttackSkeleton\AttackRequest $attackRequest = null;
+    private ?\DrdPlus\AttackSkeleton\CustomArmamentsState $customArmamentsState = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AttackWebPartsContainer $routedAttackWebPartsContainer = null;
+    private ?\DrdPlus\AttackSkeleton\Web\AttackWebPartsContainer $rootAttackWebPartsContainer = null;
 
     public function __construct(CalculatorConfiguration $calculatorConfiguration, Environment $environment, HtmlHelper $htmlHelper)
     {

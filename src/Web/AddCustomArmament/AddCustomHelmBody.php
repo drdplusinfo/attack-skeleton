@@ -11,8 +11,7 @@ class AddCustomHelmBody extends StrictObject implements BodyInterface
 {
     use CancelActionButtonTrait;
 
-    /** @var HtmlHelper */
-    private $frontendHelper;
+    private \DrdPlus\AttackSkeleton\HtmlHelper $frontendHelper;
 
     public function __construct(HtmlHelper $frontendHelper)
     {

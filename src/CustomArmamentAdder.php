@@ -18,10 +18,7 @@ use Granam\String\StringTools;
 
 class CustomArmamentAdder extends StrictObject
 {
-    /**
-     * @var Armourer
-     */
-    private $armourer;
+    private \DrdPlus\Armourer\Armourer $armourer;
 
     public function __construct(Armourer $armourer)
     {

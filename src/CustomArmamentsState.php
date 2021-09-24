@@ -7,10 +7,7 @@ use Granam\Strict\Object\StrictObject;
 
 class CustomArmamentsState extends StrictObject
 {
-    /**
-     * @var CurrentValues
-     */
-    private $currentValues;
+    private \DrdPlus\CalculatorSkeleton\CurrentValues $currentValues;
 
     public function __construct(CurrentValues $currentValues)
     {

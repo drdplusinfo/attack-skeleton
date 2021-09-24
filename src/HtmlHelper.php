@@ -48,9 +48,9 @@ class HtmlHelper extends \DrdPlus\RulesSkeleton\HtmlHelper
 
     public function getDisabled(bool $canUseIt): string
     {
-        return !$canUseIt
-            ? 'disabled'
-            : '';
+        return $canUseIt
+            ? ''
+            : 'disabled';
     }
 
     /**
@@ -61,13 +61,13 @@ class HtmlHelper extends \DrdPlus\RulesSkeleton\HtmlHelper
     public function getLocalUrlWithQuery(array $additionalParameters = [], array $getParameters = null): string
     {
         $parameters = $getParameters ?? $_GET;
-        if ($additionalParameters) {
+        if ($additionalParameters !== []) {
             foreach ($additionalParameters as $name => $value) {
                 $parameters[$name] = $value;
             }
         }
         $query = '';
-        if ($parameters) {
+        if ($parameters !== []) {
             $query = '?' . http_build_query($parameters);
         }
 

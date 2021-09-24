@@ -93,9 +93,7 @@ abstract class AbstractAttackTest extends AbstractCalculatorContentTest
         $armourer = $this->mockery(Armourer::class);
         $armourer->shouldReceive('canUseArmament')
             ->with($this->type(ArmamentCode::class), $this->type(Strength::class), $this->type(Size::class))
-            ->andReturnUsing(function (ArmamentCode $armamentCode) use ($unusableArmaments) {
-                return !\in_array($armamentCode->getValue(), $unusableArmaments, true);
-            });
+            ->andReturnUsing(fn(ArmamentCode $armamentCode) => !\in_array($armamentCode->getValue(), $unusableArmaments, true));
         $armourer->makePartial();
         $armourer->__construct(Tables::getIt());
         return $armourer;

@@ -13,8 +13,7 @@ class AddCustomMeleeWeaponBody extends StrictObject implements BodyInterface
     use WeaponWoundTypesTrait;
     use CancelActionButtonTrait;
 
-    /** @var HtmlHelper */
-    private $frontendHelper;
+    private \DrdPlus\AttackSkeleton\HtmlHelper $frontendHelper;
 
     public function __construct(HtmlHelper $frontendHelper)
     {

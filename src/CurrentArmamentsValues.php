@@ -51,18 +51,12 @@ class CurrentArmamentsValues extends StrictObject
     public const CUSTOM_SHIELD_WEIGHT = 'custom_shield_weight';
     public const CUSTOM_SHIELD_TWO_HANDED_ONLY = 'custom_shield_two_handed_only';
 
-    /** @var CurrentValues */
-    private $currentValues;
-    /** @var array */
-    private $currentCustomRangedWeaponsValues;
-    /** @var array */
-    private $currentCustomMeleeWeaponsValues;
-    /** @var array */
-    private $currentCustomBodyArmorsValues;
-    /** @var array */
-    private $currentCustomHelmsValues;
-    /** @var array */
-    private $currentCustomShieldsValues;
+    private \DrdPlus\CalculatorSkeleton\CurrentValues $currentValues;
+    private ?array $currentCustomRangedWeaponsValues = null;
+    private ?array $currentCustomMeleeWeaponsValues = null;
+    private ?array $currentCustomBodyArmorsValues = null;
+    private ?array $currentCustomHelmsValues = null;
+    private ?array $currentCustomShieldsValues = null;
 
     public function __construct(CurrentValues $currentValues)
     {

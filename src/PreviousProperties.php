@@ -16,8 +16,7 @@ use Granam\Strict\Object\StrictObject;
 
 class PreviousProperties extends StrictObject
 {
-    /** @var History */
-    private $history;
+    private \DrdPlus\CalculatorSkeleton\History $history;
 
     public function __construct(History $history)
     {

@@ -15,12 +15,9 @@ class CurrentArmaments extends StrictObject
 {
     use UsingArmaments;
 
-    /** @var CurrentArmamentsValues */
-    private $currentArmamentsValues;
-    /** @var Armourer */
-    private $armourer;
-    /** @var CurrentProperties */
-    private $currentProperties;
+    private \DrdPlus\AttackSkeleton\CurrentArmamentsValues $currentArmamentsValues;
+    private \DrdPlus\Armourer\Armourer $armourer;
+    private \DrdPlus\AttackSkeleton\CurrentProperties $currentProperties;
 
     public function __construct(
         CurrentProperties $currentProperties,
