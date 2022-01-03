@@ -8,8 +8,11 @@ use DrdPlus\AttackSkeleton\PreviousArmaments;
 use DrdPlus\AttackSkeleton\PreviousProperties;
 use DrdPlus\BaseProperties\Strength;
 use DrdPlus\CalculatorSkeleton\History;
+use DrdPlus\Codes\Armaments\BodyArmorCode;
+use DrdPlus\Codes\Armaments\HelmCode;
 use DrdPlus\Codes\Armaments\MeleeWeaponCode;
 use DrdPlus\Codes\Armaments\RangedWeaponCode;
+use DrdPlus\Codes\Armaments\ShieldCode;
 use DrdPlus\Properties\Body\Size;
 use DrdPlus\Tables\Tables;
 use Tests\DrdPlus\CalculatorSkeleton\Partials\AbstractCalculatorContentTest;
@@ -109,6 +112,20 @@ class PreviousArmamentsTest extends AbstractCalculatorContentTest
     /**
      * @test
      */
+    public function I_will_get_hand_as_previous_melee_weapon_if_previous_is_not_supported(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([AttackRequest::MELEE_WEAPON => 'soul shard', AttackRequest::MELEE_WEAPON_HOLDING => 'by teeth']),
+            $this->createPreviousProperties(),
+            Armourer::getIt(),
+            Tables::getIt()
+        );
+        self::assertSame(MeleeWeaponCode::getIt(MeleeWeaponCode::HAND), $previousArmaments->getPreviousMeleeWeapon());
+    }
+
+    /**
+     * @test
+     */
     public function I_can_get_previous_ranged_weapon(): void
     {
         $previousArmaments = new PreviousArmaments(
@@ -122,4 +139,118 @@ class PreviousArmamentsTest extends AbstractCalculatorContentTest
         );
         self::assertSame(RangedWeaponCode::getIt(RangedWeaponCode::MINICROSSBOW), $previousArmaments->getPreviousRangedWeapon());
     }
+
+    /**
+     * @test
+     */
+    public function I_will_get_sand_as_previous_ranged_weapon_if_previous_is_not_supported(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::RANGED_WEAPON => 'plasma from tears',
+                AttackRequest::RANGED_WEAPON_HOLDING => null,
+            ]),
+            $this->createPreviousProperties(),
+            Armourer::getIt(),
+            Tables::getIt()
+        );
+        self::assertSame(RangedWeaponCode::getIt(RangedWeaponCode::SAND), $previousArmaments->getPreviousRangedWeapon());
+    }
+
+    /**
+     * @test
+     */
+    public function I_can_get_previous_body_armor(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::BODY_ARMOR => BodyArmorCode::CHAINMAIL_ARMOR,
+            ]),
+            $this->createPreviousProperties(),
+            $this->createArmourer(true),
+            Tables::getIt()
+        );
+        self::assertSame(BodyArmorCode::getIt(BodyArmorCode::CHAINMAIL_ARMOR), $previousArmaments->getPreviousBodyArmor());
+    }
+
+    /**
+     * @test
+     */
+    public function I_will_get_without_body_armor_as_previous_body_armor_if_previous_is_not_supported(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::BODY_ARMOR => 'swimsuit',
+            ]),
+            $this->createPreviousProperties(),
+            Armourer::getIt(),
+            Tables::getIt()
+        );
+        self::assertSame(BodyArmorCode::getIt(BodyArmorCode::WITHOUT_ARMOR), $previousArmaments->getPreviousBodyArmor());
+    }
+
+    /**
+     * @test
+     */
+    public function I_can_get_previous_helm(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::HELM => HelmCode::CONICAL_HELM,
+            ]),
+            $this->createPreviousProperties(),
+            $this->createArmourer(true),
+            Tables::getIt()
+        );
+        self::assertSame(HelmCode::getIt(HelmCode::CONICAL_HELM), $previousArmaments->getPreviousHelm());
+    }
+
+    /**
+     * @test
+     */
+    public function I_will_get_without_helm_as_previous_helm_if_previous_is_not_supported(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::HELM => 'hat',
+            ]),
+            $this->createPreviousProperties(),
+            Armourer::getIt(),
+            Tables::getIt()
+        );
+        self::assertSame(HelmCode::getIt(HelmCode::WITHOUT_HELM), $previousArmaments->getPreviousHelm());
+    }
+
+    /**
+     * @test
+     */
+    public function I_can_get_previous_shield(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::SHIELD => ShieldCode::BUCKLER,
+            ]),
+            $this->createPreviousProperties(),
+            $this->createArmourer(true),
+            Tables::getIt()
+        );
+        self::assertSame(ShieldCode::getIt(ShieldCode::BUCKLER), $previousArmaments->getPreviousShield());
+    }
+
+    /**
+     * @test
+     */
+    public function I_will_get_without_shield_as_previous_shield_if_previous_is_not_supported(): void
+    {
+        $previousArmaments = new PreviousArmaments(
+            $this->createHistory([
+                AttackRequest::SHIELD => 'chair',
+            ]),
+            $this->createPreviousProperties(),
+            Armourer::getIt(),
+            Tables::getIt()
+        );
+        self::assertSame(ShieldCode::getIt(ShieldCode::WITHOUT_SHIELD), $previousArmaments->getPreviousShield());
+    }
+
 }
