@@ -19,15 +19,22 @@ $documentRoot = $documentRoot ?? (PHP_SAPI !== 'cli' ? rtrim(dirname($_SERVER['S
 /** @noinspection PhpIncludeInspection */
 require_once $documentRoot . '/vendor/autoload.php';
 
-$environment = $environment ?? Environment::createFromGlobals();
-if (PHP_SAPI !== 'cli') {
-    TracyDebugger::enable($environment->isInProduction());
+try {
+    $environment = $environment ?? Environment::createFromGlobals();
+    if (PHP_SAPI !== 'cli') {
+        TracyDebugger::enable($environment->isInProduction());
+    }
+
+    $dirs = $dirs ?? Dirs::createFromGlobals();
+    $configuration = $configuration ?? CalculatorConfiguration::createFromYml($dirs);
+    $htmlHelper = $htmlHelper ?? HtmlHelper::createFromGlobals($dirs, $environment);
+    $servicesContainer = $servicesContainer ?? new AttackServicesContainer($configuration, $environment, $htmlHelper);
+    $calculatorApplication = $rulesApplication ?? $controller ?? new CalculatorApplication($servicesContainer);
+
+    $calculatorApplication->run();
+} catch (\Throwable $throwable) {
+    if (!empty($_SERVER['SERVER_PROTOCOL'])) {
+        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    }
+    throw $throwable;
 }
-
-$dirs = $dirs ?? Dirs::createFromGlobals();
-$configuration = $configuration ?? CalculatorConfiguration::createFromYml($dirs);
-$htmlHelper = $htmlHelper ?? HtmlHelper::createFromGlobals($dirs, $environment);
-$servicesContainer = $servicesContainer ?? new AttackServicesContainer($configuration, $environment, $htmlHelper);
-$calculatorApplication = $rulesApplication ?? $controller ?? new CalculatorApplication($servicesContainer);
-
-$calculatorApplication->run();
